@@ -57,3 +57,17 @@ Los administradores podrán:
       - Github: https://github.com/PandaJavi
 
 Tablero de Trello: https://trello.com/b/gaM8JvpQ/portal-de-rol-dad
+
+
+## Fase 1
+
+
+  - Diagrama de navegación
+  
+  
+    ![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Diagrama%20de%20navegaci%C3%B3n.jpg)
+
+
+
+
+
