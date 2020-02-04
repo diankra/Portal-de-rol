@@ -35,9 +35,10 @@ Los administradores podrán:
   
 ## Entidades
   - Usuario: Los usuarios podrán ser jugadores o másters dependiendo de la partida que jueguen. Dispondrán de la lista de partidas en las que estén participando junto con el rol que desempeñan en cada una de ellas y la ficha de personaje asociada, en caso de haberla. También tendrán un histórico de partidas jugadas.
-  - Administrador: Los administradores tendrán las funciones de un usuario normal, a las que se añaden capacidades de moderación del foro general y control de usuarios y partidas. 
-  - Partida: Las partidas serán creadas por un usuario que actuará como máster. Este será el responsable de las condiciones de la partida (número de jugadores, fichas necesarias, duración... y actuará como moderador de su propia partida). La partida no comienza hasta que no lo determine el máster, y podrá ser cerrada por el mismo o un administrador. 
+  - (Hereda de Usuario) Administrador: Tipo de usuario especial que además de todas las funciones básicas puede editar y eliminar mensajes en el foro y banear usuarios.
   - Foro: Estará formado por hilos que podrá iniciar cualquier usuario y que podrán contener respuestas en forma de mensajes. Estos hilos podrán ser cerrados o eliminados por su creador o un administrador
+  - (Hereda de Foro) Partida: Las partidas serán creadas por un usuario que actuará como máster. Este será el responsable de las condiciones de la partida (número de jugadores, fichas necesarias, duración... y actuará como moderador de su propia partida). La partida no comienza hasta que no lo determine el máster, y podrá ser cerrada por el mismo o un administrador. 
+  - Mensaje: Es publicado por un usuario en el foro o en una partida y contiene texto, que puede ser modificado o borrado por su autor o por un Administrador.
   - Fichas: Hay dos tipos de fichas, las fichas de personaje y las fichas de partida. Las fichas de personaje las crearán los jugadores para una o varias partidas en las que participen. Las fichas de partida las crearán los másters para las partidas que dirijan y engloban elementos propios de estas, como monstruos, ubicaciones...
   
 ## Funcionalidades de servicio interno
@@ -69,5 +70,7 @@ Tablero de Trello: https://trello.com/b/gaM8JvpQ/portal-de-rol-dad
 
 
 
+  
+    
 
 
