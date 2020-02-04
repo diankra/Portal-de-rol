@@ -9,11 +9,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class WebController {
 	
-	@GetMapping("/hola")
-	public String greeting(Model model, @RequestParam String nombre, @RequestParam String asunto,
-			@RequestParam String comentario) {
+	@GetMapping("/foro")
+	public String greeting(Model model) {
 		
-	return "main_class";
+	return "foro_general";
+	}
+	
+	@GetMapping("/partidas_publicas")
+	public String saludo_partidas(Model model) {
+		
+	return "partidas_publicas";
 	}
 
 }
