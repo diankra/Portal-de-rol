@@ -3,8 +3,14 @@
 	<meta charset="UTF-8"/>
 </head>
 <body>
-	<h2>Estos son los enlaces que buscáis</h2>	
+	<h2>Foro General</h2>	
 </body>
 
+	<ul>
+		{{#hilos}}
+		<a href="/foro/{{.}}">{{.}}</a>
+		<br></br>
+		{{/hilos}}
+	</ul>
 <a href="/">Volver</a>
 </html>
