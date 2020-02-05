@@ -3,9 +3,18 @@
 	<meta charset="UTF-8"/>
 </head>
 <body>
-	<h2>Aquí se crean usuarios.</h2>	
+	<h2>Crear nuevo usuario</h2>	
+	<form method="post" action='/crear_usuario/aceptar'>
+	<p>Nombre de usuario: </p>
+	<input type='text' name='user'/>
+	<p>Correo electrónico: </p>
+	<input type='text' name='mail'/>
+	<p>Contraseña: </p>
+	<input type='password' name='password'/>
+ 	<input type='submit' value='Enviar'>
 </body>
 
+<br></br>
 <a href="/">Volver</a>
 <a href="/inicia_sesion">Iniciar sesion</a>
 </html>

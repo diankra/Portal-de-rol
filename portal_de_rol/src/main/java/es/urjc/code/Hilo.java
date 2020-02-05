@@ -1,18 +1,19 @@
 package es.urjc.code;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Hilo {
 
 	private String titulo;
 	private Usuario autor;
-	private List<Mensaje> mensajes;
+	private List<Mensaje> mensajes = new ArrayList<Mensaje>();;
 	
-	public Hilo(String titulo, Usuario autor, List<Mensaje> mensajes) {
+	public Hilo(String titulo, Usuario autor, Mensaje primerMensaje) {
 		super();
 		this.titulo = titulo;
 		this.autor = autor;
-		this.mensajes = mensajes;
+		this.mensajes.add(primerMensaje);
 	}
 
 	public String getTitulo() {
@@ -41,6 +42,11 @@ public class Hilo {
 	
 	public void addMensaje(Mensaje mensaje) {
 		this.mensajes.add(mensaje);
+	}
+
+	@Override
+	public String toString() {
+		return "Hilo [titulo=" + titulo + ", autor=" + autor + ", mensajes=" + mensajes + "]";
 	}
 	
 	
