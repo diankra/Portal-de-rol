@@ -7,7 +7,7 @@ public class Hilo {
 
 	private String titulo;
 	private Usuario autor;
-	private List<Mensaje> mensajes = new ArrayList<Mensaje>();;
+	private List<Mensaje> mensajes = new ArrayList<Mensaje>();
 	
 	public Hilo(String titulo, Usuario autor, Mensaje primerMensaje) {
 		super();
@@ -48,6 +48,7 @@ public class Hilo {
 	public String toString() {
 		return "Hilo [titulo=" + titulo + ", autor=" + autor + ", mensajes=" + mensajes + "]";
 	}
+	
 	
 	
 }

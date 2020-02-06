@@ -138,8 +138,6 @@ public class WebController {
 		if (!usuarios.contains(usuario)) {
 			usuarios.add(usuario);
 		}
-		
-		model.addAttribute("nombre", user);
 		return "aceptar_usuario";
 	}
 
@@ -147,18 +145,6 @@ public class WebController {
 	public String inicia_sesion(Model model) {
 
 		return "inicia_sesion";
-	}
-	
-	@PostMapping("/inicia_sesion/aceptar")
-	public String aceptarInicioSesion(Model model, @RequestParam String user,
-			@RequestParam String password) {
-
-		/*
-		 * A RELLENAR CON LA BASE DE PATOS
-		 * 
-		 */
-		model.addAttribute("nombre", user);
-		return "aceptar_usuario";
 	}
 
 	@GetMapping("/crear_partida")
