@@ -164,6 +164,36 @@ public class WebController {
 
 		return "crear_ficha";
 	}
+	
+	@GetMapping("/crear_ficha/ficha_heroes")
+	public String fichas_heroes(Model model) {
+
+		return "ficha_heroes";
+	}
+	
+	@GetMapping("/crear_ficha/ficha_enemigos")
+	public String fichas_enemigos(Model model) {
+
+		return "ficha_enemigos";
+	}
+	
+	@GetMapping("/crear_ficha/ficha_objetos")
+	public String fichas_objetos(Model model) {
+
+		return "ficha_objetos";
+	}
+	
+	@GetMapping("/crear_ficha/ficha_habilidades")
+	public String fichas_habilidades(Model model) {
+
+		return "ficha_habilidades";
+	}
+	
+	@GetMapping("/crear_ficha/ficha_loc")
+	public String fichas_localizaciones(Model model) {
+
+		return "ficha_loc";
+	}
 
 	public Hilo getHiloActual(String titulo) {
 		Hilo hiloActual = null;
