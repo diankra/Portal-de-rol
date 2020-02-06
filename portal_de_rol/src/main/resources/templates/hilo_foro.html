@@ -3,10 +3,9 @@
 	<meta charset="UTF-8"/>
 </head>
 <body>
-	<h2>Estas en el hilo {{titulo}} de un foro</h2>	
+	<h2>Hilo:{{titulo}}</h2>	
 	<table>		
 		{{#mensajes}}
-		{{-index}}
 		{{.}}
 		<br></br>
 		<a href = "/foro/{{titulo}}/{{-index}}">Eliminar mensaje</a>
