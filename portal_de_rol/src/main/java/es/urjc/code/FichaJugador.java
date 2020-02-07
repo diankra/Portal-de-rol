@@ -1,8 +1,16 @@
 package es.urjc.code;
 
+import javax.persistence.Entity;
+
+
+@Entity
 public class FichaJugador extends Ficha{
 
 	private Usuario propietario;
+	
+	protected FichaJugador() {
+		
+	}
 	
 	public FichaJugador(String n, String d, Usuario p) {
 		super(n, d);

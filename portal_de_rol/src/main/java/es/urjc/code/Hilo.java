@@ -3,11 +3,26 @@ package es.urjc.code;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+
+@Entity
 public class Hilo {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String titulo;
 	private Usuario autor;
+	@OneToMany
 	private List<Mensaje> mensajes = new ArrayList<Mensaje>();
+	
+	protected Hilo() {
+		
+	}
 	
 	public Hilo(String titulo, Usuario autor, Mensaje primerMensaje) {
 		super();

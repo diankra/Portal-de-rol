@@ -3,11 +3,22 @@ package es.urjc.code;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Partida extends Hilo{
 
 	private Usuario master;
+	@ManyToMany
 	private List<Usuario> jugadores = new ArrayList<Usuario>();
+	@OneToMany
 	private List<FichaMundo> fichas = new ArrayList<FichaMundo>();
+	
+	protected Partida() {
+		
+	}
 	
 	public Partida(String titulo, Usuario master, Mensaje primerMensaje) {
 		super(titulo, master, primerMensaje);

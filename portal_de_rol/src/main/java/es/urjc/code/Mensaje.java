@@ -1,9 +1,21 @@
 package es.urjc.code;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Mensaje {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Usuario autor;
 	private String texto;
+	
+	protected Mensaje() {
+		
+	}
 	
 	public Mensaje(Usuario autor, String texto) {
 		super();
