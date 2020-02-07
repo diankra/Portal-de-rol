@@ -202,6 +202,13 @@ public class WebController {
 		return "aceptar_ficha";
 	}
 	
+	@PostMapping("/ficha_enemigos/aceptar_ficha")
+	public String aceptarFicha(Model model, @RequestParam String name,
+			@RequestParam("Tipo") String Tipo, @RequestParam("Elemento") String Elemento) {
+		
+		return "aceptar_ficha";	
+	}
+	
 	public Hilo getHiloActual(String titulo) {
 		Hilo hiloActual = null;
 		int index = 0;
