@@ -194,7 +194,14 @@ public class WebController {
 
 		return "ficha_loc";
 	}
-
+	
+	@PostMapping("/ficha_heroes/aceptar_ficha")
+	public String aceptarFicha(Model model, @RequestParam String name, @RequestParam("Jugador") String Jugador,
+			@RequestParam("Clase") String Clase, @RequestParam("Raza") String Raza) {
+		
+		return "aceptar_ficha";
+	}
+	
 	public Hilo getHiloActual(String titulo) {
 		Hilo hiloActual = null;
 		int index = 0;
