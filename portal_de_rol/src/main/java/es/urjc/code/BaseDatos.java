@@ -7,9 +7,9 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class BaseDatos implements CommandLineRunner{
 
-	@Autowired
-	private UsuarioRepository usuarios;
-	@Autowired
+	//@Autowired
+	///private UsuarioRepository usuarios;
+	/*@Autowired
 	private FichaMundoRepository fichasmundo;
 	@Autowired
 	private FichaJugadorRepository fichasjugador;
@@ -18,7 +18,7 @@ public class BaseDatos implements CommandLineRunner{
 	@Autowired
 	private MensajeRepository mensajes;
 	@Autowired
-	private PartidaRepository partidas;
+	private PartidaRepository partidas;*/
 	
 	
 	@Override

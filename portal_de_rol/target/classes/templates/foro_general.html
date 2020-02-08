@@ -8,7 +8,9 @@
 
 	<ul>
 		{{#hilos}}
-		<a href="/foro/{{.}}">{{.}}</a>
+			{{#.}}
+				<a href="/foro/{{titulo}}">{{titulo}}</a>
+			{{/.}}
 		<br></br>
 		{{/hilos}}
 	</ul>

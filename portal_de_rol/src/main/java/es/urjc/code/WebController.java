@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,29 +28,23 @@ public class WebController {
 	Hilo h2 = new Hilo("Ejemplo 2", u2, m2);
 	List<Hilo> hilos = new ArrayList<Hilo>();
 	List<Usuario> usuarios = new ArrayList<Usuario>(); // Sería más un set pero como va a ser en bd pues da igual
-	boolean empezado = false; // Otra ñapa, espero quitarla con la database
 	@Autowired
 	Usuario usuario;
 
+	List<Partida> partidasPublicas = new ArrayList<Partida>(); //ESTARIA BIEN GUARDAR LAS PARTIDAS PUBLICAS EN UN REPO APARTE
 	// Hasta aqui zona de datos a cholon
+
+	@PostConstruct
+	public void init() {
+		hilos.add(h1);
+		hilos.add(h2);
+
+	}
 
 	@GetMapping("/foro")
 	public String foro(Model model) {
 
-		// Zona de datos a cholon numero 2
-		if (!empezado) {
-			hilos.add(h1);
-			hilos.add(h2);
-			empezado = true;
-		}
-		List<String> titulos = new ArrayList<String>();
-		for (Hilo h : hilos) {
-			titulos.add(h.getTitulo());
-		}
-
-		model.addAttribute("hilos", titulos);
-		// Fin de zona de datos a cholon numero 2
-
+		model.addAttribute("hilos", hilos);
 		return "foro_general";
 	}
 
@@ -62,14 +58,14 @@ public class WebController {
 	public String hiloCreado(Model model, @RequestParam String titulo, @RequestParam String mensajeEscrito) {
 		Hilo h;
 		Mensaje m;
-		if (usuario.getNombre() == null) { //PREGUNTAR AL PROFE QUE HACER CUANDO NO SE HA IDENTIFICADO NADIE
-			m = new Mensaje(u1, mensajeEscrito);
-			h = new Hilo(titulo, u1, m); // Esto es para probar y eso
+		if (usuario.getNombre() == null) { // PREGUNTAR AL PROFE QUE HACER CUANDO NO SE HA IDENTIFICADO NADIE
+			m = new Mensaje(usuario, mensajeEscrito);
+			h = new Hilo(titulo, usuario, m); // Esto es para probar y eso
 		} else {
 			m = new Mensaje(usuario, mensajeEscrito);
-			h = new Hilo(titulo, usuario, m); 
+			h = new Hilo(titulo, usuario, m);
 		}
-		hilos.add(h); //no permitir hilos repetidos, para luego
+		// hilos.add(h); //no permitir hilos repetidos, para luego
 		return "hilo_creado";
 	}
 
@@ -79,13 +75,9 @@ public class WebController {
 		// Espero que esto no haya que cambiarlo mucho con la database pero quien sabe
 
 		Hilo hiloActual = getHiloActual(hilo);
-		model.addAttribute("titulo", hiloActual.getTitulo());
-		List<String> mensajes = new ArrayList<String>();
-		for (Mensaje m : hiloActual.getMensajes()) {
 
-			mensajes.add(m.getAutor().getNombre().toUpperCase() + ":  " + m.getTexto()); // Un poco ñapa
-		}
-		model.addAttribute("mensajes", mensajes);
+		model.addAttribute("titulo", hiloActual.getTitulo());
+		model.addAttribute("mensajes", hiloActual.getMensajes());
 		return "hilo_foro";
 	}
 
@@ -102,7 +94,7 @@ public class WebController {
 		Hilo hiloActual = getHiloActual(hilo);
 		if (usuario == null) // Ñapa incoming. Programming the Spanish way
 			hiloActual.addMensaje(
-					new Mensaje(u1 /* lo pongo como ejemplo, mejorara al añadir la sesion */, mensajeEscrito));
+					new Mensaje(usuario /* lo pongo como ejemplo, mejorara al añadir la sesion */, mensajeEscrito));
 		else
 			hiloActual.addMensaje(new Mensaje(usuario, mensajeEscrito));
 		model.addAttribute("titulo", hilo);
@@ -135,9 +127,9 @@ public class WebController {
 			@RequestParam String password) {
 
 		usuario = new Usuario(user, mail, password);
-		if (!usuarios.contains(usuario)) {
-			usuarios.add(usuario);
-		}
+		/*
+		 * if (!usuarios.contains(usuario)) { usuarios.add(usuario); }
+		 */
 		return "aceptar_usuario";
 	}
 
@@ -153,6 +145,33 @@ public class WebController {
 		return "crear_partida";
 	}
 
+	@PostMapping("/crear_partida/aceptar")
+	public String aceptarNuevaPartida(Model model, @RequestParam String nombre, @RequestParam(required = false) String privada,
+			@RequestParam String invitados, @RequestParam String descripcion) {
+		Mensaje men = new Mensaje(usuario, descripcion);
+		Partida partida;
+		if (privada != null) {
+			model.addAttribute("tipo", "privada");
+			partida = new Partida(nombre, true, usuario, men);
+		} else {
+			model.addAttribute("tipo", "publica");
+			partida = new Partida(nombre, false, usuario, men);
+			partidasPublicas.add(partida);
+		}
+		usuario.addPartida(partida);
+		String usuariosInvitados[] = invitados.split(", ");
+		for(String name : usuariosInvitados) { //Se comprueba si los usuarios introducidos son validos y se añaden si es el caso
+			for(Usuario user : usuarios) {
+				if(name.equals(user.getNombre())) {
+					partida.addJugador(user);
+					user.addPartida(partida);
+				}
+			}
+			//LAS COMPROBACIONES SE HACEN CON LA BD YA EN FUNCIONAMIENTO
+		}
+		return "aceptar_nueva_partida";
+	}
+
 	@GetMapping("/partidas_privadas")
 	public String partidas_privadas(Model model) {
 
@@ -164,51 +183,51 @@ public class WebController {
 
 		return "crear_ficha";
 	}
-	
+
 	@GetMapping("/crear_ficha/ficha_heroes")
 	public String fichas_heroes(Model model) {
 
 		return "ficha_heroes";
 	}
-	
+
 	@GetMapping("/crear_ficha/ficha_enemigos")
 	public String fichas_enemigos(Model model) {
 
 		return "ficha_enemigos";
 	}
-	
+
 	@GetMapping("/crear_ficha/ficha_objetos")
 	public String fichas_objetos(Model model) {
 
 		return "ficha_objetos";
 	}
-	
+
 	@GetMapping("/crear_ficha/ficha_habilidades")
 	public String fichas_habilidades(Model model) {
 
 		return "ficha_habilidades";
 	}
-	
+
 	@GetMapping("/crear_ficha/ficha_loc")
 	public String fichas_localizaciones(Model model) {
 
 		return "ficha_loc";
 	}
-	
+
 	@PostMapping("/ficha_heroes/aceptar_ficha")
 	public String aceptarFicha(Model model, @RequestParam String name, @RequestParam("Jugador") String Jugador,
 			@RequestParam("Clase") String Clase, @RequestParam("Raza") String Raza) {
-		
+
 		return "aceptar_ficha";
 	}
-	
+
 	@PostMapping("/ficha_enemigos/aceptar_ficha")
-	public String aceptarFicha(Model model, @RequestParam String name,
-			@RequestParam("Tipo") String Tipo, @RequestParam("Elemento") String Elemento) {
-		
-		return "aceptar_ficha";	
+	public String aceptarFicha(Model model, @RequestParam String name, @RequestParam("Tipo") String Tipo,
+			@RequestParam("Elemento") String Elemento) {
+
+		return "aceptar_ficha";
 	}
-	
+
 	public Hilo getHiloActual(String titulo) {
 		Hilo hiloActual = null;
 		int index = 0;

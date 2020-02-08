@@ -3,7 +3,7 @@ package es.urjc.code;
 import javax.persistence.Entity;
 
 
-@Entity
+
 public class FichaJugador extends Ficha{
 
 	private Usuario propietario;
