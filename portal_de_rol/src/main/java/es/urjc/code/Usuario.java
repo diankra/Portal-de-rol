@@ -23,9 +23,19 @@ public class Usuario {
 	private String nombre;
 	private String correo;
 	private String password;
-	@OneToMany
-	private List<FichaJugador> fichas = new ArrayList<FichaJugador>();
 	
+	@OneToMany(mappedBy="propietario")
+	private List<FichaJugador> fichas = new ArrayList<FichaJugador>();
+	@OneToMany(mappedBy="master")
+	private List<Partida> partidasMaster = new ArrayList<Partida>();
+
+	public List<Partida> getPartidasMaster() {
+		return partidasMaster;
+	}
+
+	public void setPartidasMaster(List<Partida> partidasMaster) {
+		this.partidasMaster = partidasMaster;
+	}
 
 	protected Usuario() {
 		

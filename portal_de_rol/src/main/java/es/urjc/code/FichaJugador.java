@@ -1,11 +1,13 @@
 package es.urjc.code;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 
 @Entity
 public class FichaJugador extends Ficha{
 
+	@ManyToOne
 	private Usuario propietario;
 	
 	protected FichaJugador() {

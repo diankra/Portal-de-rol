@@ -5,11 +5,13 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
 public class Partida extends Hilo{
 
+	@ManyToOne
 	private Usuario master;
 	@ManyToMany
 	private List<Usuario> jugadores = new ArrayList<Usuario>();
