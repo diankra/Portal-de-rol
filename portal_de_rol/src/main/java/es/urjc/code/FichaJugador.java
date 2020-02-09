@@ -1,13 +1,22 @@
 package es.urjc.code;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+	@Entity
 
 public class FichaJugador extends Ficha {
 
 //	La ficha jugador tiene el nombre, si es NPC o no definido con tipo, su clase y su raza.
 //	Por lo que necesitamos los parametros nombre, tipo, clase y raza definidos en ficha_heroes
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	
 	@ManyToOne
 	private Usuario propietario;
 	private String name;
