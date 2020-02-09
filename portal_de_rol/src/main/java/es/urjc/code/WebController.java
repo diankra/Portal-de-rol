@@ -28,17 +28,24 @@ public class WebController {
 	Hilo h2 = new Hilo("Ejemplo 2", u2, m2);
 	List<Hilo> hilos = new ArrayList<Hilo>();
 	List<Usuario> usuarios = new ArrayList<Usuario>(); // Sería más un set pero como va a ser en bd pues da igual
+
 	@Autowired
 	Usuario usuario;
 
-	List<Partida> partidasPublicas = new ArrayList<Partida>(); //ESTARIA BIEN GUARDAR LAS PARTIDAS PUBLICAS EN UN REPO APARTE
+	List<Partida> partidasPublicas = new ArrayList<Partida>(); // ESTARIA BIEN GUARDAR LAS PARTIDAS PUBLICAS EN UN REPO
+																// APARTE
+
+	Partida p1 = new Partida("p1", false, u1, m1);
+	Partida p2 = new Partida("p2", false, u2, m2);
+
 	// Hasta aqui zona de datos a cholon
 
 	@PostConstruct
 	public void init() {
 		hilos.add(h1);
 		hilos.add(h2);
-
+		partidasPublicas.add(p1);
+		partidasPublicas.add(p2);
 	}
 
 	@GetMapping("/foro")
@@ -113,7 +120,48 @@ public class WebController {
 	@GetMapping("/partidas_publicas")
 	public String partidas(Model model) {
 
+		model.addAttribute("partidasPublicas", partidasPublicas);
+
 		return "partidas_publicas";
+	}
+
+	@GetMapping("partidas_publicas/{partida}")
+	public String partida(Model model, @PathVariable String partida) {
+
+		Partida partidaActual = getPartidaActual(partida);
+
+		model.addAttribute("titulo", partidaActual.getTitulo());
+		model.addAttribute("mensajes", partidaActual.getMensajes());
+		return "partida";
+	}
+
+	@GetMapping("partidas_publicas/{titulo}/escribir_mensaje_partida")
+	public String escribirMensajePartida(Model model, @PathVariable String titulo) {
+
+		model.addAttribute("titulo", titulo);
+		return "escribir_mensaje_partida";
+	}
+
+	@PostMapping("partidas_publicas/{titulo}/escribir_mensaje_partida/aceptar")
+	public String aceptarMensajePartida(Model model, @PathVariable String titulo, @RequestParam String mensajeEscrito) {
+
+		Partida partidaActual = getPartidaActual(titulo);
+		if (usuario == null) // Ñapa incoming. Programming the Spanish way
+			partidaActual.addMensaje(
+					new Mensaje(usuario /* lo pongo como ejemplo, mejorara al añadir la sesion */, mensajeEscrito));
+		else
+			partidaActual.addMensaje(new Mensaje(usuario, mensajeEscrito));
+		model.addAttribute("titulo", titulo);
+		return "mensaje_escrito_partida";
+	}
+
+	@GetMapping("partidas_publicas/{titulo}/{index}")
+	public String eliminarMensajePartida(Model model, @PathVariable String titulo, @PathVariable int index) {
+		Partida actual = getPartidaActual(titulo);
+		actual.getMensajes().remove(index - 1);
+
+		model.addAttribute("titulo", titulo);
+		return "mensaje_eliminado_partida";
 	}
 
 	@GetMapping("/crear_usuario")
@@ -146,8 +194,9 @@ public class WebController {
 	}
 
 	@PostMapping("/crear_partida/aceptar")
-	public String aceptarNuevaPartida(Model model, @RequestParam String nombre, @RequestParam(required = false) String privada,
-			@RequestParam String invitados, @RequestParam String descripcion) {
+	public String aceptarNuevaPartida(Model model, @RequestParam String nombre,
+			@RequestParam(required = false) String privada, @RequestParam String invitados,
+			@RequestParam String descripcion) {
 		Mensaje men = new Mensaje(usuario, descripcion);
 		Partida partida;
 		if (privada != null) {
@@ -160,14 +209,15 @@ public class WebController {
 		}
 		usuario.addPartida(partida);
 		String usuariosInvitados[] = invitados.split(", ");
-		for(String name : usuariosInvitados) { //Se comprueba si los usuarios introducidos son validos y se añaden si es el caso
-			for(Usuario user : usuarios) {
-				if(name.equals(user.getNombre())) {
+		for (String name : usuariosInvitados) { // Se comprueba si los usuarios introducidos son validos y se añaden si
+												// es el caso
+			for (Usuario user : usuarios) {
+				if (name.equals(user.getNombre())) {
 					partida.addJugador(user);
 					user.addPartida(partida);
 				}
 			}
-			//LAS COMPROBACIONES SE HACEN CON LA BD YA EN FUNCIONAMIENTO
+			// LAS COMPROBACIONES SE HACEN CON LA BD YA EN FUNCIONAMIENTO
 		}
 		return "aceptar_nueva_partida";
 	}
@@ -218,14 +268,46 @@ public class WebController {
 	public String aceptarFicha(Model model, @RequestParam String name, @RequestParam("Jugador") String Jugador,
 			@RequestParam("Clase") String Clase, @RequestParam("Raza") String Raza) {
 
+//		Los siguientes parametros son para mandarlos por moustache y mandarlos por pantalla.
+//		Seran el nombre del personaje, el tipo, clase y raza.
+
+		model.addAttribute("name", name);
+		model.addAttribute("Jugador", Jugador);
+		model.addAttribute("Clase", Clase);
+		model.addAttribute("Raza", Raza);
+
+//		Los anteriores parametros y el ID del usuario seran los necesarios para crear la ficha y guardar en la base de datos.
+//		ID del usuario, nombre del personaje, tipo del personaje pasado a boolean, clase del personaje y raza del personaje.
+
+		boolean type = false;
+
+		if (Jugador.equals("Jugador")) {
+			type = true;
+		}
+
+		FichaJugador f = new FichaJugador(usuario, name, type, Clase, Raza);
+
 		return "aceptar_ficha";
 	}
 
-	@PostMapping("/ficha_enemigos/aceptar_ficha")
-	public String aceptarFicha(Model model, @RequestParam String name, @RequestParam("Tipo") String Tipo,
-			@RequestParam("Elemento") String Elemento) {
+	@PostMapping("/ficha_enemigos/aceptar_ficha_enemigo")
+	public String aceptarFicha(Model model, @RequestParam String name, @RequestParam String type,
+			@RequestParam String alignment) {
 
-		return "aceptar_ficha";
+//		Los siguientes parametros son para mandarlos por moustache y mandarlos por pantalla.
+//		Seran el nombre del personaje, el tipo, clase y raza.
+
+		model.addAttribute("name", name);
+		model.addAttribute("type", type);
+		model.addAttribute("alignment", alignment);
+
+		// Los anteriores parametros y el ID del usuario seran los necesarios para crear
+		// la ficha y guardar en la base de datos.
+//		ID del usuario, nombre del personaje, tipo del personaje pasado a boolean, clase del personaje y raza del personaje.
+
+		FichaEnemigo f = new FichaEnemigo(name, type, alignment);
+
+		return "aceptar_ficha_enemigo";
 	}
 
 	public Hilo getHiloActual(String titulo) {
@@ -238,6 +320,18 @@ public class WebController {
 			index++;
 		}
 		return hiloActual;
+	}
+
+	public Partida getPartidaActual(String partida) {
+		Partida partidaActual = null;
+		int index = 0;
+		while (partidaActual == null) {
+			if (partidasPublicas.get(index).getTitulo().equals(partida)) {
+				partidaActual = partidasPublicas.get(index);
+			}
+			index++;
+		}
+		return partidaActual;
 	}
 
 }
