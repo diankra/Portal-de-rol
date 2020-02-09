@@ -1,16 +1,18 @@
 package es.urjc.code;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 
-@Entity
+
 public class FichaMundo extends Ficha{
 	
-	protected FichaMundo() {
-		
+	private String tipo;
+
+	
+	public FichaMundo(String n, String tipo, String descripcion) {
+		super(n, descripcion);
 	}
 	
-	public FichaMundo(String n, String d) {
-		super(n, d);
-	}
-
 }

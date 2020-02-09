@@ -1,0 +1,35 @@
+<html>
+<head>
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<h2>Aquí se crean y consultan fichas de personajes.</h2>
+	
+	<form method="post" action='/ficha_heroes/aceptar_ficha'>
+	<p>Nombre del personaje: </p>
+	<input type='text' name='name'/>
+	<br></br>
+	<p>Tipo de personaje: </p>
+	<label>	<input type='radio'  name='Jugador' value= "Jugador"/> Es un personaje de un jugador. </label>
+	<label>	<input type='radio'  name='Jugador' value= "No jugador"/> Es un personaje no jugador. </label>
+	<br></br>
+	<p>Clase del personaje: </p>
+	<label>	<input type='radio'  name='Clase' value= "Guerrero"/> Es un guerrero. </label>
+	<label>	<input type='radio'  name='Clase' value= "Mago"/> Es un mago. </label>
+	<label>	<input type='radio'  name='Clase' value= "Picaro"/> Es un pícaro. </label>
+	<br></br>
+ 	<p>Raza del personaje: </p>	
+	<label>	<input type='radio'  name='Raza' value= "Humano"/> Es un Humano. </label>
+	<label>	<input type='radio'  name='Raza' value= "Elfo"/> Es un Elfo. </label>
+	<label>	<input type='radio'  name='Raza' value= "Enano"/> Es un Enano. </label>
+	<br></br>
+ 	
+ 	<input type='submit' value='Enviar'>
+		
+</body>
+
+<br></br>
+<a href="/crear_ficha">Volver a fichas</a>
+<br></br>
+<a href="/">Volver al portal</a>
+</html>

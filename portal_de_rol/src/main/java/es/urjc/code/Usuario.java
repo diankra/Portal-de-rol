@@ -15,22 +15,18 @@ import javax.persistence.OneToMany;
 @Component
 @SessionScope
 
-@Entity
 public class Usuario {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String nombre;
 	private String correo;
 	private String password;
-	@OneToMany
+	private List<Partida> partidas = new ArrayList<Partida>();
 	private List<FichaJugador> fichas = new ArrayList<FichaJugador>();
-	
 
 	protected Usuario() {
-		
+
 	}
-	
+
 	public Usuario(String nombre, String correo, String password) {
 		super();
 		this.nombre = nombre;
@@ -69,6 +65,21 @@ public class Usuario {
 	public void setFichas(List<FichaJugador> fichas) {
 		this.fichas = fichas;
 	}
-	
-	
+
+	public List<Partida> getPartidas() {
+		return partidas;
+	}
+
+	public void setPartidas(List<Partida> partidas) {
+		this.partidas = partidas;
+	}
+
+	public void addPartida(Partida p) {
+		this.partidas.add(p);
+	}
+
+	public void addFicha(FichaJugador f) {
+		this.fichas.add(f);
+	}
+
 }

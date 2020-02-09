@@ -7,17 +7,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 
-@Entity
+
 public class Hilo {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+
+	private int id;
 	private String titulo;
+
 	private Usuario autor;
-	@OneToMany
+
 	private List<Mensaje> mensajes = new ArrayList<Mensaje>();
 	
 	protected Hilo() {

@@ -4,6 +4,17 @@
 </head>
 <body>
 	<h2>Estos son las partidas que buscáis</h2>	
+	
+	<ul>
+		{{#partidasPublicas}}
+			{{#.}}
+				<a href="/partidas_publicas/{{titulo}}">{{titulo}}</a>
+				<br></br>
+			{{/.}}
+		{{/partidasPublicas}}
+	</ul>
+	
+	
 </body>
 
 <a href="/">Volver</a>

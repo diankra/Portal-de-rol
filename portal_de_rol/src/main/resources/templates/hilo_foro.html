@@ -6,11 +6,12 @@
 	<h2>Estas en el hilo {{titulo}} de un foro</h2>	
 	<table>		
 		{{#mensajes}}
-		{{-index}}
-		{{.}}
-		<br></br>
-		<a href = "/foro/{{titulo}}/{{-index}}">Eliminar mensaje</a>
-		<br></br>
+			{{#.}}
+				<b>{{autor.nombre}}:</b>
+				<p>		{{texto}}</p>
+			{{/.}}
+			<a href = "/foro/{{titulo}}/{{-index}}">Eliminar mensaje</a>
+			<br></br>
 		{{/mensajes}}
 
 		

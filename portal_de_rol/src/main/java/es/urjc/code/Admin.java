@@ -2,7 +2,7 @@ package es.urjc.code;
 
 import javax.persistence.Entity;
 
-@Entity
+
 public class Admin extends Usuario{
 	
 	protected Admin() {

@@ -4,25 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-@Entity
+
 public class Partida extends Hilo{
 
+
+	private int id;
 	private Usuario master;
-	@ManyToMany
+	private boolean privada;
 	private List<Usuario> jugadores = new ArrayList<Usuario>();
-	@OneToMany
+
 	private List<FichaMundo> fichas = new ArrayList<FichaMundo>();
 	
 	protected Partida() {
 		
 	}
 	
-	public Partida(String titulo, Usuario master, Mensaje primerMensaje) {
+	public Partida(String titulo, boolean privada, Usuario master, Mensaje primerMensaje) {
 		super(titulo, master, primerMensaje);
 		this.master = master;
+		this.privada = privada;
 	}
 
 	public Usuario getMaster() {
@@ -47,6 +53,22 @@ public class Partida extends Hilo{
 
 	public void setFichas(List<FichaMundo> fichas) {
 		this.fichas = fichas;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public boolean isPrivada() {
+		return privada;
+	}
+
+	public void setPrivada(boolean privada) {
+		this.privada = privada;
 	}
 
 	public void addJugador(Usuario u) {
