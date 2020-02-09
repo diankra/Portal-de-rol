@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Component
@@ -23,19 +24,14 @@ public class Usuario {
 	private String nombre;
 	private String correo;
 	private String password;
+	private boolean isAdmin;
 	
 	@OneToMany(mappedBy="propietario")
 	private List<FichaJugador> fichas = new ArrayList<FichaJugador>();
 	@OneToMany(mappedBy="master")
 	private List<Partida> partidasMaster = new ArrayList<Partida>();
-
-	public List<Partida> getPartidasMaster() {
-		return partidasMaster;
-	}
-
-	public void setPartidasMaster(List<Partida> partidasMaster) {
-		this.partidasMaster = partidasMaster;
-	}
+	@ManyToMany(mappedBy="jugador")
+	private List<Partida> partidasJugador = new ArrayList<Partida>();
 
 	protected Usuario() {
 		
@@ -79,6 +75,23 @@ public class Usuario {
 	public void setFichas(List<FichaJugador> fichas) {
 		this.fichas = fichas;
 	}
+	
+	public List<Partida> getPartidasMaster() {
+		return partidasMaster;
+	}
+
+	public void setPartidasMaster(List<Partida> partidasMaster) {
+		this.partidasMaster = partidasMaster;
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
 	
 	
 }

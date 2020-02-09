@@ -19,6 +19,8 @@ public class BaseDatos implements CommandLineRunner{
 	private MensajeRepository mensajes;
 	@Autowired
 	private PartidaRepository partidas;
+	@Autowired 
+	private ForoRepository foro;
 	
 	
 	@Override

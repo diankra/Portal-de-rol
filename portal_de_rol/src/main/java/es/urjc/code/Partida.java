@@ -15,7 +15,7 @@ public class Partida extends Hilo{
 	private Usuario master;
 	@ManyToMany
 	private List<Usuario> jugadores = new ArrayList<Usuario>();
-	@OneToMany
+	@OneToMany(mappedBy = "partida")
 	private List<FichaMundo> fichas = new ArrayList<FichaMundo>();
 	
 	protected Partida() {
@@ -89,7 +89,7 @@ public class Partida extends Hilo{
 	public void eliminarFicha(FichaMundo f) {
 		for (FichaMundo ficha : this.fichas) {
 			if (ficha.equals(f)) {
-				jugadores.remove(ficha);
+				fichas.remove(ficha);
 				break;			
 			}
 		}

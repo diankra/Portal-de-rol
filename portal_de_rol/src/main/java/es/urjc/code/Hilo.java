@@ -17,7 +17,7 @@ public class Hilo {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String titulo;
 	private Usuario autor;
-	@OneToMany
+	@OneToMany(mappedBy = "hilo")
 	private List<Mensaje> mensajes = new ArrayList<Mensaje>();
 	
 	protected Hilo() {
