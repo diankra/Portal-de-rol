@@ -8,14 +8,16 @@ public class FichaMundo extends Ficha{
 	
 	@ManyToOne
 	private Partida partida;
+	private String tipo;
 	
 	protected FichaMundo() {
 		
 	}
 	
-	public FichaMundo(String n, String d, Partida p) {
+	public FichaMundo(String n, String d, Partida p, String t) {
 		super(n, d);
 		this.setPartida(p);
+		this.tipo = t;
 	}
 
 	public Partida getPartida() {
@@ -24,6 +26,14 @@ public class FichaMundo extends Ficha{
 
 	public void setPartida(Partida partida) {
 		this.partida = partida;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 }

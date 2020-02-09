@@ -9,12 +9,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Foro {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)	
+	private long id;
+	
+	@OneToOne(cascade=CascadeType.ALL)
 	private Usuario admin;
 	
 	@OneToMany(cascade=CascadeType.ALL)
@@ -26,10 +30,18 @@ public class Foro {
 		
 	}
 	
-	public Foro(Usuario admin) {
+	public Foro(String nombre, Usuario admin) {
 		this.admin = admin;
 	}
 
+	public long getId() {
+		return this.id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
 	public Usuario getAdmin() {
 		return admin;
 	}

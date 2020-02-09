@@ -11,6 +11,9 @@ public class Mensaje {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	
+	@ManyToOne
 	private Usuario autor;
 	private String texto;
 	@ManyToOne
@@ -24,6 +27,22 @@ public class Mensaje {
 		super();
 		this.autor = autor;
 		this.texto = texto;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Hilo getHilo() {
+		return hilo;
+	}
+
+	public void setHilo(Hilo hilo) {
+		this.hilo = hilo;
 	}
 
 	public Usuario getAutor() {

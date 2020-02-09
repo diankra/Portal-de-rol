@@ -9,6 +9,8 @@ import javax.persistence.Id;
 public class Ficha {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	
 	private String nombre;
 	private String descripcion;	
 	
@@ -19,6 +21,14 @@ public class Ficha {
 	public Ficha (String n, String d) {
 		this.nombre = n;
 		this.descripcion = d;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getNombre() {

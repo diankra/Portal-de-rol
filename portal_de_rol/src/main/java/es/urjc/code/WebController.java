@@ -27,6 +27,7 @@ public class WebController {
 	List<Hilo> hilos = new ArrayList<Hilo>();
 	List<Usuario> usuarios = new ArrayList<Usuario>(); // Sería más un set pero como va a ser en bd pues da igual
 	boolean empezado = false; // Otra ñapa, espero quitarla con la database
+
 	@Autowired
 	Usuario usuario;
 
@@ -47,7 +48,7 @@ public class WebController {
 		}
 
 		model.addAttribute("hilos", titulos);
-		// Fin de zona de datos a cholon numero 2
+		 //Fin de zona de datos a cholon numero 2 
 
 		return "foro_general";
 	}
@@ -102,7 +103,7 @@ public class WebController {
 		Hilo hiloActual = getHiloActual(hilo);
 		if (usuario == null) // Ñapa incoming. Programming the Spanish way
 			hiloActual.addMensaje(
-					new Mensaje(u1 /* lo pongo como ejemplo, mejorara al añadir la sesion */, mensajeEscrito));
+					new Mensaje(u1 /* lo pongo como ejemplo, mejorara al añadir la sesion*/ , mensajeEscrito));
 		else
 			hiloActual.addMensaje(new Mensaje(usuario, mensajeEscrito));
 		model.addAttribute("titulo", hilo);

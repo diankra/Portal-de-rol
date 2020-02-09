@@ -21,16 +21,23 @@ public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	
 	private String nombre;
 	private String correo;
 	private String password;
 	private boolean isAdmin;
 	
+	@OneToMany(mappedBy="autor")
+	private List<Mensaje> mensajes = new ArrayList<Mensaje>();
+	@OneToMany(mappedBy="autor")
+	private List<Hilo> hilos = new ArrayList<Hilo>();
+	
 	@OneToMany(mappedBy="propietario")
 	private List<FichaJugador> fichas = new ArrayList<FichaJugador>();
 	@OneToMany(mappedBy="master")
 	private List<Partida> partidasMaster = new ArrayList<Partida>();
-	@ManyToMany(mappedBy="jugador")
+	@ManyToMany(mappedBy="jugadores")
 	private List<Partida> partidasJugador = new ArrayList<Partida>();
 
 	protected Usuario() {
@@ -42,6 +49,14 @@ public class Usuario {
 		this.nombre = nombre;
 		this.correo = correo;
 		this.password = password;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getNombre() {
@@ -90,6 +105,30 @@ public class Usuario {
 
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+
+	public List<Mensaje> getMensajes() {
+		return mensajes;
+	}
+
+	public void setMensajes(List<Mensaje> mensajes) {
+		this.mensajes = mensajes;
+	}
+
+	public List<Hilo> getHilos() {
+		return hilos;
+	}
+
+	public void setHilos(List<Hilo> hilos) {
+		this.hilos = hilos;
+	}
+
+	public List<Partida> getPartidasJugador() {
+		return partidasJugador;
+	}
+
+	public void setPartidasJugador(List<Partida> partidasJugador) {
+		this.partidasJugador = partidasJugador;
 	}
 
 	
