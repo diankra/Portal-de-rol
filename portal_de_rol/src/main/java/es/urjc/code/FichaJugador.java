@@ -1,12 +1,14 @@
 package es.urjc.code;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 public class FichaJugador extends Ficha {
 
 //	La ficha jugador tiene el nombre, si es NPC o no definido con tipo, su clase y su raza.
 //	Por lo que necesitamos los parametros nombre, tipo, clase y raza definidos en ficha_heroes
 
+	@ManyToOne
 	private Usuario propietario;
 	private String name;
 	private boolean type;

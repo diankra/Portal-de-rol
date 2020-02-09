@@ -10,15 +10,18 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-
+	@Entity
 
 public class Hilo {
 
-
-	private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	
 	private String titulo;
-
+	@ManyToOne
 	private Usuario autor;
+	@OneToMany(mappedBy = "hilo")
 
 	private List<Mensaje> mensajes = new ArrayList<Mensaje>();
 	
@@ -31,6 +34,14 @@ public class Hilo {
 		this.titulo = titulo;
 		this.autor = autor;
 		this.mensajes.add(primerMensaje);
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getTitulo() {

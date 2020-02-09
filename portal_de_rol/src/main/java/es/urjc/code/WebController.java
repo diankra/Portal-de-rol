@@ -29,6 +29,7 @@ public class WebController {
 	List<Hilo> hilos = new ArrayList<Hilo>();
 	List<Usuario> usuarios = new ArrayList<Usuario>(); // Sería más un set pero como va a ser en bd pues da igual
 
+
 	@Autowired
 	Usuario usuario;
 
@@ -52,6 +53,7 @@ public class WebController {
 	public String foro(Model model) {
 
 		model.addAttribute("hilos", hilos);
+
 		return "foro_general";
 	}
 
@@ -101,7 +103,9 @@ public class WebController {
 		Hilo hiloActual = getHiloActual(hilo);
 		if (usuario == null) // Ñapa incoming. Programming the Spanish way
 			hiloActual.addMensaje(
+
 					new Mensaje(usuario /* lo pongo como ejemplo, mejorara al añadir la sesion */, mensajeEscrito));
+
 		else
 			hiloActual.addMensaje(new Mensaje(usuario, mensajeEscrito));
 		model.addAttribute("titulo", hilo);
@@ -207,14 +211,14 @@ public class WebController {
 			partida = new Partida(nombre, false, usuario, men);
 			partidasPublicas.add(partida);
 		}
-		usuario.addPartida(partida);
+		usuario.addPartidaJugador(partida);
 		String usuariosInvitados[] = invitados.split(", ");
 		for (String name : usuariosInvitados) { // Se comprueba si los usuarios introducidos son validos y se añaden si
 												// es el caso
 			for (Usuario user : usuarios) {
 				if (name.equals(user.getNombre())) {
 					partida.addJugador(user);
-					user.addPartida(partida);
+					user.addPartidaJugador(partida);
 				}
 			}
 			// LAS COMPROBACIONES SE HACEN CON LA BD YA EN FUNCIONAMIENTO

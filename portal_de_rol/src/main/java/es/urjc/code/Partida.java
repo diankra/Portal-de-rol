@@ -8,16 +8,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+	@Entity
 
 public class Partida extends Hilo{
 
+	@ManyToOne
 
-	private int id;
 	private Usuario master;
 	private boolean privada;
+	
+	@ManyToMany
 	private List<Usuario> jugadores = new ArrayList<Usuario>();
+
+
+	@OneToMany(mappedBy = "partida")
 
 	private List<FichaMundo> fichas = new ArrayList<FichaMundo>();
 	
@@ -53,14 +60,6 @@ public class Partida extends Hilo{
 
 	public void setFichas(List<FichaMundo> fichas) {
 		this.fichas = fichas;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public boolean isPrivada() {
@@ -109,7 +108,7 @@ public class Partida extends Hilo{
 	public void eliminarFicha(FichaMundo f) {
 		for (FichaMundo ficha : this.fichas) {
 			if (ficha.equals(f)) {
-				jugadores.remove(ficha);
+				fichas.remove(ficha);
 				break;			
 			}
 		}
