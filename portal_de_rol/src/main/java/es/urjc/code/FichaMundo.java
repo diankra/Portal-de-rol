@@ -8,12 +8,11 @@ import javax.persistence.Entity;
 
 public class FichaMundo extends Ficha{
 	
-	protected FichaMundo() {
-			
-	}
+	private String tipo;
+
 	
-	public FichaMundo(String n) {
-		super(n);
+	public FichaMundo(String n, String tipo, String descripcion) {
+		super(n, descripcion);
 	}
 	
 }

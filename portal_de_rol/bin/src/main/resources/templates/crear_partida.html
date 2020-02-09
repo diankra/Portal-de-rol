@@ -4,6 +4,15 @@
 </head>
 <body>
 	<h2>Aquí se crean partidas.</h2>	
+		<form method="post" action='/crear_partida/aceptar'>
+			<p>Nombre de la partida: </p>
+			<input type='text' name='nombre'/>
+			<label>	<input type='checkbox'  name='privada' value= "true"/> Es una partida privada. </label>
+			<p>Jugadores invitados: </p>
+			<textarea name='invitados' rows=5 cols=40>Escribe los nicks de los jugadores separados por comas</textarea> 
+			<p>Descripcion: </p>
+			<textarea name='descripcion' rows=10 cols=60></textarea> 
+ 			<input type='submit' value='Enviar'>
 </body>
 
 <a href="/">Volver</a>

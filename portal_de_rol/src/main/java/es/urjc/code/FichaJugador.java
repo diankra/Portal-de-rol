@@ -14,7 +14,7 @@ public class FichaJugador extends Ficha {
 	private String raza;
 
 	public FichaJugador(Usuario propietario, String name, boolean type, String clase, String raza) {
-		super(name);
+		super(name, "");
 		this.propietario = propietario;
 		this.name = name;
 		this.type = type;

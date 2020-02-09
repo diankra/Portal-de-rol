@@ -305,7 +305,7 @@ public class WebController {
 		// la ficha y guardar en la base de datos.
 //		ID del usuario, nombre del personaje, tipo del personaje pasado a boolean, clase del personaje y raza del personaje.
 
-		FichaEnemigo f = new FichaEnemigo(name, type, alignment);
+		FichaMundo f = new FichaMundo(name, "Enemigo", "Alineamiento: "+alignment+" Tipo de enemigo: "+type);
 
 		return "aceptar_ficha_enemigo";
 	}
