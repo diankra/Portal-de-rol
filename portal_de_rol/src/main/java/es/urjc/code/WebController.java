@@ -251,15 +251,17 @@ public class WebController {
 		return "partidas_privadas";
 	}
 
-	@GetMapping("partidas_privadas/{partidaPrivada}")
-	public String partidaPrivada(Model model, @PathVariable String partida) {
 
-		Partida partidaActual = getPartidaPrivadaActual(partida);
+	@GetMapping("partidas_privadas/{partidaPrivada}")
+	public String partidaPrivada(Model model, @PathVariable String partidaPrivada) {
+
+		Partida partidaActual = getPartidaPrivadaActual(partidaPrivada);
 
 		model.addAttribute("titulo", partidaActual.getTitulo());
 		model.addAttribute("mensajes", partidaActual.getMensajes());
 		return "partidaPrivada";
 	}
+		
 
 	@GetMapping("partidas_privadas/{titulo}/escribir_mensaje_partida_privada")
 	public String escribirMensajePartidaPrivada(Model model, @PathVariable String titulo) {
@@ -405,11 +407,11 @@ public class WebController {
 		int index = 0;
 		while (partidaActual == null) {
 			if (usuario.getPartidasJugador().get(index).getTitulo().equals(partida)) {
-				partidaActual = partidasPrivadas.get(index);
+				partidaActual = usuario.getPartidasJugador().get(index);
 			}
 			index++;
 		}
 		return partidaActual;
-	}
+	}	
 
 }
