@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 	
 	@Entity
 	@Component
@@ -23,9 +25,12 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
+	@NotNull
 	private String nombre;
 	private String correo;
+	@NotNull
 	private String password;
+	@NotNull
 	private boolean isAdmin;
 	
 	@OneToMany(mappedBy="autor")

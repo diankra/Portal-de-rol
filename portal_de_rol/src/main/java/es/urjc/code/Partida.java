@@ -10,25 +10,25 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 	@Entity
-
 public class Partida extends Hilo{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-		
+	
+	@NotNull	
 	@ManyToOne
 	private Usuario master;
+	@NotNull
 	private boolean privada;
 	
 	@ManyToMany
 	private List<Usuario> jugadores = new ArrayList<Usuario>();
 
-
 	@OneToMany(mappedBy = "partida")
-
 	private List<FichaMundo> fichas = new ArrayList<FichaMundo>();
 	
 	protected Partida() {

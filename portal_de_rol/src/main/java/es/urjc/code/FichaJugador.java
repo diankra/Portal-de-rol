@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 	@Entity
 
@@ -17,9 +18,12 @@ public class FichaJugador extends Ficha {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
+	@NotNull
 	@ManyToOne
 	private Usuario propietario;
+	@NotNull
 	private String name;
+	@NotNull
 	private boolean type;
 	private String clase;
 	private String raza;
