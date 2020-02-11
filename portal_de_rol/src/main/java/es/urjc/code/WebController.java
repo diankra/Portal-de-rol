@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class WebController {
 
+	@Autowired
+	private BaseDatos baseDatos;
 	// Estos son datos a cholon que se tienen que quitar, estan solo para el diseño
 
 	Usuario u1 = new Usuario("Bob", "bob@noimporta.com", "contraseña1");
@@ -26,7 +28,7 @@ public class WebController {
 
 	Hilo h1 = new Hilo("Ejemplo 1", u1, m1);
 	Hilo h2 = new Hilo("Ejemplo 2", u2, m2);
-	List<Hilo> hilos = new ArrayList<Hilo>();
+
 	List<Usuario> usuarios = new ArrayList<Usuario>(); // Sería más un set pero como va a ser en bd pues da igual
 
 
@@ -43,8 +45,15 @@ public class WebController {
 
 	@PostConstruct
 	public void init() {
-		hilos.add(h1);
-		hilos.add(h2);
+		u1 = baseDatos.saveUsuario(u1);
+		u2 = baseDatos.saveUsuario(u2);
+		h1 = baseDatos.saveHilo(h1);
+		h2 = baseDatos.saveHilo(h2);
+		//Para guardar en la bd
+		m1.setHilo(h1);
+		m2.setHilo(h2);
+		m1 = baseDatos.saveMensaje(m1);
+		m2 = baseDatos.saveMensaje(m2);
 		partidasPublicas.add(p1);
 		partidasPublicas.add(p2);
 	}
@@ -52,7 +61,7 @@ public class WebController {
 	@GetMapping("/foro")
 	public String foro(Model model) {
 
-		model.addAttribute("hilos", hilos);
+		model.addAttribute("hilos", baseDatos.getAllHilos());
 
 		return "foro_general";
 	}
@@ -67,25 +76,30 @@ public class WebController {
 	public String hiloCreado(Model model, @RequestParam String titulo, @RequestParam String mensajeEscrito) {
 		Hilo h;
 		Mensaje m;
-		if (usuario.getNombre() == null) { // PREGUNTAR AL PROFE QUE HACER CUANDO NO SE HA IDENTIFICADO NADIE
-			m = new Mensaje(usuario, mensajeEscrito);
-			h = new Hilo(titulo, usuario, m); // Esto es para probar y eso
+		Usuario userActual = baseDatos.findUsuario(usuario.getId());
+		if (userActual == null) { // Ñapa incoming. Programming the Spanish way
+			return "hilo_no_creado";
 		} else {
 			m = new Mensaje(usuario, mensajeEscrito);
 			h = new Hilo(titulo, usuario, m);
+			m.setAutor(usuario);
+			m.setHilo(h);
+			baseDatos.saveHilo(h);
+			baseDatos.saveMensaje(m);
 		}
 		// hilos.add(h); //no permitir hilos repetidos, para luego
 		return "hilo_creado";
 	}
 
 	@GetMapping("foro/{hilo}")
-	public String hilo(Model model, @PathVariable String hilo) {
+	public String hilo(Model model, @PathVariable long hilo) {
 
 		// Espero que esto no haya que cambiarlo mucho con la database pero quien sabe
 
-		Hilo hiloActual = getHiloActual(hilo);
+		Hilo hiloActual = baseDatos.getHilo(hilo);
 
 		model.addAttribute("titulo", hiloActual.getTitulo());
+		
 		model.addAttribute("mensajes", hiloActual.getMensajes());
 		return "hilo_foro";
 	}
@@ -178,7 +192,7 @@ public class WebController {
 	public String aceptarUsuario(Model model, @RequestParam String user, @RequestParam String mail,
 			@RequestParam String password) {
 
-		usuario = new Usuario(user, mail, password);
+		usuario = baseDatos.saveUsuario(new Usuario(user, mail, password));
 		/*
 		 * if (!usuarios.contains(usuario)) { usuarios.add(usuario); }
 		 */
@@ -315,15 +329,16 @@ public class WebController {
 	}
 
 	public Hilo getHiloActual(String titulo) {
-		Hilo hiloActual = null;
-		int index = 0;
-		while (hiloActual == null) {
-			if (hilos.get(index).getTitulo().equals(titulo)) {
-				hiloActual = hilos.get(index);
-			}
-			index++;
-		}
-		return hiloActual;
+//		Hilo hiloActual = null;
+//		int index = 0;
+//		while (hiloActual == null) {
+//			if (hilos.get(index).getTitulo().equals(titulo)) {
+//				hiloActual = hilos.get(index);
+//			}
+//			index++;
+//		}
+//		return hiloActual;
+		return null;
 	}
 
 	public Partida getPartidaActual(String partida) {
