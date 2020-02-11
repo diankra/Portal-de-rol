@@ -11,6 +11,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 
+
 public class Partida extends Hilo{
 
 
