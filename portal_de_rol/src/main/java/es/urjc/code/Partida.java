@@ -15,10 +15,6 @@ import javax.persistence.OneToMany;
 
 public class Partida extends Hilo{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-		
 	@ManyToOne
 	private Usuario master;
 	private boolean privada;

@@ -3,16 +3,16 @@
 	<meta charset="UTF-8"/>
 </head>
 <body>
-	<h2>Estas en el hilo {{titulo}} de un foro y vas a escribir un mensaje</h2>	
+	<h2>Estas en el hilo {{hilo.titulo}} de un foro y vas a escribir un mensaje</h2>	
 	
-	<form method="post" action='/foro/{{titulo}}/escribir_mensaje/aceptar'>
+	<form method="post" action='/foro/{{hilo.id}}/escribir_mensaje/aceptar'>
 	<p>Escribe tu mensaje:</p>
 	<textarea name='mensajeEscrito' rows=5 cols=40>Texto</textarea> 
  	<input type='submit' value='Enviar'>
 </form>
 	
 
-<a href="/foro/{{titulo}}">Volver</a>
+<a href="/foro/{{hilo.id}}">Volver</a>
 </body>
 
 

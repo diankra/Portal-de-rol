@@ -68,6 +68,10 @@ public class Hilo {
 		this.mensajes = mensajes;
 	}
 	
+	public void removeMensaje(int index) {
+		this.mensajes.remove(index);
+	}
+	
 	public void addMensaje(Mensaje mensaje) {
 		this.mensajes.add(mensaje);
 	}

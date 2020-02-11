@@ -29,8 +29,12 @@ public class BaseDatos implements CommandLineRunner{
 		return usuarios.save(u);
 	}
 	
-	public Usuario findUsuario(long id) {
-		return usuarios.findUsuarioById(id);
+	public Usuario findUsuario(String nombre) {
+		return usuarios.findUsuarioByNombre(nombre);
+	}
+	
+	public Usuario findUsuarioByCorreo(String mail) {
+		return usuarios.findUsuarioByCorreo(mail);
 	}
 	public Hilo saveHilo(Hilo h) {
 		return hilos.save(h);
@@ -45,6 +49,23 @@ public class BaseDatos implements CommandLineRunner{
 	
 	public Hilo getHilo(long id) {
 		return hilos.findHiloById(id);
+	}
+	
+	public void removeMensaje(Mensaje m) {
+		mensajes.delete(m);
+	}
+	
+	public Partida savePartida(Partida p) {
+		return partidas.save(p);
+	}
+	
+	public List<Partida> getPartidasPublicas() {
+		return partidas.findPartidasByPrivada(false);
+	}
+	
+	public Partida getPartida(long id)
+	{
+		return partidas.findPartidaById(id);
 	}
 	@Override
 	public void run(String... args) throws Exception {
