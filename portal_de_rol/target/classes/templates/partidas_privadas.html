@@ -3,7 +3,18 @@
 	<meta charset="UTF-8"/>
 </head>
 <body>
-	<h2>Aquí se juegan partidas privadas.</h2>	
+	<h2>Estas son las partidas que buscáis</h2>	
+	
+	<ul>
+		{{#partidasPrivadas}}
+			{{#.}}
+				<a href="/partidas_privadas/{{titulo}}">{{titulo}}</a>
+				<br></br>
+			{{/.}}
+		{{/partidasPrivadas}}
+	</ul>
+	
+	
 </body>
 
 <a href="/">Volver</a>

@@ -35,7 +35,10 @@ public class WebController {
 
 	List<Partida> partidasPublicas = new ArrayList<Partida>(); // ESTARIA BIEN GUARDAR LAS PARTIDAS PUBLICAS EN UN REPO
 																// APARTE
-
+	List<Partida> partidasPrivadas = new ArrayList<Partida>();
+	
+	
+	
 	Partida p1 = new Partida("p1", false, u1, m1);
 	Partida p2 = new Partida("p2", false, u2, m2);
 
@@ -226,11 +229,70 @@ public class WebController {
 		return "aceptar_nueva_partida";
 	}
 
+//	@GetMapping("/partidas_privadas")
+//	public String partidas_privadas(Model model) {
+//		
+//		model.addAttribute("partidasPrivadas", partidasPrivadas);
+//		
+//		return "partidas_privadas";
+//	}
+	
+	
+	
+//	
+	
+	
+	
 	@GetMapping("/partidas_privadas")
 	public String partidas_privadas(Model model) {
 
+		model.addAttribute("partidasPrivadas", usuario.getPartidasJugador());
+
 		return "partidas_privadas";
 	}
+
+	@GetMapping("partidas_privadas/{partidaPrivada}")
+	public String partidaPrivada(Model model, @PathVariable String partida) {
+
+		Partida partidaActual = getPartidaPrivadaActual(partida);
+
+		model.addAttribute("titulo", partidaActual.getTitulo());
+		model.addAttribute("mensajes", partidaActual.getMensajes());
+		return "partidaPrivada";
+	}
+
+	@GetMapping("partidas_privadas/{titulo}/escribir_mensaje_partida_privada")
+	public String escribirMensajePartidaPrivada(Model model, @PathVariable String titulo) {
+
+		model.addAttribute("titulo", titulo);
+		return "escribir_mensaje_partida_privada";
+	}
+
+	@PostMapping("partidas_privadas/{titulo}/escribir_mensaje_partida_privada/aceptar")
+	public String aceptarMensajePartidaPrivada(Model model, @PathVariable String titulo, @RequestParam String mensajeEscrito) {
+
+		Partida partidaActual = getPartidaPrivadaActual(titulo);
+		if (usuario == null) // Ñapa incoming. Programming the Spanish way
+			partidaActual.addMensaje(
+					new Mensaje(usuario /* lo pongo como ejemplo, mejorara al añadir la sesion */, mensajeEscrito));
+		else
+			partidaActual.addMensaje(new Mensaje(usuario, mensajeEscrito));
+		model.addAttribute("titulo", titulo);
+		return "mensaje_escrito_partida_privada";
+	}
+
+	@GetMapping("partidas_privadas/{titulo}/{index}")
+	public String eliminarMensajePartidaPrivada(Model model, @PathVariable String titulo, @PathVariable int index) {
+		Partida actual = getPartidaPrivadaActual(titulo);
+		actual.getMensajes().remove(index - 1);
+
+		model.addAttribute("titulo", titulo);
+		return "mensaje_eliminado_partida_privada";
+	}
+	
+	
+	
+//	
 
 	@GetMapping("/crear_ficha")
 	public String fichas(Model model) {
@@ -332,6 +394,18 @@ public class WebController {
 		while (partidaActual == null) {
 			if (partidasPublicas.get(index).getTitulo().equals(partida)) {
 				partidaActual = partidasPublicas.get(index);
+			}
+			index++;
+		}
+		return partidaActual;
+	}
+	
+	public Partida getPartidaPrivadaActual(String partida) {
+		Partida partidaActual = null;
+		int index = 0;
+		while (partidaActual == null) {
+			if (usuario.getPartidasJugador().get(index).getTitulo().equals(partida)) {
+				partidaActual = partidasPrivadas.get(index);
 			}
 			index++;
 		}
