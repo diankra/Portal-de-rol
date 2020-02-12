@@ -23,6 +23,7 @@ public class Ficha {
 		
 	}
 	
+	
 	public Ficha (String n, String d) {
 		this.nombre = n;		
 	}

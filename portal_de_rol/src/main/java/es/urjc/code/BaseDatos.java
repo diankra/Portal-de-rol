@@ -12,9 +12,9 @@ public class BaseDatos implements CommandLineRunner{
 	@Autowired
 	private UsuarioRepository usuarios;
 	@Autowired
-	private FichaMundoRepository fichasmundo;
+	private FichaMundoRepository fichasMundo;
 	@Autowired
-	private FichaJugadorRepository fichasjugador;
+	private FichaJugadorRepository fichasJugador;
 	@Autowired
 	private HiloRepository hilos;
 	@Autowired
@@ -66,6 +66,17 @@ public class BaseDatos implements CommandLineRunner{
 	public Partida getPartida(long id)
 	{
 		return partidas.findPartidaById(id);
+	}
+	
+	public FichaJugador saveFichaJugador(FichaJugador f) {
+		return fichasJugador.save(f);
+	}
+	
+	public FichaJugador findFichaJugador(long id) {
+		return fichasJugador.findFichaById(id);
+	}
+	public FichaMundo saveFichaMundo(FichaMundo f) {
+		return fichasMundo.save(f);
 	}
 	@Override
 	public void run(String... args) throws Exception {

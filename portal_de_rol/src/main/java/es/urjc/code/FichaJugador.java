@@ -19,6 +19,8 @@ public class FichaJugador extends Ficha {
 	private boolean jugable;
 	private String clase;
 	private String raza;
+	
+	protected FichaJugador() {}
 
 	public FichaJugador(Usuario propietario, String name, boolean jugable, String clase, String raza) {
 		super(name, "");

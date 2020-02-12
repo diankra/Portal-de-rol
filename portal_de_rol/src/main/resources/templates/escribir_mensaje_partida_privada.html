@@ -10,10 +10,18 @@
 		action='/partidas_privadas/{{titulo}}/escribir_mensaje_partida_privada/aceptar'>
 		<p>Escribe tu mensaje:</p>
 		<textarea name='mensajeEscrito' rows=5 cols=40>Texto</textarea>
+		<p>Selecciona tu personaje</p>
+		{{#fichas}}
+			{{#.}}
+			<label>	<input type='radio'  name='idFicha' value= '{{id}}'/> {{nombre}} </label>
+			<br></br>
+			{{/.}}
+		{{/fichas}}
 		<input type='submit' value='Enviar'>
 	</form>
 
 
+	
 	<a href="/partidas_privadas/{{titulo}}">Volver</a>
 </body>
 

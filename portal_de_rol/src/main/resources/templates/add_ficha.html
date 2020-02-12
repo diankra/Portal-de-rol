@@ -1,0 +1,26 @@
+<html>
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+	<h2>Añade tu ficha</h2>
+
+	<form method="post"
+		action='/partidas_privadas/{{titulo}}/add_ficha/aceptar'>
+		<p>Selecciona tu personaje</p>
+		{{#fichas}}
+			{{#.}}
+			<label>	<input type='checkbox'  name='ficha' value= '{{id}}'/> {{nombre}} </label>
+			<br></br>
+			{{/.}}
+		{{/fichas}}
+		<input type='submit' value='Enviar'>
+	</form>
+
+
+	
+	<a href="/partidas_privadas/{{id}}">Volver</a>
+</body>
+
+
+</html>

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -31,6 +32,8 @@ public class WebController {
 	Hilo h1 = new Hilo("Ejemplo 1", u1, m1);
 	Hilo h2 = new Hilo("Ejemplo 2", u2, m2);
 
+	FichaJugador f1 = new FichaJugador(u1, "Dave el Bárbaro", true, "Guerrero", "Humano");
+	FichaJugador f2 = new FichaJugador(u1, "Conan el Bárbaro", true, "Guerrero", "Humano");
 	@Autowired
 	Usuario usuario;
 
@@ -58,15 +61,21 @@ public class WebController {
 		m2.setHilo(h2);
 		m3.setHilo(p1);
 		m4.setHilo(p2);
+		f1 = baseDatos.saveFichaJugador(f1);
+		u1.addFicha(f1);
+		f2 = baseDatos.saveFichaJugador(f2);
+		u1.addFicha(f2);
 		u1.addPartidaJugador(p1);
 		u1.addPartidaJugador(p2);
 		u2.addPartidaJugador(p1);
 		u2.addPartidaJugador(p2);
+		
 		m1 = baseDatos.saveMensaje(m1);
 		m2 = baseDatos.saveMensaje(m2);
 		m3 = baseDatos.saveMensaje(m3);
 		m4 = baseDatos.saveMensaje(m4);
 
+		usuario = u1; //ESTO ES PARA ACELERAR LAS PRUEBAS
 	}
 
 	@GetMapping("/foro")
@@ -325,13 +334,19 @@ public class WebController {
 	@GetMapping("partidas_privadas/{id}/escribir_mensaje_partida_privada")
 	public String escribirMensajePartidaPrivada(Model model, @PathVariable long id) {
 
+		model.addAttribute("fichas", usuario.getFichas());
 		model.addAttribute("titulo", id);
 		return "escribir_mensaje_partida_privada";
 	}
 
 	@PostMapping("partidas_privadas/{titulo}/escribir_mensaje_partida_privada/aceptar")
-	public String aceptarMensajePartidaPrivada(Model model, @PathVariable long titulo, @RequestParam String mensajeEscrito) {
+	public String aceptarMensajePartidaPrivada(Model model, @PathVariable long titulo, @RequestParam String mensajeEscrito, @RequestParam(required = false) String idFicha) {
 
+		Ficha fichaActual = baseDatos.findFichaJugador(Integer.parseInt(idFicha));
+		String inicio = "";
+		if(fichaActual != null) {
+			inicio = fichaActual.getNombre();
+		}
 		Partida partidaActual = baseDatos.getPartida(titulo);
 		Usuario userActual = baseDatos.findUsuario(usuario.getNombre());
 		String respuesta = "";
@@ -339,7 +354,7 @@ public class WebController {
 			respuesta = "No se ha escrito el mensaje. Usuario inválido";
 		}else {
 			respuesta = "Mensaje escrito para la partida "+partidaActual.getTitulo();
-			Mensaje m = new Mensaje(usuario, mensajeEscrito);
+			Mensaje m = new Mensaje(usuario, inicio+mensajeEscrito);
 			partidaActual.addMensaje(m);
 			m.setHilo(partidaActual);
 
@@ -348,6 +363,21 @@ public class WebController {
 		model.addAttribute("cadena", respuesta);
 		model.addAttribute("titulo", titulo);
 		return "mensaje_escrito_partida_privada";
+	}
+	
+	@RequestMapping("partidas_privadas/{id}/add_ficha")
+	public String addFichaMundo(Model model, @PathVariable long id) {
+		
+		model.addAttribute("fichas", usuario.getFichas());
+		model.addAttribute("id", id);
+		return "add_ficha";
+	}
+	
+	@PostMapping("partidas_privadas/{id}/add_ficha/aceptar")
+	public String aceptarFichaMundo(Model model, @PathVariable long id, @RequestParam List<String> idFicha) {
+		
+		//HAY QUE PROGRAMARLO PERO NO PUEDO MAS
+			return "";
 	}
 
 	@GetMapping("partidas_privadas/{id}/{index}")
@@ -424,7 +454,12 @@ public class WebController {
 		}
 
 		FichaJugador f = new FichaJugador(usuario, name, type, Clase, Raza);
-
+		f = baseDatos.saveFichaJugador(f);
+		if(baseDatos.findUsuario(usuario.getNombre()) != null)
+		{
+			usuario.addFicha(f);
+		}
+		
 		return "aceptar_ficha";
 	}
 
@@ -432,34 +467,17 @@ public class WebController {
 	public String aceptarFicha(Model model, @RequestParam String name, @RequestParam String type,
 			@RequestParam String alignment) {
 
-//		Los siguientes parametros son para mandarlos por moustache y mandarlos por pantalla.
-//		Seran el nombre del personaje, el tipo, clase y raza.
-
-		model.addAttribute("name", name);
-		model.addAttribute("type", type);
-		model.addAttribute("alignment", alignment);
-
 		// Los anteriores parametros y el ID del usuario seran los necesarios para crear
 		// la ficha y guardar en la base de datos.
 //		ID del usuario, nombre del personaje, tipo del personaje pasado a boolean, clase del personaje y raza del personaje.
 
 		FichaMundo f = new FichaMundo(name, "Enemigo", "Alineamiento: " + alignment + " Tipo de enemigo: " + type);
-
-		return "aceptar_ficha_enemigo";
+		f = baseDatos.saveFichaMundo(f);
+		model.addAttribute("ficha", f);
+		return "aceptar_ficha_mundo";
 	}
 
 
-	
-	public Partida getPartidaPrivadaActual(String partida) {
-		Partida partidaActual = null;
-		int index = 0;
-		while (partidaActual == null) {
-			if (usuario.getPartidasJugador().get(index).getTitulo().equals(partida)) {
-				partidaActual = usuario.getPartidasJugador().get(index);
-			}
-			index++;
-		}
-		return partidaActual;
-	}	
+
 
 }
