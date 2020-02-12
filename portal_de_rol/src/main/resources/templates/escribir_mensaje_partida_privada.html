@@ -1,0 +1,21 @@
+<html>
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+	<h2>Estas en la partida {{titulo}} de un foro y vas a escribir un
+		mensaje</h2>
+
+	<form method="post"
+		action='/partidas_privadas/{{titulo}}/escribir_mensaje_partida_privada/aceptar'>
+		<p>Escribe tu mensaje:</p>
+		<textarea name='mensajeEscrito' rows=5 cols=40>Texto</textarea>
+		<input type='submit' value='Enviar'>
+	</form>
+
+
+	<a href="/partidas_privadas/{{titulo}}">Volver</a>
+</body>
+
+
+</html>
