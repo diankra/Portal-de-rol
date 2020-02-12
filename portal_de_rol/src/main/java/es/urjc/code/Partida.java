@@ -15,11 +15,6 @@ import javax.validation.constraints.NotNull;
 	@Entity
 public class Partida extends Hilo{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-	
-	@NotNull	
 	@ManyToOne
 	private Usuario master;
 	@NotNull

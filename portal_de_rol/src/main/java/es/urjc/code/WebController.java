@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class WebController {
 
+	@Autowired
+	private BaseDatos baseDatos;
 	// Estos son datos a cholon que se tienen que quitar, estan solo para el diseño
 
 	Usuario u1 = new Usuario("Bob", "bob@noimporta.com", "contraseña1");
@@ -24,35 +26,45 @@ public class WebController {
 	Usuario u2 = new Usuario("Alice", "alice@noimporta.com", "contraseña2");
 	Mensaje m2 = new Mensaje(u2, "Mensaje de ejemplo 2");
 
+	Mensaje m3 = new Mensaje(u1, "Esto es una nueva partida publica");
+	Mensaje m4 = new Mensaje(u2, "Esto es una partida privada");
 	Hilo h1 = new Hilo("Ejemplo 1", u1, m1);
 	Hilo h2 = new Hilo("Ejemplo 2", u2, m2);
-	List<Hilo> hilos = new ArrayList<Hilo>();
-	List<Usuario> usuarios = new ArrayList<Usuario>(); // Sería más un set pero como va a ser en bd pues da igual
-
 
 	@Autowired
 	Usuario usuario;
 
-	List<Partida> partidasPublicas = new ArrayList<Partida>(); // ESTARIA BIEN GUARDAR LAS PARTIDAS PUBLICAS EN UN REPO
-																// APARTE
+	List<Partida> partidasPublicas = new ArrayList<Partida>(); 
 
-	Partida p1 = new Partida("p1", false, u1, m1);
-	Partida p2 = new Partida("p2", false, u2, m2);
+	Partida p1 = new Partida("p1", false, u1, m3);
+	Partida p2 = new Partida("p2", true, u2, m4);
 
 	// Hasta aqui zona de datos a cholon
 
 	@PostConstruct
 	public void init() {
-		hilos.add(h1);
-		hilos.add(h2);
-		partidasPublicas.add(p1);
-		partidasPublicas.add(p2);
+		u1 = baseDatos.saveUsuario(u1);
+		u2 = baseDatos.saveUsuario(u2);
+		h1 = baseDatos.saveHilo(h1);
+		h2 = baseDatos.saveHilo(h2);
+		p1 = baseDatos.savePartida(p1);
+		p2 = baseDatos.savePartida(p2);
+		// Para guardar en la bd
+		m1.setHilo(h1);
+		m2.setHilo(h2);
+		m3.setHilo(p1);
+		m4.setHilo(p2);
+		m1 = baseDatos.saveMensaje(m1);
+		m2 = baseDatos.saveMensaje(m2);
+		m3 = baseDatos.saveMensaje(m3);
+		m4 = baseDatos.saveMensaje(m4);
+
 	}
 
 	@GetMapping("/foro")
 	public String foro(Model model) {
 
-		model.addAttribute("hilos", hilos);
+		model.addAttribute("hilos", baseDatos.getAllHilos());
 
 		return "foro_general";
 	}
@@ -67,95 +79,118 @@ public class WebController {
 	public String hiloCreado(Model model, @RequestParam String titulo, @RequestParam String mensajeEscrito) {
 		Hilo h;
 		Mensaje m;
-		if (usuario.getNombre() == null) { // PREGUNTAR AL PROFE QUE HACER CUANDO NO SE HA IDENTIFICADO NADIE
-			m = new Mensaje(usuario, mensajeEscrito);
-			h = new Hilo(titulo, usuario, m); // Esto es para probar y eso
+		Usuario userActual = baseDatos.findUsuario(usuario.getNombre());
+		if (userActual == null) { // Ñapa incoming. Programming the Spanish way
+			return "hilo_no_creado";
 		} else {
 			m = new Mensaje(usuario, mensajeEscrito);
 			h = new Hilo(titulo, usuario, m);
+			m.setAutor(usuario);
+			m.setHilo(h);
+			baseDatos.saveHilo(h);
+			baseDatos.saveMensaje(m);
 		}
 		// hilos.add(h); //no permitir hilos repetidos, para luego
 		return "hilo_creado";
 	}
 
 	@GetMapping("foro/{hilo}")
-	public String hilo(Model model, @PathVariable String hilo) {
+	public String hilo(Model model, @PathVariable long hilo) {
 
 		// Espero que esto no haya que cambiarlo mucho con la database pero quien sabe
 
-		Hilo hiloActual = getHiloActual(hilo);
+		Hilo hiloActual = baseDatos.getHilo(hilo);
 
-		model.addAttribute("titulo", hiloActual.getTitulo());
+		model.addAttribute("hilo", hiloActual);
+
 		model.addAttribute("mensajes", hiloActual.getMensajes());
 		return "hilo_foro";
 	}
 
 	@GetMapping("foro/{hilo}/escribir_mensaje")
-	public String escribirMensaje(Model model, @PathVariable String hilo) {
+	public String escribirMensaje(Model model, @PathVariable long hilo) {
+		Hilo hiloActual = baseDatos.getHilo(hilo);
 
-		model.addAttribute("titulo", hilo);
+		model.addAttribute("hilo", hiloActual);
 		return "escribir_mensaje";
 	}
 
 	@PostMapping("foro/{hilo}/escribir_mensaje/aceptar")
-	public String aceptarMensaje(Model model, @PathVariable String hilo, @RequestParam String mensajeEscrito) {
+	public String aceptarMensaje(Model model, @PathVariable long hilo, @RequestParam String mensajeEscrito) {
 
-		Hilo hiloActual = getHiloActual(hilo);
-		if (usuario == null) // Ñapa incoming. Programming the Spanish way
-			hiloActual.addMensaje(
+		Hilo hiloActual = baseDatos.getHilo(hilo);
+		Usuario userActual = baseDatos.findUsuario(usuario.getNombre());
+		if (userActual == null) { // Si el usuario actual no está en la BD es que no está registrado
+			model.addAttribute("hilo", hiloActual);
+			return "mensaje_error";
 
-					new Mensaje(usuario /* lo pongo como ejemplo, mejorara al añadir la sesion */, mensajeEscrito));
+		} else {
+			Mensaje m = new Mensaje(usuario, mensajeEscrito);
+			m.setHilo(hiloActual);
+			hiloActual.addMensaje(m);
 
-		else
-			hiloActual.addMensaje(new Mensaje(usuario, mensajeEscrito));
-		model.addAttribute("titulo", hilo);
-		return "mensaje_escrito";
+			baseDatos.saveMensaje(m);
+
+			model.addAttribute("hilo", hiloActual);
+			return "mensaje_escrito";
+		}
 	}
 
 	@GetMapping("foro/{hilo}/{index}")
-	public String eliminarMensaje(Model model, @PathVariable String hilo, @PathVariable int index) {
-		Hilo actual = getHiloActual(hilo);
-		actual.getMensajes().remove(index - 1);
+	public String eliminarMensaje(Model model, @PathVariable long hilo, @PathVariable int index) {
+		Hilo actual = baseDatos.getHilo(hilo);
+		Mensaje m = actual.getMensajes().get(index - 1);
+		actual.removeMensaje(index - 1);
 
-		model.addAttribute("titulo", hilo);
+		baseDatos.removeMensaje(m);
+
+		model.addAttribute("hilo", actual.getId());
 		return "mensaje_eliminado";
 	}
 
 	@GetMapping("/partidas_publicas")
 	public String partidas(Model model) {
 
-		model.addAttribute("partidasPublicas", partidasPublicas);
+		model.addAttribute("partidasPublicas", baseDatos.getPartidasPublicas());
 
 		return "partidas_publicas";
 	}
 
 	@GetMapping("partidas_publicas/{partida}")
-	public String partida(Model model, @PathVariable String partida) {
+	public String partida(Model model, @PathVariable long partida) {
 
-		Partida partidaActual = getPartidaActual(partida);
+		Partida partidaActual = baseDatos.getPartida(partida);
 
-		model.addAttribute("titulo", partidaActual.getTitulo());
+		model.addAttribute("titulo", partidaActual.getId());
 		model.addAttribute("mensajes", partidaActual.getMensajes());
 		return "partida";
 	}
 
-	@GetMapping("partidas_publicas/{titulo}/escribir_mensaje_partida")
-	public String escribirMensajePartida(Model model, @PathVariable String titulo) {
+	@GetMapping("partidas_publicas/{partida}/escribir_mensaje_partida")
+	public String escribirMensajePartida(Model model, @PathVariable long partida) {
 
-		model.addAttribute("titulo", titulo);
+		model.addAttribute("titulo", partida);
 		return "escribir_mensaje_partida";
 	}
 
-	@PostMapping("partidas_publicas/{titulo}/escribir_mensaje_partida/aceptar")
-	public String aceptarMensajePartida(Model model, @PathVariable String titulo, @RequestParam String mensajeEscrito) {
+	@PostMapping("partidas_publicas/{partida}/escribir_mensaje_partida/aceptar")
+	public String aceptarMensajePartida(Model model, @PathVariable long partida, @RequestParam String mensajeEscrito) {
 
-		Partida partidaActual = getPartidaActual(titulo);
-		if (usuario == null) // Ñapa incoming. Programming the Spanish way
-			partidaActual.addMensaje(
-					new Mensaje(usuario /* lo pongo como ejemplo, mejorara al añadir la sesion */, mensajeEscrito));
-		else
-			partidaActual.addMensaje(new Mensaje(usuario, mensajeEscrito));
-		model.addAttribute("titulo", titulo);
+		Partida partidaActual = baseDatos.getPartida(partida);
+		Usuario usuarioActual = baseDatos.findUsuario(usuario.getNombre());
+		String respuesta = "";
+		if (usuarioActual == null) {
+			respuesta = "Usuario no identificado";
+		}else {
+			respuesta = "Mensaje escrito para la partida "+partidaActual.getTitulo();
+			Mensaje m = new Mensaje(usuario, mensajeEscrito);
+			m.setHilo(partidaActual);
+
+			partidaActual.addMensaje(m);
+			baseDatos.saveMensaje(m);
+		}
+		model.addAttribute("cadena", respuesta);
+		model.addAttribute("titulo", partida);
 		return "mensaje_escrito_partida";
 	}
 
@@ -178,11 +213,20 @@ public class WebController {
 	public String aceptarUsuario(Model model, @RequestParam String user, @RequestParam String mail,
 			@RequestParam String password) {
 
-		usuario = new Usuario(user, mail, password);
-		/*
-		 * if (!usuarios.contains(usuario)) { usuarios.add(usuario); }
-		 */
-		return "aceptar_usuario";
+		String respuesta = "";
+		Usuario uActualNombre = baseDatos.findUsuario(user);
+		Usuario uActualMail = baseDatos.findUsuarioByCorreo(mail);
+		if (uActualNombre != null) {
+			respuesta = "Usuario no válido. Nombre repetido";
+		}else if(uActualMail != null) {
+			respuesta = "Usuario no válido. Correo electrónico repetido";
+		}else {
+			respuesta = "Usuario aceptado";
+			usuario = baseDatos.saveUsuario(new Usuario(user, mail, password));
+		}
+			model.addAttribute("cadena", respuesta);
+			return "aceptar_usuario";
+		
 	}
 
 	@GetMapping("/inicia_sesion")
@@ -191,6 +235,22 @@ public class WebController {
 		return "inicia_sesion";
 	}
 
+	@PostMapping("/inicia_sesion/aceptar")
+	public String aceptarSesion(Model model, @RequestParam String user, @RequestParam String password) {
+		Usuario uActual = baseDatos.findUsuario(user);
+		String respuesta = "";
+		if(uActual == null) {
+			respuesta = "El nombre de usuario no existe";
+		}else if(!password.equals(uActual.getPassword()))
+		{
+			respuesta = "Contraseña incorrecta";
+		}else {
+			respuesta = "Bienvenido, "+user;
+			usuario = uActual;
+		}
+		model.addAttribute("cadena", respuesta);
+		return "aceptar_usuario";
+	}
 	@GetMapping("/crear_partida")
 	public String crear_partida(Model model) {
 
@@ -215,12 +275,12 @@ public class WebController {
 		String usuariosInvitados[] = invitados.split(", ");
 		for (String name : usuariosInvitados) { // Se comprueba si los usuarios introducidos son validos y se añaden si
 												// es el caso
-			for (Usuario user : usuarios) {
-				if (name.equals(user.getNombre())) {
-					partida.addJugador(user);
-					user.addPartidaJugador(partida);
-				}
-			}
+//			for (Usuario user : usuarios) {
+//				if (name.equals(user.getNombre())) {
+//					partida.addJugador(user);
+//					user.addPartidaJugador(partida);
+//				}
+//			}
 			// LAS COMPROBACIONES SE HACEN CON LA BD YA EN FUNCIONAMIENTO
 		}
 		return "aceptar_nueva_partida";
@@ -309,21 +369,22 @@ public class WebController {
 		// la ficha y guardar en la base de datos.
 //		ID del usuario, nombre del personaje, tipo del personaje pasado a boolean, clase del personaje y raza del personaje.
 
-		FichaMundo f = new FichaMundo(name, "Enemigo", "Alineamiento: "+alignment+" Tipo de enemigo: "+type);
+		FichaMundo f = new FichaMundo(name, "Enemigo", "Alineamiento: " + alignment + " Tipo de enemigo: " + type);
 
 		return "aceptar_ficha_enemigo";
 	}
 
 	public Hilo getHiloActual(String titulo) {
-		Hilo hiloActual = null;
-		int index = 0;
-		while (hiloActual == null) {
-			if (hilos.get(index).getTitulo().equals(titulo)) {
-				hiloActual = hilos.get(index);
-			}
-			index++;
-		}
-		return hiloActual;
+//		Hilo hiloActual = null;
+//		int index = 0;
+//		while (hiloActual == null) {
+//			if (hilos.get(index).getTitulo().equals(titulo)) {
+//				hiloActual = hilos.get(index);
+//			}
+//			index++;
+//		}
+//		return hiloActual;
+		return null;
 	}
 
 	public Partida getPartidaActual(String partida) {

@@ -3,21 +3,21 @@
 	<meta charset="UTF-8"/>
 </head>
 <body>
-	<h2>Estas en el hilo {{titulo}} de un foro</h2>	
+	<h2>Estas en el hilo {{hilo.titulo}} de un foro</h2>	
 	<table>		
 		{{#mensajes}}
 			{{#.}}
 				<b>{{autor.nombre}}:</b>
 				<p>		{{texto}}</p>
 			{{/.}}
-			<a href = "/foro/{{titulo}}/{{-index}}">Eliminar mensaje</a>
+			<a href = "/foro/{{hilo.id}}/{{-index}}">Eliminar mensaje</a>
 			<br></br>
 		{{/mensajes}}
 
 		
 
 	</table>
-	<a href="/foro/{{titulo}}/escribir_mensaje">Escribir mensaje</a>
+	<a href="/foro/{{hilo.id}}/escribir_mensaje">Escribir mensaje</a>
 <br></br>
 <a href="/foro">Volver</a>
 </body>

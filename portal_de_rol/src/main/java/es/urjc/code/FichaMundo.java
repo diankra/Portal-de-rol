@@ -18,10 +18,6 @@ public class FichaMundo extends Ficha{
 	private Partida partida;
 	private String tipo;
 	
-	protected FichaMundo() {
-		
-	}
-	
 	public FichaMundo(String n, String d, String t) {
 		super(n, d);
 		this.tipo = t;
