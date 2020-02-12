@@ -34,12 +34,18 @@ Los administradores podrán:
 
   
 ## Entidades
-  - Usuario: Los usuarios podrán ser jugadores o másters dependiendo de la partida que jueguen. Dispondrán de la lista de partidas en las que estén participando junto con el rol que desempeñan en cada una de ellas y la ficha de personaje asociada, en caso de haberla. También tendrán un histórico de partidas jugadas.
-  - (Hereda de Usuario) Administrador: Tipo de usuario especial que además de todas las funciones básicas puede editar y eliminar mensajes en el foro y banear usuarios.
-  - Foro: Estará formado por hilos que podrá iniciar cualquier usuario y que podrán contener respuestas en forma de mensajes. Estos hilos podrán ser cerrados o eliminados por su creador o un administrador
-  - (Hereda de Foro) Partida: Las partidas serán creadas por un usuario que actuará como máster. Este será el responsable de las condiciones de la partida (número de jugadores, fichas necesarias, duración... y actuará como moderador de su propia partida). La partida no comienza hasta que no lo determine el máster, y podrá ser cerrada por el mismo o un administrador. 
-  - Mensaje: Es publicado por un usuario en el foro o en una partida y contiene texto, que puede ser modificado o borrado por su autor o por un Administrador.
-  - Fichas: Hay dos tipos de fichas, las fichas de personaje y las fichas de partida. Las fichas de personaje las crearán los jugadores para una o varias partidas en las que participen. Las fichas de partida las crearán los másters para las partidas que dirijan y engloban elementos propios de estas, como monstruos, ubicaciones...
+  - Usuario: Poseen nombre, correo y contraseña. Pueden ser administradores o no, en función del boolean is_Admin. Pueden crear fichas de jugador, crear hilos y mensajes y participar en partidas como jugadores o másters. Además, si es administrador, va ligado al Foro como admin., pudiendo editar y borrar hilos y mensajes.
+  - Foro: En él se contienen Hilos y Partidas (un subtipo de estos), además de un Usuario que actuará como administrador.
+  - Hilo: Tiene un título y está formado por Mensajes. Además, tiene un autor que es el Usuario que lo ha creado, el cual puede borrarlo.
+  - Partida: Hereda de Hilo, pudiendo ser pública o privada (boolean Privada). Su autor actúa además como master, y tiene Usuarios como jugadores y Fichas de Mundo.
+  - Mensaje: Es publicado por un Usuario en un Hilo y contiene texto, que puede ser modificado o borrado por su autor.
+  - Ficha_Jugador: Hereda de Ficha (es una clase abstracta, pero no funciona como entidad en la BBDD) y tiene parámetros como nombre, raza, clase y tipo (jugador o personaje no jugable), además de un Usuario como autor.
+  - Ficha_Mundo: También hereda de Ficha y tiene nombre, tipo y descripción. Forma parte de una Partida, ya que hace referencia a todos aquellos elementos propios de ella (enemigos, tesoros, localizaciones...)
+  
+  *RELACIONES DEFINIDAS COMO ENTIDAD EN UML*
+  -Foro_Hilos (RELACIÓN): Indica que el Foro contiene una lista de Hilos, con propagación de borrado en cascada.
+  -Foro_Partidas (RELACIÓN): Indica que el Foro contiene una lista de Partidas, con propagación de borrado en cascada.
+  -Partida_Jugadores (RELACIÓN): Conecta los Usuarios y las Partidas en las que participan representando una relación bidireccional de tipo N-M, ya que un jugador puede estar en varias partidas y estas a su vez pueden contener varios jugadores.
   
 ## Funcionalidades de servicio interno
   - Almacenamiento y escalado de imágenes
@@ -71,7 +77,7 @@ Tablero de Trello: https://trello.com/b/gaM8JvpQ/portal-de-rol-dad
 
   - Diagrama UML
   
-    ![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/modelo%20de%20datos%20fase%201/dad_uml_fase1.png)
+    ![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/modelo%20de%20datos%20fase%201/DaD%20UML%20(v2).png)
   
     
 
