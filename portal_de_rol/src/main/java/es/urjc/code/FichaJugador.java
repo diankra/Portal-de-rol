@@ -1,9 +1,6 @@
 package es.urjc.code;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
@@ -14,25 +11,19 @@ public class FichaJugador extends Ficha {
 //	La ficha jugador tiene el nombre, si es NPC o no definido con tipo, su clase y su raza.
 //	Por lo que necesitamos los parametros nombre, tipo, clase y raza definidos en ficha_heroes
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
 	
 	@NotNull
 	@ManyToOne
 	private Usuario propietario;
 	@NotNull
-	private String name;
-	@NotNull
-	private boolean type;
+	private boolean jugable;
 	private String clase;
 	private String raza;
 
-	public FichaJugador(Usuario propietario, String name, boolean type, String clase, String raza) {
+	public FichaJugador(Usuario propietario, String name, boolean jugable, String clase, String raza) {
 		super(name, "");
 		this.propietario = propietario;
-		this.name = name;
-		this.type = type;
+		this.jugable = jugable;
 		this.clase = clase;
 		this.raza = raza;
 	}
@@ -45,20 +36,12 @@ public class FichaJugador extends Ficha {
 		this.propietario = propietario;
 	}
 
-	public String getName() {
-		return name;
+	public boolean isJugable() {
+		return jugable;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public boolean isType() {
-		return type;
-	}
-
-	public void setType(boolean type) {
-		this.type = type;
+	public void setJugable(boolean type) {
+		this.jugable = type;
 	}
 
 	public String getClase() {

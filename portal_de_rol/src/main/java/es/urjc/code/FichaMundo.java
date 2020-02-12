@@ -1,19 +1,12 @@
 package es.urjc.code;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 	@Entity
 
 public class FichaMundo extends Ficha{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-				
 	@ManyToOne
 	private Partida partida;
 	private String tipo;
