@@ -34,6 +34,8 @@ Los administradores podrán:
 
   
 ## Entidades
+  *ENTIDADES PRINCIPALES*
+  
   - Usuario: Poseen nombre, correo y contraseña. Pueden ser administradores o no, en función del boolean is_Admin. Pueden crear fichas de jugador, crear hilos y mensajes y participar en partidas como jugadores o másters. Además, si es administrador, va ligado al Foro como admin., pudiendo editar y borrar hilos y mensajes.
   - Foro: En él se contienen Hilos y Partidas (un subtipo de estos), además de un Usuario que actuará como administrador.
   - Hilo: Tiene un título y está formado por Mensajes. Además, tiene un autor que es el Usuario que lo ha creado, el cual puede borrarlo.
@@ -41,8 +43,9 @@ Los administradores podrán:
   - Mensaje: Es publicado por un Usuario en un Hilo y contiene texto, que puede ser modificado o borrado por su autor.
   - Ficha_Jugador: Hereda de Ficha (es una clase abstracta, pero no funciona como entidad en la BBDD) y tiene parámetros como nombre, raza, clase y tipo (jugador o personaje no jugable), además de un Usuario como autor.
   - Ficha_Mundo: También hereda de Ficha y tiene nombre, tipo y descripción. Forma parte de una Partida, ya que hace referencia a todos aquellos elementos propios de ella (enemigos, tesoros, localizaciones...)
-  
+    
   *RELACIONES DEFINIDAS COMO ENTIDAD EN UML*
+  
   -Foro_Hilos (RELACIÓN): Indica que el Foro contiene una lista de Hilos, con propagación de borrado en cascada.
   -Foro_Partidas (RELACIÓN): Indica que el Foro contiene una lista de Partidas, con propagación de borrado en cascada.
   -Partida_Jugadores (RELACIÓN): Conecta los Usuarios y las Partidas en las que participan representando una relación bidireccional de tipo N-M, ya que un jugador puede estar en varias partidas y estas a su vez pueden contener varios jugadores.
@@ -52,17 +55,6 @@ Los administradores podrán:
   - Envío de mensajes a los usuarios con las actualizaciones de las partidas en las que participen o estén suscritos
   - Funcionalidades por determinar 
   
-## Integrantes
-  - Marta Sebastián Valverde
-      - Correo: m.sebastianv.2016@alumnos.urjc.es
-      - Github: https://github.com/diankra
-  - Héctor Fernández Rubio
-      - Correo: h.fernandezru@alumnos.urjc.es
-      - Github: https://github.com/Dalgus
-  - Javier Fernández Osuna
-      - Correo: j.hernandez.2016@alumnos.urjc.es
-      - Github: https://github.com/PandaJavi
-
 Tablero de Trello: https://trello.com/b/gaM8JvpQ/portal-de-rol-dad
 
 
@@ -82,3 +74,14 @@ Tablero de Trello: https://trello.com/b/gaM8JvpQ/portal-de-rol-dad
     
 
 
+
+## Integrantes
+  - Marta Sebastián Valverde
+      - Correo: m.sebastianv.2016@alumnos.urjc.es
+      - Github: https://github.com/diankra
+  - Héctor Fernández Rubio
+      - Correo: h.fernandezru@alumnos.urjc.es
+      - Github: https://github.com/Dalgus
+  - Javier Fernández Osuna
+      - Correo: j.hernandez.2016@alumnos.urjc.es
+      - Github: https://github.com/PandaJavi
