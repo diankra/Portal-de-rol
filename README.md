@@ -46,9 +46,9 @@ Los administradores podrán:
     
   *RELACIONES DEFINIDAS COMO ENTIDAD EN UML*
   
-  -Foro_Hilos (RELACIÓN): Indica que el Foro contiene una lista de Hilos, con propagación de borrado en cascada.
-  -Foro_Partidas (RELACIÓN): Indica que el Foro contiene una lista de Partidas, con propagación de borrado en cascada.
-  -Partida_Jugadores (RELACIÓN): Conecta los Usuarios y las Partidas en las que participan representando una relación bidireccional de tipo N-M, ya que un jugador puede estar en varias partidas y estas a su vez pueden contener varios jugadores.
+  - Foro_Hilos (RELACIÓN): Indica que el Foro contiene una lista de Hilos, con propagación de borrado en cascada.
+  - Foro_Partidas (RELACIÓN): Indica que el Foro contiene una lista de Partidas, con propagación de borrado en cascada.
+  - Partida_Jugadores (RELACIÓN): Conecta los Usuarios y las Partidas en las que participan representando una relación bidireccional de tipo N-M, ya que un jugador puede estar en varias partidas y estas a su vez pueden contener varios jugadores.
   
 ## Funcionalidades de servicio interno
   - Almacenamiento y escalado de imágenes
