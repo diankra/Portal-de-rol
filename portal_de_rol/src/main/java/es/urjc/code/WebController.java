@@ -49,6 +49,8 @@ public class WebController {
 		u2 = baseDatos.saveUsuario(u2);
 		h1 = baseDatos.saveHilo(h1);
 		h2 = baseDatos.saveHilo(h2);
+		p1.addJugador(u2);
+		p2.addJugador(u1);
 		p1 = baseDatos.savePartida(p1);
 		p2 = baseDatos.savePartida(p2);
 		// Para guardar en la bd
@@ -56,6 +58,10 @@ public class WebController {
 		m2.setHilo(h2);
 		m3.setHilo(p1);
 		m4.setHilo(p2);
+		u1.addPartidaJugador(p1);
+		u1.addPartidaJugador(p2);
+		u2.addPartidaJugador(p1);
+		u2.addPartidaJugador(p2);
 		m1 = baseDatos.saveMensaje(m1);
 		m2 = baseDatos.saveMensaje(m2);
 		m3 = baseDatos.saveMensaje(m3);
@@ -196,12 +202,15 @@ public class WebController {
 		return "mensaje_escrito_partida";
 	}
 
-	@GetMapping("partidas_publicas/{titulo}/{index}")
-	public String eliminarMensajePartida(Model model, @PathVariable String titulo, @PathVariable int index) {
-		Partida actual = getPartidaActual(titulo);
+	@GetMapping("partidas_publicas/{partida}/{index}")
+	public String eliminarMensajePartida(Model model, @PathVariable long partida, @PathVariable int index) {
+		Partida actual = baseDatos.getPartida(partida);
+		Mensaje m = actual.getMensajes().get(index-1);
 		actual.getMensajes().remove(index - 1);
 
-		model.addAttribute("titulo", titulo);
+		baseDatos.removeMensaje(m);
+		
+		model.addAttribute("titulo", partida);
 		return "mensaje_eliminado_partida";
 	}
 
@@ -273,34 +282,25 @@ public class WebController {
 			partida = new Partida(nombre, false, usuario, men);
 			partidasPublicas.add(partida);
 		}
+		men.setHilo(partida);
+		
 		usuario.addPartidaJugador(partida);
 		String usuariosInvitados[] = invitados.split(", ");
 		for (String name : usuariosInvitados) { // Se comprueba si los usuarios introducidos son validos y se añaden si
 												// es el caso
-//			for (Usuario user : usuarios) {
-//				if (name.equals(user.getNombre())) {
-//					partida.addJugador(user);
-//					user.addPartidaJugador(partida);
-//				}
-//			}
-			// LAS COMPROBACIONES SE HACEN CON LA BD YA EN FUNCIONAMIENTO
+			Usuario u = baseDatos.findUsuario(name);
+			if(u != null) {
+				u.addPartidaJugador(partida);
+				partida.addJugador(u);
+			}
+			
 		}
+		baseDatos.savePartida(partida);
+		baseDatos.saveMensaje(men);
 		return "aceptar_nueva_partida";
 	}
 
-//	@GetMapping("/partidas_privadas")
-//	public String partidas_privadas(Model model) {
-//		
-//		model.addAttribute("partidasPrivadas", partidasPrivadas);
-//		
-//		return "partidas_privadas";
-//	}
-	
-	
-	
-//	
-	
-	
+
 	
 	@GetMapping("/partidas_privadas")
 	public String partidas_privadas(Model model) {
@@ -312,42 +312,53 @@ public class WebController {
 
 
 	@GetMapping("partidas_privadas/{partidaPrivada}")
-	public String partidaPrivada(Model model, @PathVariable String partidaPrivada) {
+	public String partidaPrivada(Model model, @PathVariable long partidaPrivada) {
 
-		Partida partidaActual = getPartidaPrivadaActual(partidaPrivada);
+		Partida partidaActual = baseDatos.getPartida(partidaPrivada);
 
-		model.addAttribute("titulo", partidaActual.getTitulo());
+		model.addAttribute("titulo", partidaActual.getId());
 		model.addAttribute("mensajes", partidaActual.getMensajes());
 		return "partidaPrivada";
 	}
 		
 
-	@GetMapping("partidas_privadas/{titulo}/escribir_mensaje_partida_privada")
-	public String escribirMensajePartidaPrivada(Model model, @PathVariable String titulo) {
+	@GetMapping("partidas_privadas/{id}/escribir_mensaje_partida_privada")
+	public String escribirMensajePartidaPrivada(Model model, @PathVariable long id) {
 
-		model.addAttribute("titulo", titulo);
+		model.addAttribute("titulo", id);
 		return "escribir_mensaje_partida_privada";
 	}
 
 	@PostMapping("partidas_privadas/{titulo}/escribir_mensaje_partida_privada/aceptar")
-	public String aceptarMensajePartidaPrivada(Model model, @PathVariable String titulo, @RequestParam String mensajeEscrito) {
+	public String aceptarMensajePartidaPrivada(Model model, @PathVariable long titulo, @RequestParam String mensajeEscrito) {
 
-		Partida partidaActual = getPartidaPrivadaActual(titulo);
-		if (usuario == null) // Ñapa incoming. Programming the Spanish way
-			partidaActual.addMensaje(
-					new Mensaje(usuario /* lo pongo como ejemplo, mejorara al añadir la sesion */, mensajeEscrito));
-		else
-			partidaActual.addMensaje(new Mensaje(usuario, mensajeEscrito));
+		Partida partidaActual = baseDatos.getPartida(titulo);
+		Usuario userActual = baseDatos.findUsuario(usuario.getNombre());
+		String respuesta = "";
+		if (userActual == null) { // Ñapa incoming. Programming the Spanish way
+			respuesta = "No se ha escrito el mensaje. Usuario inválido";
+		}else {
+			respuesta = "Mensaje escrito para la partida "+partidaActual.getTitulo();
+			Mensaje m = new Mensaje(usuario, mensajeEscrito);
+			partidaActual.addMensaje(m);
+			m.setHilo(partidaActual);
+
+			baseDatos.saveMensaje(m);
+		}
+		model.addAttribute("cadena", respuesta);
 		model.addAttribute("titulo", titulo);
 		return "mensaje_escrito_partida_privada";
 	}
 
-	@GetMapping("partidas_privadas/{titulo}/{index}")
-	public String eliminarMensajePartidaPrivada(Model model, @PathVariable String titulo, @PathVariable int index) {
-		Partida actual = getPartidaPrivadaActual(titulo);
-		actual.getMensajes().remove(index - 1);
-
-		model.addAttribute("titulo", titulo);
+	@GetMapping("partidas_privadas/{id}/{index}")
+	public String eliminarMensajePartidaPrivada(Model model, @PathVariable long id, @PathVariable int index) {
+		Partida actual = baseDatos.getPartida(id);
+		Mensaje m = actual.getMensajes().get(index-1);
+		actual.getMensajes().remove(m);
+		
+		baseDatos.removeMensaje(m);
+		
+		model.addAttribute("titulo", id);
 		return "mensaje_eliminado_partida_privada";
 	}
 	
@@ -437,30 +448,7 @@ public class WebController {
 		return "aceptar_ficha_enemigo";
 	}
 
-	public Hilo getHiloActual(String titulo) {
-//		Hilo hiloActual = null;
-//		int index = 0;
-//		while (hiloActual == null) {
-//			if (hilos.get(index).getTitulo().equals(titulo)) {
-//				hiloActual = hilos.get(index);
-//			}
-//			index++;
-//		}
-//		return hiloActual;
-		return null;
-	}
 
-	public Partida getPartidaActual(String partida) {
-		Partida partidaActual = null;
-		int index = 0;
-		while (partidaActual == null) {
-			if (partidasPublicas.get(index).getTitulo().equals(partida)) {
-				partidaActual = partidasPublicas.get(index);
-			}
-			index++;
-		}
-		return partidaActual;
-	}
 	
 	public Partida getPartidaPrivadaActual(String partida) {
 		Partida partidaActual = null;
