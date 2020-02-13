@@ -68,6 +68,9 @@ public class BaseDatos implements CommandLineRunner{
 		return partidas.findPartidaById(id);
 	}
 	
+	public List<Partida> getAllPartidas(){
+		return partidas.findAll();
+	}
 	public FichaJugador saveFichaJugador(FichaJugador f) {
 		return fichasJugador.save(f);
 	}
