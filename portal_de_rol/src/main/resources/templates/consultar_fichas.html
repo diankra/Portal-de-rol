@@ -1,0 +1,19 @@
+<html>
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+	<h2>Fichas activas en esta partida:</h2>
+	
+	{{#fichas}}
+		{{#.}}
+			<a href="/partidas_privadas/{{idPartida}}/consultar_fichas/{{id}}">{{nombre}}: {{tipo}}</a>
+			<br></br>
+		{{/.}}
+	{{/fichas}}
+
+</body>
+
+<br></br>
+<a href="/partidas_privadas/{{idPartida}}">Volver</a>
+</html>

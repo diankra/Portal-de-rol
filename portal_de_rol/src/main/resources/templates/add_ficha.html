@@ -6,11 +6,11 @@
 	<h2>Añade tu ficha</h2>
 
 	<form method="post"
-		action='/partidas_privadas/{{titulo}}/add_ficha/aceptar'>
-		<p>Selecciona tu personaje</p>
+		action='/partidas_privadas/{{id}}/add_ficha/aceptar'>
+		<p>Selecciona una o varias fichas:</p>
 		{{#fichas}}
 			{{#.}}
-			<label>	<input type='checkbox'  name='ficha' value= '{{id}}'/> {{nombre}} </label>
+			<label>	<input type='checkbox'  name='idFicha' value= '{{id}}'/> {{nombre}}: {{tipo}} </label>
 			<br></br>
 			{{/.}}
 		{{/fichas}}

@@ -25,7 +25,8 @@ public class Ficha {
 	
 	
 	public Ficha (String n, String d) {
-		this.nombre = n;		
+		this.nombre = n;	
+		this.descripcion = d;
 	}
 
 	public long getId() {
@@ -50,6 +51,12 @@ public class Ficha {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Ficha [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
 	}
 	
 	
