@@ -11,6 +11,10 @@ public class FichaMundo extends Ficha{
 	private Partida partida;
 	private String tipo;
 	
+
+	
+
+	public FichaMundo() {}
 	public FichaMundo(String n,String t, String d) {
 		super(n, d);
 		this.tipo = t;
@@ -31,5 +35,7 @@ public class FichaMundo extends Ficha{
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+	
+	
 	
 }

@@ -52,6 +52,12 @@ public class Ficha {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Ficha [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
+	}
 	
 	
 }

@@ -68,6 +68,9 @@ public class BaseDatos implements CommandLineRunner{
 		return partidas.findPartidaById(id);
 	}
 	
+	public List<Partida> getAllPartidas(){
+		return partidas.findAll();
+	}
 	public FichaJugador saveFichaJugador(FichaJugador f) {
 		return fichasJugador.save(f);
 	}
@@ -77,6 +80,14 @@ public class BaseDatos implements CommandLineRunner{
 	}
 	public FichaMundo saveFichaMundo(FichaMundo f) {
 		return fichasMundo.save(f);
+	}
+	
+	public List<FichaMundo> findFichasLibres(){
+		return fichasMundo.findByPartida(null);
+	}
+	
+	public FichaMundo findFichaMundo(long id) {
+		return fichasMundo.findFichaMundoById(id);
 	}
 	@Override
 	public void run(String... args) throws Exception {
