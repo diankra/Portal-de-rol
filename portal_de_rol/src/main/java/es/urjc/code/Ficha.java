@@ -17,7 +17,7 @@ public class Ficha {
 	
 	@NotNull
 	private String nombre;
-	private String descripcion;	
+	private String descripcion;
 	
 	protected Ficha(){
 		
@@ -25,7 +25,8 @@ public class Ficha {
 	
 	
 	public Ficha (String n, String d) {
-		this.nombre = n;		
+		this.nombre = n;	
+		this.descripcion = d;
 	}
 
 	public long getId() {

@@ -464,20 +464,48 @@ public class WebController {
 	}
 
 	@PostMapping("/ficha_enemigos/aceptar_ficha_enemigo")
-	public String aceptarFicha(Model model, @RequestParam String name, @RequestParam String type,
-			@RequestParam String alignment) {
+	public String aceptarFichaEnemigo(Model model, @RequestParam String name, @RequestParam String Tipo,
+			@RequestParam String Alineamiento) {
 
 		// Los anteriores parametros y el ID del usuario seran los necesarios para crear
 		// la ficha y guardar en la base de datos.
 //		ID del usuario, nombre del personaje, tipo del personaje pasado a boolean, clase del personaje y raza del personaje.
 
-		FichaMundo f = new FichaMundo(name, "Enemigo", "Alineamiento: " + alignment + " Tipo de enemigo: " + type);
+		FichaMundo f = new FichaMundo(name, "Enemigo", " Alineamiento: " + Alineamiento + " Tipo de enemigo: " + Tipo);
 		f = baseDatos.saveFichaMundo(f);
 		model.addAttribute("ficha", f);
 		return "aceptar_ficha_mundo";
 	}
+	
+	@PostMapping("/ficha_objetos/aceptar_ficha_objeto")
+	public String aceptarFichaObjeto(Model model, @RequestParam String name, @RequestParam String Tipo,
+			@RequestParam String Descripcion) {
 
+		FichaMundo f = new FichaMundo(name, "Objeto", " Tipo:" + Tipo + " Descripcion:" + Descripcion);
+		f = baseDatos.saveFichaMundo(f);
+		model.addAttribute("ficha", f);		
+		return "aceptar_ficha_objeto";
+	}
+	
+	@PostMapping("/ficha_habilidades/aceptar_ficha_habilidades")
+	public String aceptarFichaHabilidades(Model model, @RequestParam String name, @RequestParam String Tipo,
+			@RequestParam String Descripcion) {
 
+		FichaMundo f = new FichaMundo(name, "Habilidad", " Tipo:" + Tipo + " Descripcion:" + Descripcion);
+		f = baseDatos.saveFichaMundo(f);
+		model.addAttribute("ficha", f);		
+		return "aceptar_ficha_objeto";
+	}
+	
+	@PostMapping("/ficha_loc/aceptar_ficha_loc")
+	public String aceptarFichaLoc(Model model, @RequestParam String name, @RequestParam String Tipo, @RequestParam String Temperatura,
+			@RequestParam String Descripcion) {
+
+		FichaMundo f = new FichaMundo(name, "Localizacion", "Tipo: " + Tipo + " Temperatura: " + Temperatura + " Descripcion: " + Descripcion);
+		f = baseDatos.saveFichaMundo(f);
+		model.addAttribute("ficha", f);		
+		return "aceptar_ficha_objeto";
+	}
 
 
 }

@@ -5,9 +5,23 @@
 <body>
 	<h2>Aquí se crean y consultan fichas de localizaciones.</h2>
 	
-	
-	
-	
+	<form method="post" action='/ficha_loc/aceptar_ficha_loc'>
+	<p>Nombre del lugar: </p>
+	<input type='text' name='name'/>
+	<br></br>
+	<p>Tipo de lugar: </p>
+	<label>	<input type='radio'  name='Tipo' value= "Mundanos"/> Es un lugar común. </label>
+	<label>	<input type='radio'  name='Tipo' value= "Elemental"/> Es un plano elemental. </label>
+	<label>	<input type='radio'  name='Tipo' value= "Dimensional"/> Es un plano dimensional. </label>
+	<br></br>
+	<p>Temperatura: </p>
+	<label>	<input type='radio'  name='Temperatura' value= "La temperatura oscila entre -50 y 5 grados centigrados"/> La temperatura oscila entre -50 y 5 grados centigrados. </label>
+	<label>	<input type='radio'  name='Temperatura' value= "La temperatura oscila entre 6 y 25 grados centigrados"/> La temperatura oscila entre 6 y 25 grados centigrados. </label>
+	<label>	<input type='radio'  name='Temperatura' value= "La temperatura es superior de 26 grados centigrados"/> La temperatura es superior de 26 grados centigrados, </label>
+	<p>Descripcion del lugar: </p>
+	 <input type='text' name='Descripcion'/>
+ 	<input type='submit' value='Enviar'>	
+	</form>
 </body>
 
 <br></br>

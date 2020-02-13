@@ -3,11 +3,22 @@
 	<meta charset="UTF-8"/>
 </head>
 <body>
-	<h2>Aquí se crean y consultan fichas de armas, armaduras y objetos genericos.</h2>
+	<h2>Aquí se crean y consultan fichas de objetos.</h2>
 	
-	
-	
-	
+	<form method="post" action='/ficha_objetos/aceptar_ficha_objeto'>
+	<p>Nombre del objeto: </p>
+	<input type='text' name='name'/>
+	<br></br>
+	<p>Tipo del objeto: </p>
+	<label>	<input type='radio'  name='Tipo' value= "Mundanos"/> Es una objeto común. </label>
+	<label>	<input type='radio'  name='Tipo' value= "Magicos"/> Es un objeto magico. </label>
+	<label>	<input type='radio'  name='Tipo' value= "Unicos"/> Es un objeto unico. </label>
+	<br></br>
+	<p>Descripcion del objeto: </p>
+	 <input type='text' name='Descripcion'/>
+ 	<input type='submit' value='Enviar'>
+	</form>
+		
 </body>
 
 <br></br>

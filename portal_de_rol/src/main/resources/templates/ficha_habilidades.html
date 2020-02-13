@@ -1,13 +1,25 @@
 <html>
+<html>
 <head>
 	<meta charset="UTF-8"/>
 </head>
 <body>
-	<h2>Aquí se crean y consultan fichas de habilidades y conjuros.</h2>
+	<h2>Aquí se crean y consultan fichas de habilidades.</h2>
 	
-	
-	
-	
+	<form method="post" action='/ficha_habilidades/aceptar_ficha_habilidades'>
+	<p>Nombre de la habilidad: </p>
+	<input type='text' name='name'/>
+	<br></br>
+	<p>Tipo del objeto: </p>
+	<label>	<input type='radio'  name='Tipo' value= "Fisicas"/> Es una habilidad fisica, natural o entrenada. </label>
+	<label>	<input type='radio'  name='Tipo' value= "Magicas"/> Es una habilidad magica o un conjuro. </label>
+	<label>	<input type='radio'  name='Tipo' value= "Raciales"/> Habilidades propias de raza. </label>
+	<br></br>
+	<p>Descripcion de la habilidad: </p>
+	 <input type='text' name='Descripcion'/>
+ 	<input type='submit' value='Enviar'>
+	</form>
+		
 </body>
 
 <br></br>
