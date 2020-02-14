@@ -71,7 +71,8 @@ Tablero de Trello: https://trello.com/b/gaM8JvpQ/portal-de-rol-dad
   
     ![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/modelo%20de%20datos%20fase%201/DaD%20UML%20(v2).png)
   
-    
+  - Diagrama Entidad/Relación
+    ![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/DiagramaEntidadRelacion.jpg)
 
 
 
