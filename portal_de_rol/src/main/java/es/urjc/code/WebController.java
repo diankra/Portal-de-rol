@@ -25,8 +25,8 @@ public class WebController {
 	
 	Usuario vacio = new Usuario("", "", "");
 	// Estos son datos a cholon que se ponen la primera vez
-/*
-	Usuario u1 = new Usuario("Bob", "bob@noimporta.com", "contraseña1");
+
+	/*Usuario u1 = new Usuario("Bob", "bob@noimporta.com", "contraseña1");
 	Mensaje m1 = new Mensaje(u1, "Hola como estan");
 	Usuario u2 = new Usuario("Alice", "alice@noimporta.com", "contraseña2");
 	Mensaje m2 = new Mensaje(u2, "Mensaje de ejemplo 2");
@@ -53,8 +53,8 @@ public class WebController {
 	public void init() {
 		vacio = baseDatos.saveUsuario(vacio);
 		usuario = vacio;
-		/*
-		u1 = baseDatos.saveUsuario(u1);
+		
+		/*u1 = baseDatos.saveUsuario(u1);
 		u2 = baseDatos.saveUsuario(u2);
 		
 		h1 = baseDatos.saveHilo(h1);
