@@ -476,8 +476,8 @@ public class WebController {
 	}
 
 	@PostMapping("/ficha_heroes/aceptar_ficha")
-	public String aceptarFicha(Model model, @RequestParam String name, @RequestParam("Jugador") String Jugador,
-			@RequestParam("Clase") String Clase, @RequestParam("Raza") String Raza) {
+	public String aceptarFicha(Model model, @RequestParam String name, @RequestParam(required = false) String Jugador,
+			@RequestParam(required = false)  String Clase, @RequestParam(required = false)  String Raza) {
 
 //		Los siguientes parametros son para mandarlos por moustache y mandarlos por pantalla.
 //		Seran el nombre del personaje, el tipo, clase y raza.
@@ -506,8 +506,8 @@ public class WebController {
 	}
 
 	@PostMapping("/ficha_enemigos/aceptar_ficha_enemigo")
-	public String aceptarFichaEnemigo(Model model, @RequestParam String name, @RequestParam String Tipo,
-			@RequestParam String Alineamiento) {
+	public String aceptarFichaEnemigo(Model model, @RequestParam String name, @RequestParam(required = false)  String Tipo,
+			@RequestParam(required = false)  String Alineamiento) {
 
 		// Los anteriores parametros y el ID del usuario seran los necesarios para crear
 		// la ficha y guardar en la base de datos.
@@ -523,8 +523,8 @@ public class WebController {
 	}
 
 	@PostMapping("/ficha_objetos/aceptar_ficha_objeto")
-	public String aceptarFichaObjeto(Model model, @RequestParam String name, @RequestParam String Tipo,
-			@RequestParam String Descripcion) {
+	public String aceptarFichaObjeto(Model model, @RequestParam String name, @RequestParam(required = false)  String Tipo,
+			@RequestParam(required = false)  String Descripcion) {
 
 		FichaMundo f = new FichaMundo(name, "Objeto", " Tipo:" + Tipo + " Descripcion:" + Descripcion);
 		f = baseDatos.saveFichaMundo(f);
@@ -533,8 +533,8 @@ public class WebController {
 	}
 
 	@PostMapping("/ficha_habilidades/aceptar_ficha_habilidades")
-	public String aceptarFichaHabilidades(Model model, @RequestParam String name, @RequestParam String Tipo,
-			@RequestParam String Descripcion) {
+	public String aceptarFichaHabilidades(Model model, @RequestParam String name, @RequestParam(required = false)  String Tipo,
+			@RequestParam(required = false) String Descripcion) {
 
 		FichaMundo f = new FichaMundo(name, "Habilidad", " Tipo:" + Tipo + " Descripcion:" + Descripcion);
 		f = baseDatos.saveFichaMundo(f);
@@ -543,8 +543,8 @@ public class WebController {
 	}
 
 	@PostMapping("/ficha_loc/aceptar_ficha_loc")
-	public String aceptarFichaLoc(Model model, @RequestParam String name, @RequestParam String Tipo,
-			@RequestParam String Temperatura, @RequestParam String Descripcion) {
+	public String aceptarFichaLoc(Model model, @RequestParam String name, @RequestParam(required = false)  String Tipo,
+			@RequestParam(required = false)  String Temperatura, @RequestParam(required = false)  String Descripcion) {
 
 		FichaMundo f = new FichaMundo(name, "Localizacion",
 				"Tipo: " + Tipo + " Temperatura: " + Temperatura + " Descripcion: " + Descripcion);
