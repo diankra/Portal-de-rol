@@ -126,31 +126,38 @@ Tablero de Trello: https://trello.com/b/gaM8JvpQ/portal-de-rol-dad
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/ficha_heroe.png?raw=true)
     
     - Visualizar ficha de personaje:
-    
+          En esta pagina podremos observar las caracteristicas especificadas en la pagina anterior dutante la creación del personaje.
+          
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/creada_ficha_heroe.png?raw=true)
     
     - Crear ficha de enemigo:
-    
+          En esta pagina podremos definir las caracteristicas que definiran a un enemigo.
+          
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/ficha_enemigos.png?raw=true)
     
     - Visualizar ficha de enemigo:
-    
+          En esta pagina podremos observar las caracteristicas especificadas en la pagina anterior dutante la creación del enemigo.
+          
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/creada_ficha_enemigo.png?raw=true)
     
      - Crear ficha de habilidad:
-     
-![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/ficha_enemigos.png?raw=true)
+          En esta pagina crearemos las habilidades de los personajes y monstruos, definiendo su origen, nombre y una descripcion de uso y resultados de la misma.
+          
+![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/ficha_habilidades.png)
     
     - Visualizar ficha de habilidad:
-    
+          En esta pagina podremos observar las caracteristicas especificadas en la pagina anterior durante la creacion de la habilidad.
+          
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/creada_ficha_habilidad.png?raw=true)
     
      - Crear ficha de localización:
-     
+          En esta pagina crearemos las localizaciones, definiendo su origen, temperatura, nombre y una descripción.
+          
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/ficha_localizaciones.png?raw=true)
     
     - Visualizar ficha de localización:
-    
+          En esta pagina podremos observar las caracteristicas especificadas en la pagina anterior durante la creacion de la localización.
+          
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/creada_ficha_localizaciones.png?raw=true)
 
 ## Integrantes
