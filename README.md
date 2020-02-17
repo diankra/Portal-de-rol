@@ -58,23 +58,61 @@ Los administradores podrán:
 Tablero de Trello: https://trello.com/b/gaM8JvpQ/portal-de-rol-dad
 
 
-## Fase 1
+# Fase 2
 
 
-  - Diagrama de navegación
+  ## Diagrama de navegación
   
   
-    ![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Diagrama%20de%20navegaci%C3%B3n.png)
+    ![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Diagrama%20de%20navegaci%C3%B3n.jpg)
 
 
-  - Diagrama UML
+  ## Diagrama UML
   
     ![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/modelo%20de%20datos%20fase%201/DaD%20UML%20(v2).png)
   
-  - Diagrama Entidad/Relación
+  ## Diagrama Entidad/Relación
     ![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/DiagramaEntidadRelacion.jpg)
 
-
+  ## Páginas diseñadas
+    - Página principal
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/pagina_principal.png?raw=true)
+    - Foro general
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/foro_general.png?raw=true)
+    - Hilo
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/hilo_foro.png?raw=true)
+    - Crear hilo
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/crear_hilo.png?raw=true)
+    - Escribir mensaje
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/escribir_mensaje.png?raw=true)
+    - Partidas públicas:
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/partidas_publicas.png?raw=true)
+    - Partida pública:
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/partida_publica.png?raw=true)
+    - Crear partida
+     ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/crear_partida.png?raw=true)
+    -Partida privada:
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/partida_privada.png?raw=true)
+    - Escribir para una partida privada:
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/mensaje_partida_privada.png?raw=true)
+    - Crear fichas:
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/crear_fichas.png?raw=true)
+    - Crear ficha de personaje:
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/ficha_heroe.png?raw=true)
+    - Visualizar ficha de personaje:
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/creada_ficha_heroe.png?raw=true)
+    - Crear ficha de enemigo:
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/ficha_enemigos.png?raw=true)
+    - Visualizar ficha de enemigo:
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/creada_ficha_enemigo.png?raw=true)
+     - Crear ficha de habilidad:
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/ficha_enemigos.png?raw=true)
+    - Visualizar ficha de habilidad:
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/creada_ficha_habilidad.png?raw=true)
+     - Crear ficha de localización:
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/ficha_localizaciones.png?raw=true)
+    - Visualizar ficha de localización:
+    ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/creada_ficha_localizaciones.png?raw=true)
 
 ## Integrantes
   - Marta Sebastián Valverde
