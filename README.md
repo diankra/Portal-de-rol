@@ -77,27 +77,33 @@ Tablero de Trello: https://trello.com/b/gaM8JvpQ/portal-de-rol-dad
 
   ## Páginas diseñadas
   
-    - Página principal: Es la página a la que se accede al abrir el portal. Permite acceder al Foro General, ver la lista de Partidas públicas (como espectador), crear un nuevo Usuario o bien registrarse con uno ya existente, crear una Partida nueva como máster, acceder a una Partida en la que se participe como jugador (sea privada o pública) y entrar a la sección de creación de Fichas.
+    - Página principal: 
+        Es la página a la que se accede al abrir el portal. Permite acceder al Foro General, ver la lista de Partidas públicas (como espectador), crear un nuevo Usuario o bien registrarse con uno ya existente, crear una Partida nueva como máster, acceder a una Partida en la que se participe como jugador (sea privada o pública) y entrar a la sección de creación de Fichas.
     
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/pagina_principal.png?raw=true)
     
-    - Foro general: En él se muestran los Hilos de mensajes existentes, además de dar la opción de crear uno nuevo.
+    - Foro general: 
+        En él se muestran los Hilos de mensajes existentes, además de dar la opción de crear uno nuevo.
     
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/foro_general.png?raw=true)
     
-    - Hilo: En el Hilo se muestran todos los Mensajes que lo conformen (con su autor) y se da la opción de escribir un mensaje nuevo o bien borrar uno ya existente, lo cual solo puede hacer el propio autor.
+    - Hilo: 
+        En el Hilo se muestran todos los Mensajes que lo conformen (con su autor) y se da la opción de escribir un mensaje nuevo o bien borrar uno ya existente, lo cual solo puede hacer el propio autor.
     
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/hilo_foro.png?raw=true)
     
-    - Crear hilo: Esta página permite crear un Hilo nuevo introduciendo su título y un Mensaje, que aparecerá como primer mensaje una vez creado.
+    - Crear hilo: 
+        Esta página permite crear un Hilo nuevo introduciendo su título y un Mensaje, que aparecerá como primer mensaje una vez creado.
     
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/crear_hilo.png?raw=true)
     
-    - Escribir mensaje: Aquí se escribe el contenido del Mensaje, el cual se mostrará en el Hilo correspondiente una vez enviado.
+    - Escribir mensaje: 
+        Aquí se escribe el contenido del Mensaje, el cual se mostrará en el Hilo correspondiente una vez enviado.
     
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/escribir_mensaje.png?raw=true)
     
-    - Partidas públicas: En esta sección aparece la lista de Partidas públicas, a las cuales se puede acceder como espectador.
+    - Partidas públicas: 
+        En esta sección aparece la lista de Partidas públicas, a las cuales se puede acceder como espectador.
     
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/partidas_publicas.png?raw=true)
     
@@ -126,30 +132,37 @@ Tablero de Trello: https://trello.com/b/gaM8JvpQ/portal-de-rol-dad
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/ficha_heroe.png?raw=true)
     
     - Visualizar ficha de personaje:
+        En esta página podremos observar las características especificadas en la página anterior durante la creación del personaje.
     
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/creada_ficha_heroe.png?raw=true)
     
     - Crear ficha de enemigo:
+        En esta página podremos indicar las características que definirán a un enemigo.
     
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/ficha_enemigos.png?raw=true)
     
     - Visualizar ficha de enemigo:
+        En esta página podremos observar las características especificadas en la página anterior durante la creación del enemigo.
     
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/creada_ficha_enemigo.png?raw=true)
     
      - Crear ficha de habilidad:
+        En esta página crearemos las habilidades de los personajes y monstruos, definiendo su origen, nombre y una descripción de uso y resultados de la misma.
      
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/ficha_enemigos.png?raw=true)
     
     - Visualizar ficha de habilidad:
+        En esta página podremos observar las características especificadas en la página anterior durante la creación de la habilidad.
     
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/creada_ficha_habilidad.png?raw=true)
     
      - Crear ficha de localización:
+        En esta pagina crearemos las localizaciones, definiendo su origen, temperatura, nombre y una descripción.
      
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/ficha_localizaciones.png?raw=true)
     
     - Visualizar ficha de localización:
+        En esta página podremos observar las características especificadas en la página anterior durante la creación de la localización.
     
 ![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Capturas_pantallas/creada_ficha_localizaciones.png?raw=true)
 
