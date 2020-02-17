@@ -3,13 +3,14 @@
 <meta charset="UTF-8" />
 </head>
 <body>
-	<h2>Estas en la partida {{titulo}} de un foro</h2>
+	<h2>Estas en la partida "{{titulo}}"</h2>
 	<table>
-		{{#mensajes}} {{#.}}
+		{{#mensajes}} 
+		{{#.}}
 		<b>{{autor.nombre}}:</b>
 		<p>{{texto}}</p>
 		{{/.}}
-		<a href="/partidas_privadas/{{titulo}}/{{-index}}">Eliminar
+		<a href="/partidas_privadas/{{partida}}/{{-index}}">Eliminar
 			mensaje</a>
 		<br></br> {{/mensajes}}
 
@@ -17,15 +18,15 @@
 
 	</table>
 	<br></br>
-	<a href="/partidas_privadas/{{titulo}}/escribir_mensaje_partida_privada">Escribir
+	<a href="/partidas_privadas/{{partida}}/escribir_mensaje_partida_privada">Escribir
 		mensaje</a>
 
 	<br></br>
 	<a href="/crear_ficha">Crear ficha</a>
 	<br></br>
-	<a href="/partidas_privadas/{{titulo}}/add_ficha">Añadir ficha de mundo</a>
+	<a href="/partidas_privadas/{{partida}}/add_ficha">Añadir ficha de mundo</a>
 	<br></br>
-	<a href="/partidas_privadas/{{titulo}}/consultar_fichas">Consultar fichas</a>
+	<a href="/partidas_privadas/{{partida}}/consultar_fichas">Consultar fichas</a>
 	<br></br>
 	<a href="/partidas_privadas">Volver</a>
 </body>

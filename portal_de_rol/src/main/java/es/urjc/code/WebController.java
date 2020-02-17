@@ -20,8 +20,12 @@ public class WebController {
 
 	@Autowired
 	private BaseDatos baseDatos;
-	// Estos son datos a cholon que se tienen que quitar, estan solo para el diseño
-
+	@Autowired
+	Usuario usuario;
+	
+	Usuario vacio = new Usuario("", "", "");
+	// Estos son datos a cholon que se ponen la primera vez
+/*
 	Usuario u1 = new Usuario("Bob", "bob@noimporta.com", "contraseña1");
 	Mensaje m1 = new Mensaje(u1, "Hola como estan");
 	Usuario u2 = new Usuario("Alice", "alice@noimporta.com", "contraseña2");
@@ -32,30 +36,31 @@ public class WebController {
 	Hilo h1 = new Hilo("Ejemplo 1", u1, m1);
 	Hilo h2 = new Hilo("Ejemplo 2", u2, m2);
 
-	Usuario vacio = new Usuario("", "", "");
+	
 	FichaJugador f1 = new FichaJugador(u1, "Dave el Bárbaro", true, "Guerrero", "Humano");
 	FichaJugador f2 = new FichaJugador(u1, "Conan el Bárbaro", true, "Guerrero", "Humano");
 
 	FichaMundo fm1 = new FichaMundo("Esqueleto", "Alineamiento: caótico malvado Tipo: No muerto", "Enemigo");
 	FichaMundo fm2 = new FichaMundo("Kikimora", "Alineamiento: caótico neutral Tipo: Insectoide", "Enemigo");
-	@Autowired
-	Usuario usuario;
+
 
 	Partida p1 = new Partida("p1", false, u1, m3);
 	Partida p2 = new Partida("p2", true, u2, m4);
-
+//*/
 	// Hasta aqui zona de datos a cholon
 
 	@PostConstruct
 	public void init() {
-		
+		vacio = baseDatos.saveUsuario(vacio);
+		usuario = vacio;
+		/*
 		u1 = baseDatos.saveUsuario(u1);
 		u2 = baseDatos.saveUsuario(u2);
-		vacio = baseDatos.saveUsuario(vacio);
+		
 		h1 = baseDatos.saveHilo(h1);
 		h2 = baseDatos.saveHilo(h2);
 
-		usuario = vacio;
+		
 		p1 = baseDatos.savePartida(p1);
 		p2 = baseDatos.savePartida(p2);
 		// Para guardar en la bd
@@ -70,7 +75,6 @@ public class WebController {
 
 		fm1 = baseDatos.saveFichaMundo(fm1);
 		fm2 = baseDatos.saveFichaMundo(fm2);
-		System.out.println("DEBUG: " + fm1.toString());
 
 		u1.addFicha(f2);
 		u1.addPartidaJugador(p1);
@@ -83,12 +87,21 @@ public class WebController {
 		m3 = baseDatos.saveMensaje(m3);
 		m4 = baseDatos.saveMensaje(m4);
 
+//*/
 	}
 
 	@GetMapping("/foro")
 	public String foro(Model model) {
 
-		model.addAttribute("hilos", baseDatos.getAllHilos());
+		List<Hilo> hilos = new ArrayList<Hilo>();
+		for(Hilo h : baseDatos.getAllHilos())
+		{
+			Partida p = new Partida();
+			if(h.getClass() != p.getClass()) {
+				hilos.add(h);
+			}
+		}
+		model.addAttribute("hilos", hilos);
 
 		return "foro_general";
 	}
@@ -107,12 +120,12 @@ public class WebController {
 //		if (userActual == null) { // Ñapa incoming. Programming the Spanish way
 //			return "hilo_no_creado";
 //		} else {
-			m = new Mensaje(usuario, mensajeEscrito);
-			h = new Hilo(titulo, usuario, m);
-			m.setAutor(usuario);
-			m.setHilo(h);
-			baseDatos.saveHilo(h);
-			baseDatos.saveMensaje(m);
+		m = new Mensaje(usuario, mensajeEscrito);
+		h = new Hilo(titulo, usuario, m);
+		m.setAutor(usuario);
+		m.setHilo(h);
+		baseDatos.saveHilo(h);
+		baseDatos.saveMensaje(m);
 //		}
 		return "hilo_creado";
 	}
@@ -148,15 +161,15 @@ public class WebController {
 //			return "mensaje_error";
 //
 //		} else {
-			Mensaje m = new Mensaje(usuario, mensajeEscrito);
-			m.setHilo(hiloActual);
-			hiloActual.addMensaje(m);
+		Mensaje m = new Mensaje(usuario, mensajeEscrito);
+		m.setHilo(hiloActual);
+		hiloActual.addMensaje(m);
 
-			baseDatos.saveMensaje(m);
+		baseDatos.saveMensaje(m);
 
-			model.addAttribute("hilo", hiloActual);
-			return "mensaje_escrito";
-	//	}
+		model.addAttribute("hilo", hiloActual);
+		return "mensaje_escrito";
+		// }
 	}
 
 	@GetMapping("foro/{hilo}/{index}")
@@ -184,7 +197,8 @@ public class WebController {
 
 		Partida partidaActual = baseDatos.getPartida(partida);
 
-		model.addAttribute("titulo", partidaActual.getId());
+		model.addAttribute("titulo", partidaActual.getTitulo());
+		model.addAttribute("partida", partida);
 		model.addAttribute("mensajes", partidaActual.getMensajes());
 		return "partida";
 	}
@@ -243,9 +257,9 @@ public class WebController {
 //		} else if (uActualMail != null) {
 //			respuesta = "Usuario no válido. Correo electrónico repetido";
 //		} else {
-			respuesta = "Usuario aceptado";
-			usuario = baseDatos.saveUsuario(new Usuario(user, mail, password));
-	//	}
+		respuesta = "Usuario aceptado";
+		usuario = baseDatos.saveUsuario(new Usuario(user, mail, password));
+		// }
 		model.addAttribute("cadena", respuesta);
 		return "aceptar_usuario";
 
@@ -323,7 +337,8 @@ public class WebController {
 
 		Partida partidaActual = baseDatos.getPartida(partidaPrivada);
 
-		model.addAttribute("titulo", partidaActual.getId());
+		model.addAttribute("titulo", partidaActual.getTitulo());
+		model.addAttribute("partida", partidaPrivada);
 		model.addAttribute("mensajes", partidaActual.getMensajes());
 		return "partidaPrivada";
 	}
@@ -341,7 +356,7 @@ public class WebController {
 			@RequestParam String mensajeEscrito, @RequestParam(required = false) String idFicha) {
 
 		Ficha fichaActual = null;
-		
+
 		String inicio = "";
 		if (idFicha != null) {
 			fichaActual = baseDatos.findFichaJugador(Integer.parseInt(idFicha));
@@ -353,13 +368,13 @@ public class WebController {
 //		if (userActual == null) { // Ñapa incoming. Programming the Spanish way
 //			respuesta = "No se ha escrito el mensaje. Usuario inválido";
 //		} else {
-			respuesta = "Mensaje escrito para la partida " + partidaActual.getTitulo();
-			Mensaje m = new Mensaje(usuario, inicio + mensajeEscrito);
-			partidaActual.addMensaje(m);
-			m.setHilo(partidaActual);
+		respuesta = "Mensaje escrito para la partida " + partidaActual.getTitulo();
+		Mensaje m = new Mensaje(usuario, inicio + mensajeEscrito);
+		partidaActual.addMensaje(m);
+		m.setHilo(partidaActual);
 
-			baseDatos.saveMensaje(m);
-	//	}
+		baseDatos.saveMensaje(m);
+		// }
 		model.addAttribute("cadena", respuesta);
 		model.addAttribute("titulo", titulo);
 		return "mensaje_escrito_partida_privada";
@@ -376,18 +391,18 @@ public class WebController {
 	@PostMapping("partidas_privadas/{id}/add_ficha/aceptar")
 	public String aceptarFichaMundo(Model model, @PathVariable long id,
 			@RequestParam(required = false) List<String> idFicha) {
-		Partida partidaActual = baseDatos.getPartida(id);
-		for (String s : idFicha) {
-			int idMundo = Integer.parseInt(s);
-			FichaMundo fm = baseDatos.findFichaMundo(idMundo);
-			baseDatos.saveFichaMundo(fm);
-			partidaActual.addFicha(fm);
-			fm.setPartida(partidaActual);
+		if (idFicha != null) {
+			Partida partidaActual = baseDatos.getPartida(id);
+			for (String s : idFicha) {
+				int idMundo = Integer.parseInt(s);
+				FichaMundo fm = baseDatos.findFichaMundo(idMundo);
+				baseDatos.saveFichaMundo(fm);
+				partidaActual.addFicha(fm);
+				fm.setPartida(partidaActual);
+			}
 
+			baseDatos.savePartida(partidaActual);
 		}
-
-		baseDatos.savePartida(partidaActual);
-
 		return "aceptar_add_ficha";
 	}
 
@@ -490,7 +505,6 @@ public class WebController {
 		return "aceptar_ficha";
 	}
 
-
 	@PostMapping("/ficha_enemigos/aceptar_ficha_enemigo")
 	public String aceptarFichaEnemigo(Model model, @RequestParam String name, @RequestParam String Tipo,
 			@RequestParam String Alineamiento) {
@@ -507,37 +521,36 @@ public class WebController {
 
 		return "aceptar_ficha_mundo";
 	}
-	
+
 	@PostMapping("/ficha_objetos/aceptar_ficha_objeto")
 	public String aceptarFichaObjeto(Model model, @RequestParam String name, @RequestParam String Tipo,
 			@RequestParam String Descripcion) {
 
 		FichaMundo f = new FichaMundo(name, "Objeto", " Tipo:" + Tipo + " Descripcion:" + Descripcion);
 		f = baseDatos.saveFichaMundo(f);
-		model.addAttribute("ficha", f);		
+		model.addAttribute("ficha", f);
 		return "aceptar_ficha_objeto";
 	}
-	
+
 	@PostMapping("/ficha_habilidades/aceptar_ficha_habilidades")
 	public String aceptarFichaHabilidades(Model model, @RequestParam String name, @RequestParam String Tipo,
 			@RequestParam String Descripcion) {
 
 		FichaMundo f = new FichaMundo(name, "Habilidad", " Tipo:" + Tipo + " Descripcion:" + Descripcion);
 		f = baseDatos.saveFichaMundo(f);
-		model.addAttribute("ficha", f);		
+		model.addAttribute("ficha", f);
 		return "aceptar_ficha_objeto";
 	}
-	
+
 	@PostMapping("/ficha_loc/aceptar_ficha_loc")
-	public String aceptarFichaLoc(Model model, @RequestParam String name, @RequestParam String Tipo, @RequestParam String Temperatura,
-			@RequestParam String Descripcion) {
+	public String aceptarFichaLoc(Model model, @RequestParam String name, @RequestParam String Tipo,
+			@RequestParam String Temperatura, @RequestParam String Descripcion) {
 
-		FichaMundo f = new FichaMundo(name, "Localizacion", "Tipo: " + Tipo + " Temperatura: " + Temperatura + " Descripcion: " + Descripcion);
+		FichaMundo f = new FichaMundo(name, "Localizacion",
+				"Tipo: " + Tipo + " Temperatura: " + Temperatura + " Descripcion: " + Descripcion);
 		f = baseDatos.saveFichaMundo(f);
-		model.addAttribute("ficha", f);		
+		model.addAttribute("ficha", f);
 		return "aceptar_ficha_objeto";
 	}
-
-
 
 }

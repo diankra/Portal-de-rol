@@ -3,13 +3,13 @@
 <meta charset="UTF-8" />
 </head>
 <body>
-	<h2>Estas en la partida {{titulo}} de un foro</h2>
+	<h2>Estas en la partida "{{titulo}}"</h2>
 	<table>
 		{{#mensajes}} {{#.}}
 		<b>{{autor.nombre}}:</b>
 		<p>{{texto}}</p>
 		{{/.}}
-		<a href="/partidas_publicas/{{titulo}}/{{-index}}">Eliminar
+		<a href="/partidas_publicas/{{partida}}/{{-index}}">Eliminar
 			mensaje</a>
 		<br></br> {{/mensajes}}
 
@@ -17,7 +17,7 @@
 
 	</table>
 	<br></br>
-	<a href="/partidas_publicas/{{titulo}}/escribir_mensaje_partida">Escribir
+	<a href="/partidas_publicas/{{partida}}/escribir_mensaje_partida">Escribir
 		mensaje</a>
 
 	<br></br>
