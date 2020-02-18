@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 //ELIMINAR
-@Controller
+
 public class BaseDatos implements CommandLineRunner{
 
 	@Autowired
