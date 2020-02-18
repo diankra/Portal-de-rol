@@ -64,7 +64,8 @@ Tablero de Trello: https://trello.com/b/gaM8JvpQ/portal-de-rol-dad
   ## Diagrama de navegación
   
   
-![alt text] (https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Diagrama%20de%20navegaci%C3%B3n.jpg)
+  ![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Diagrama%20de%20navegaci%C3%B3n.jpg)
+  
 
 
   ## Diagrama UML
