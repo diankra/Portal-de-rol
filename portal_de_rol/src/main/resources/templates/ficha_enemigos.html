@@ -1,29 +1,39 @@
 <html>
 <head>
-	<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<!-- Estilo principal -->
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="icon" href="/assets/dndicon.webp">
+<title>Portal de Rol</title>
 </head>
 <body>
 	<h2>Aquí se crean y consultan fichas de enemigos.</h2>
-	
+
 	<form method="post" action='/ficha_enemigos/aceptar_ficha_enemigo'>
-	<p>Nombre del enemigo: </p>
-	<input type='text' name='name'/>
-	<br></br>
-	<p>Tipo del enemigo: </p>
-	<label>	<input type='radio'  name='Tipo' value= "Bestia"/> Es una bestia común. </label>
-	<label>	<input type='radio'  name='Tipo' value= "Humano"/> Es un humano. </label>
-	<label>	<input type='radio'  name='Tipo' value= "Monstruo"/> Es un monstruo. </label>
-	<br></br>
-	<p>Alineamiento del enemigo: </p>
-	<label>	<input type='radio'  name='Alineamiento' value= "Bueno"/> Bueno. </label>
-	<label>	<input type='radio'  name='Alineamiento' value= "Neutro"/> Ni bueno ni malo, neutral. </label>
-	<label>	<input type='radio'  name='Alineamiento' value= "Malvado"/> Malvado. </label>
-	<br></br>
-	 	
- 	<input type='submit' value='Enviar'>
-	
-	
-	
+		<p>Nombre del enemigo:</p>
+		<input type='text' name='name' /> <br></br>
+		<p>Tipo del enemigo:</p>
+		<label class="cont-radio"> <input type='radio' name='Tipo'
+			value="Bestia" /> Es una bestia común. <span class="radio-button"></</span></label>
+		<label class="cont-radio"> <input type='radio' name='Tipo'
+			value="Humano" /> Es un humano. <span class="radio-button"></</span></label>
+		<label class="cont-radio"> <input type='radio' name='Tipo'
+			value="Monstruo" /> Es un monstruo. <span class="radio-button"></</span></label>
+		<br></br>
+		<p>Alineamiento del enemigo:</p>
+		<label class="cont-radio"> <input type='radio'
+			name='Alineamiento' value="Bueno" /> Bueno. <span
+			class="radio-button"></</span></label> <label class="cont-radio"> <input
+			type='radio' name='Alineamiento' value="Neutro" /> Ni bueno ni malo,
+			neutral. <span class="radio-button"></</span></label> <label
+			class="cont-radio"> <input type='radio' name='Alineamiento'
+			value="Malvado" /> Malvado. <span class="radio-button"></</span></label> <br></br>
+
+		<input type='submit' value='Enviar'>
 </body>
 
 <br></br>
