@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+//PARTIR
 @Controller
 public class WebController {
 
@@ -534,7 +535,7 @@ public class WebController {
 
 	@PostMapping("/ficha_habilidades/aceptar_ficha_habilidades")
 	public String aceptarFichaHabilidades(Model model, @RequestParam String name, @RequestParam(required = false)  String Tipo,
-			@RequestParam(required = false) String Descripcion) {
+			@RequestParam(required = false)  String Descripcion) {
 
 		FichaMundo f = new FichaMundo(name, "Habilidad", " Tipo:" + Tipo + " Descripcion:" + Descripcion);
 		f = baseDatos.saveFichaMundo(f);
@@ -543,8 +544,8 @@ public class WebController {
 	}
 
 	@PostMapping("/ficha_loc/aceptar_ficha_loc")
-	public String aceptarFichaLoc(Model model, @RequestParam String name, @RequestParam(required = false)  String Tipo,
-			@RequestParam(required = false)  String Temperatura, @RequestParam(required = false)  String Descripcion) {
+	public String aceptarFichaLoc(Model model, @RequestParam String name, @RequestParam String Tipo,
+			@RequestParam String Temperatura, @RequestParam String Descripcion) {
 
 		FichaMundo f = new FichaMundo(name, "Localizacion",
 				"Tipo: " + Tipo + " Temperatura: " + Temperatura + " Descripcion: " + Descripcion);
