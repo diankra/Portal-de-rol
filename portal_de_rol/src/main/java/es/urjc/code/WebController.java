@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 //PARTIR
 @Controller
 public class WebController {
-
+/*
 	@Autowired
 	private BaseDatos baseDatos;
 	@Autowired
@@ -47,7 +47,7 @@ public class WebController {
 
 	Partida p1 = new Partida("p1", false, u1, m3);
 	Partida p2 = new Partida("p2", true, u2, m4);
-//*/
+//
 	// Hasta aqui zona de datos a cholon
 
 	@PostConstruct
@@ -88,7 +88,7 @@ public class WebController {
 		m3 = baseDatos.saveMensaje(m3);
 		m4 = baseDatos.saveMensaje(m4);
 
-//*/
+//
 	}
 
 	@GetMapping("/foro")
@@ -240,6 +240,7 @@ public class WebController {
 		return "mensaje_eliminado_partida";
 	}
 
+	
 	@GetMapping("/crear_usuario")
 	public String crear_usuario(Model model) {
 
@@ -438,8 +439,8 @@ public class WebController {
 		return "mensaje_eliminado_partida_privada";
 	}
 
-//	
-
+//
+ * 
 	@GetMapping("/crear_ficha")
 	public String fichas(Model model) {
 
@@ -553,5 +554,5 @@ public class WebController {
 		model.addAttribute("ficha", f);
 		return "aceptar_ficha_objeto";
 	}
-
+*/
 }
