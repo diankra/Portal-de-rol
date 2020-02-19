@@ -1,5 +1,7 @@
 package es.urjc.code;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +15,22 @@ public class LoginController {
 	@Autowired
 	private UsuarioRepository usuariosBD;
 	@Autowired
-	Usuario usuario;
+	static Usuario usuario;
+	//Para el usuario por defecto
+	Usuario vacio = new Usuario("", "", "");
+	
+	public static Usuario getUsuario() {
+		/*Chapucilla para acceder al usuario correcto desde todos los controller,
+		Invoca este metodo "LoginController.getUsuario()" para utilizar el user en otra clase
+		 */
+		return usuario;
+	}
+
+	@PostConstruct
+	public void init() {
+		vacio = usuariosBD.save(vacio);
+		usuario = vacio;
+	}
 	
 	@GetMapping("/crear_usuario")
 	public String crear_usuario(Model model) {

@@ -16,8 +16,7 @@ public class FichasController {
 	private FichaJugadorRepository fichasJugadorBD;
 	@Autowired
 	private FichaMundoRepository fichasMundoBD;
-	@Autowired
-	Usuario usuario;
+
 	
 	@GetMapping("/crear_ficha")
 	public String fichas(Model model) {
@@ -76,10 +75,10 @@ public class FichasController {
 			type = true;
 		}
 
-		FichaJugador f = new FichaJugador(usuario, name, type, Clase, Raza);
+		FichaJugador f = new FichaJugador(LoginController.getUsuario(), name, type, Clase, Raza);
 		f = fichasJugadorBD.save(f);
-		if (usuariosBD.findUsuarioByNombre(usuario.getNombre()) != null) {
-			usuario.addFicha(f);
+		if (usuariosBD.findUsuarioByNombre(LoginController.getUsuario().getNombre()) != null) {
+			LoginController.getUsuario().addFicha(f);
 		}
 
 		return "aceptar_ficha";

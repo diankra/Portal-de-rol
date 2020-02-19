@@ -22,8 +22,6 @@ public class PartidasPrivadasController {
 	private FichaJugadorRepository fichasJugadorBD;
 	@Autowired
 	private FichaMundoRepository fichasMundoBD;
-	@Autowired
-	Usuario usuario;
 	
 	@GetMapping("/partidas_privadas")
 	public String partidas_privadas(Model model) {
@@ -47,7 +45,7 @@ public class PartidasPrivadasController {
 	@GetMapping("partidas_privadas/{id}/escribir_mensaje_partida_privada")
 	public String escribirMensajePartidaPrivada(Model model, @PathVariable long id) {
 
-		model.addAttribute("fichas", usuario.getFichas());
+		model.addAttribute("fichas", LoginController.getUsuario().getFichas());
 		model.addAttribute("titulo", id);
 		return "escribir_mensaje_partida_privada";
 	}
@@ -70,7 +68,7 @@ public class PartidasPrivadasController {
 //			respuesta = "No se ha escrito el mensaje. Usuario inválido";
 //		} else {
 		respuesta = "Mensaje escrito para la partida " + partidaActual.getTitulo();
-		Mensaje m = new Mensaje(usuario, inicio + mensajeEscrito);
+		Mensaje m = new Mensaje(LoginController.getUsuario(), inicio + mensajeEscrito);
 		partidaActual.addMensaje(m);
 		m.setHilo(partidaActual);
 
