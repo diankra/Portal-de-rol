@@ -2,3 +2,5 @@
 portal_de_rol/target/classes/META-INF/maven/com.example/portal_de_rol/pom.properties
 *.properties
 *.properties
+portal_de_rol/src/main/resources/application.properties
+portal_de_rol/target/classes/application.properties
