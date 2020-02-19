@@ -17,7 +17,7 @@ public class LoginController {
 	@Autowired
 	static Usuario usuario;
 	//Para el usuario por defecto
-	Usuario vacio = new Usuario("", "", "");
+	Usuario vacio = new Usuario("Anonimo", "", "");
 	
 	public static Usuario getUsuario() {
 		/*Chapucilla para acceder al usuario correcto desde todos los controller,

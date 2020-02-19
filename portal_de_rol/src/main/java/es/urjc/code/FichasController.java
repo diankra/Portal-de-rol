@@ -1,7 +1,5 @@
 package es.urjc.code;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,15 +17,6 @@ public class FichasController {
 	@Autowired
 	private FichaMundoRepository fichasMundoBD;
 
-	
-	@PostConstruct
-	public void init() {
-		Usuario vacio = new Usuario("", "", "");
-		vacio = usuariosBD.save(vacio);
-		usuario = vacio;
-	}
-	
-	
 	@GetMapping("/crear_ficha")
 	public String fichas(Model model) {
 
