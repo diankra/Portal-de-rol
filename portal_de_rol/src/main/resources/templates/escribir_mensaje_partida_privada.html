@@ -1,6 +1,14 @@
 <html>
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<!-- Estilo principal -->
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="icon" href="/assets/dndicon.webp">
+<title>Portal de Rol</title>
 </head>
 <body>
 	<h2>Mensaje</h2>
@@ -10,17 +18,14 @@
 		<p>Escribe tu mensaje:</p>
 		<textarea name='mensajeEscrito' rows=5 cols=40>Texto</textarea>
 		<p>Selecciona tu personaje</p>
-		{{#fichas}}
-			{{#.}}
-			<label>	<input type='radio'  name='idFicha' value= '{{id}}'/> {{nombre}} </label>
-			<br></br>
-			{{/.}}
-		{{/fichas}}
-		<input type='submit' value='Enviar'>
+		{{#fichas}} {{#.}} <label class="cont-radio"> <input
+			type='radio' name='idFicha' value='{{id}}' /> {{nombre}} <span
+			class="radio-button"></</span></label> <br></br> {{/.}} {{/fichas}} <input
+			type='submit' value='Enviar'>
 	</form>
 
 
-	
+
 	<a href="/partidas_privadas/{{titulo}}">Volver</a>
 </body>
 

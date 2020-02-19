@@ -1,20 +1,28 @@
 <html>
 <head>
-	<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<!-- Estilo principal -->
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="icon" href="/assets/dndicon.webp">
+<title>Portal de Rol</title>
 </head>
 <body>
-	<h2>Crear hilo</h2>	
-	
-	<form method="post" action='/foro/crear_hilo/hilo_creado'>
-	<p>Titulo del hilo:</p>
-	<input type='text' name='titulo'/>
-	<p>Primer mensaje:</p>
-	<textarea name='mensajeEscrito' rows=5 cols=40>Texto</textarea> 
- 	<input type='submit' value='Enviar'>
-</form>
-	
+	<h1>Crear hilo</h1>
 
-<a href="/foro">Volver</a>
+	<form method="post" action='/foro/crear_hilo/hilo_creado'>
+		<p>Titulo del hilo:</p>
+		<input type='text' name='titulo' />
+		<p>Primer mensaje:</p>
+		<textarea name='mensajeEscrito' rows=5 cols=40>Texto</textarea>
+		<input type='submit' value='Enviar'>
+	</form>
+
+
+	<a href="/foro">Volver</a>
 </body>
 
 

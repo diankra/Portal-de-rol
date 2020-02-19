@@ -1,24 +1,29 @@
 <html>
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<!-- Estilo principal -->
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="icon" href="/assets/dndicon.webp">
+<title>Portal de Rol</title>
 </head>
 <body>
-	<h2>Añade tu ficha</h2>
+	<h1>Añade tu ficha</h1>
 
 	<form method="post"
 		action='/partidas_privadas/{{id}}/add_ficha/aceptar'>
 		<p>Selecciona una o varias fichas:</p>
-		{{#fichas}}
-			{{#.}}
-			<label>	<input type='checkbox'  name='idFicha' value= '{{id}}'/> {{nombre}}: {{tipo}} </label>
-			<br></br>
-			{{/.}}
-		{{/fichas}}
-		<input type='submit' value='Enviar'>
+		{{#fichas}} {{#.}} <label class="container"> <input
+			type='checkbox' name='idFicha' value='{{id}}' /> {{nombre}}: {{tipo}}
+			<span class="checkmark"></span></label> <br></br> {{/.}} {{/fichas}} <input
+			type='submit' value='Enviar'>
 	</form>
 
 
-	
+
 	<a href="/partidas_privadas/{{id}}">Volver</a>
 </body>
 

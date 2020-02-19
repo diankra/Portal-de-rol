@@ -1,25 +1,40 @@
 <html>
 <head>
-	<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<!-- Estilo principal -->
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="icon" href="/assets/dndicon.webp">
+<title>Portal de Rol</title>
 </head>
 <body>
-	<h2>Estas en el hilo {{hilo.titulo}} de un foro</h2>	
-	<table>		
-		{{#mensajes}}
-			{{#.}}
-				<b>{{autor.nombre}}:</b>
-				<p>		{{texto}}</p>
-			{{/.}}
-			<a href = "/foro/{{hilo.id}}/{{-index}}">Eliminar mensaje</a>
-			<br></br>
-		{{/mensajes}}
+	<h1>Estas en el hilo {{hilo.titulo}}</h1>
+	<table>
+		{{#mensajes}} {{#.}}
+		<div class="autor-mensaje">
+			<div class="autor">
+				<p>
+					<b>{{autor.nombre}}:</b>
+				</p>
+			</div>
+			<div class="mensaje">
+				<p>{{texto}}</p>
+			</div>
+			<a href="/foro/{{hilo.id}}/{{-index}}">Eliminar mensaje</a>
+		</div>
+		{{/.}}
 
-		
+		<br></br> {{/mensajes}}
+
+
 
 	</table>
 	<a href="/foro/{{hilo.id}}/escribir_mensaje">Escribir mensaje</a>
-<br></br>
-<a href="/foro">Volver</a>
+	<br></br>
+	<a href="/foro">Volver</a>
 </body>
 
 

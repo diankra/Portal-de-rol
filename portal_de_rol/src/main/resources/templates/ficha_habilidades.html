@@ -1,25 +1,37 @@
 <html>
 <html>
 <head>
-	<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<!-- Estilo principal -->
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="icon" href="/assets/dndicon.webp">
+<title>Portal de Rol</title>
 </head>
 <body>
 	<h2>Aquí se crean y consultan fichas de habilidades.</h2>
-	
-	<form method="post" action='/ficha_habilidades/aceptar_ficha_habilidades'>
-	<p>Nombre de la habilidad: </p>
-	<input type='text' name='name'/>
-	<br></br>
-	<p>Tipo del objeto: </p>
-	<label>	<input type='radio'  name='Tipo' value= "Fisicas"/> Es una habilidad fisica, natural o entrenada. </label>
-	<label>	<input type='radio'  name='Tipo' value= "Magicas"/> Es una habilidad magica o un conjuro. </label>
-	<label>	<input type='radio'  name='Tipo' value= "Raciales"/> Habilidades propias de raza. </label>
-	<br></br>
-	<p>Descripcion de la habilidad: </p>
-	 <textarea name='Descripcion'rows=5 cols=40>Texto</textarea>
- 	<input type='submit' value='Enviar'>
+
+	<form method="post"
+		action='/ficha_habilidades/aceptar_ficha_habilidades'>
+		<p>Nombre de la habilidad:</p>
+		<input type='text' name='name' /> <br></br>
+		<p>Tipo del objeto:</p>
+		<label class="cont-radio"> <input type='radio' name='Tipo'
+			value="Fisicas" /> Es una habilidad fisica, natural o entrenada. <span
+			class="radio-button"></</span></label> <label class="cont-radio"> <input
+			type='radio' name='Tipo' value="Magicas" /> Es una habilidad magica o
+			un conjuro. <span class="radio-button"></</span></label> <label
+			class="cont-radio"> <input type='radio' name='Tipo'
+			value="Raciales" /> Habilidades propias de raza. <span
+			class="radio-button"></</span></label> <br></br>
+		<p>Descripcion de la habilidad:</p>
+		<textarea name='Descripcion' rows=5 cols=40>Texto</textarea>
+		<input type='submit' value='Enviar'>
 	</form>
-		
+
 </body>
 
 <br></br>

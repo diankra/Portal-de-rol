@@ -1,26 +1,46 @@
 <html>
 <head>
-	<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<!-- Estilo principal -->
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="icon" href="/assets/dndicon.webp">
+<title>Portal de Rol</title>
 </head>
 <body>
 	<h2>Aquí se crean y consultan fichas de localizaciones.</h2>
-	
+
 	<form method="post" action='/ficha_loc/aceptar_ficha_loc'>
-	<p>Nombre del lugar: </p>
-	<input type='text' name='name'/>
-	<br></br>
-	<p>Tipo de lugar: </p>
-	<label>	<input type='radio'  name='Tipo' value= "Mundanos"/> Es un lugar común. </label>
-	<label>	<input type='radio'  name='Tipo' value= "Elemental"/> Es un plano elemental. </label>
-	<label>	<input type='radio'  name='Tipo' value= "Dimensional"/> Es un plano dimensional. </label>
-	<br></br>
-	<p>Temperatura: </p>
-	<label>	<input type='radio'  name='Temperatura' value= "La temperatura oscila entre -50 y 5 grados centigrados"/> La temperatura oscila entre -50 y 5 grados centigrados. </label>
-	<label>	<input type='radio'  name='Temperatura' value= "La temperatura oscila entre 6 y 25 grados centigrados"/> La temperatura oscila entre 6 y 25 grados centigrados. </label>
-	<label>	<input type='radio'  name='Temperatura' value= "La temperatura es superior de 26 grados centigrados"/> La temperatura es superior de 26 grados centigrados, </label>
-	<p>Descripcion del lugar: </p>
-	<textarea name='Descripcion'rows=5 cols=40>Texto</textarea>
- 	<input type='submit' value='Enviar'>	
+		<p>Nombre del lugar:</p>
+		<input type='text' name='name' /> <br></br>
+		<p>Tipo de lugar:</p>
+		<label class="cont-radio"> <input type='radio' name='Tipo'
+			value="Mundanos" /> Es un lugar común. <span class="radio-button"></</span></label>
+		<label class="cont-radio"> <input type='radio' name='Tipo'
+			value="Elemental" /> Es un plano elemental. <span
+			class="radio-button"></</span></label> <label class="cont-radio"> <input
+			type='radio' name='Tipo' value="Dimensional" /> Es un plano
+			dimensional. <span class="radio-button"></</span></label> <br></br>
+		<p>Temperatura:</p>
+		<label class="cont-radio"> <input type='radio'
+			name='Temperatura'
+			value="La temperatura oscila entre -50 y 5 grados centigrados" /> La
+			temperatura oscila entre -50 y 5 grados centigrados. <span
+			class="radio-button"></</span></label> <label class="cont-radio"> <input
+			type='radio' name='Temperatura'
+			value="La temperatura oscila entre 6 y 25 grados centigrados" /> La
+			temperatura oscila entre 6 y 25 grados centigrados. <span
+			class="radio-button"></</span></label> <label class="cont-radio"> <input
+			type='radio' name='Temperatura'
+			value="La temperatura es superior de 26 grados centigrados" /> La
+			temperatura es superior de 26 grados centigrados, <span
+			class="radio-button"></</span></label>
+		<p>Descripcion del lugar:</p>
+		<textarea name='Descripcion' rows=5 cols=40>Texto</textarea>
+		<input type='submit' value='Enviar'>
 	</form>
 </body>
 

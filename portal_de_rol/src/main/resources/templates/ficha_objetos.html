@@ -1,24 +1,34 @@
 <html>
 <head>
-	<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<!-- Estilo principal -->
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="icon" href="/assets/dndicon.webp">
+<title>Portal de Rol</title>
 </head>
 <body>
 	<h2>Aquí se crean y consultan fichas de objetos.</h2>
-	
+
 	<form method="post" action='/ficha_objetos/aceptar_ficha_objeto'>
-	<p>Nombre del objeto: </p>
-	<input type='text' name='name'/>
-	<br></br>
-	<p>Tipo del objeto: </p>
-	<label>	<input type='radio'  name='Tipo' value= "Mundanos"/> Es una objeto común. </label>
-	<label>	<input type='radio'  name='Tipo' value= "Magicos"/> Es un objeto magico. </label>
-	<label>	<input type='radio'  name='Tipo' value= "Unicos"/> Es un objeto unico. </label>
-	<br></br>
-	<p>Descripcion del objeto: </p>
-	 <textarea name='Descripcion'rows=5 cols=40>Texto</textarea>
- 	<input type='submit' value='Enviar'>
+		<p>Nombre del objeto:</p>
+		<input type='text' name='name' /> <br></br>
+		<p>Tipo del objeto:</p>
+		<label class="cont-radio"> <input type='radio' name='Tipo'
+			value="Mundanos" /> Es un objeto común. <span class="radio-button"></</span></label>
+		<label class="cont-radio"> <input type='radio' name='Tipo'
+			value="Magicos" /> Es un objeto magico. <span class="radio-button"></</span></label>
+		<label class="cont-radio"> <input type='radio' name='Tipo'
+			value="Unicos" /> Es un objeto unico. <span class="radio-button"></</span></label>
+		<br></br>
+		<p>Descripcion del objeto:</p>
+		<textarea name='Descripcion' rows=5 cols=40>Texto</textarea>
+		<input type='submit' value='Enviar'>
 	</form>
-		
+
 </body>
 
 <br></br>
