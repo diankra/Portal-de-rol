@@ -61,7 +61,7 @@ public class LoginController {
 		return "inicia_sesion";
 	}
 
-	@PostMapping("/inicia_sesion/aceptar")
+	/*@PostMapping("/inicia_sesion/aceptar")
 	public String aceptarSesion(Model model, @RequestParam String user, @RequestParam String password) {
 //		Usuario uActual = baseDatos.findUsuario(user);
 //		String respuesta = "";
@@ -75,6 +75,11 @@ public class LoginController {
 //		}
 		model.addAttribute("cadena", "Bienvenido");
 		return "aceptar_usuario";
-	}
+	}*/
+	
+	@GetMapping("/")
+    public String index() {
+        return "index";
+    }
 
 }

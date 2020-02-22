@@ -1,9 +1,12 @@
 package es.urjc.code;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 @Configuration
@@ -28,9 +31,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		// Private pages (all other pages)
 		 http.authorizeRequests().anyRequest().authenticated();
 		 
-		
+		http.formLogin().loginPage("/inicia_sesion");
+		http.formLogin().usernameParameter("username");
+		http.formLogin().passwordParameter("password");
+		http.formLogin().defaultSuccessUrl("/");
+		//http.formLogin().failureUrl("/loginerror");
+		 
+		// Logout
+		http.logout().logoutUrl("/logout");
+		http.logout().logoutSuccessUrl("/");
+
+		 // Disable CSRF at the moment
+		http.csrf().disable();
 	
 	}
+	
+	@Override
+	 protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+	 // User
+	 auth.inMemoryAuthentication().withUser("user").password("{noop}pass").roles("USER");
+	 }
+
 	
 	//Esto es para que se vea el CSS que si no se lo carga
 	@Override
