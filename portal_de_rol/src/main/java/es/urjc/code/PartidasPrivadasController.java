@@ -45,7 +45,7 @@ public class PartidasPrivadasController {
 	@GetMapping("partidas_privadas/{id}/escribir_mensaje_partida_privada")
 	public String escribirMensajePartidaPrivada(Model model, @PathVariable long id) {
 
-		model.addAttribute("fichas", LoginController.getUsuario().getFichas());
+		model.addAttribute("fichas", fichasJugadorBD.findAll()); //para que ponga todas las fichas de pj
 		model.addAttribute("titulo", id);
 		return "escribir_mensaje_partida_privada";
 	}
