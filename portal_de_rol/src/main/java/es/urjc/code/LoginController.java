@@ -17,7 +17,6 @@ public class LoginController {
 	@Autowired
 	static Usuario usuario;
 	//Para el usuario por defecto
-	Usuario vacio = new Usuario("Anonimo", "", "");
 	
 	public static Usuario getUsuario() {
 		/*Chapucilla para acceder al usuario correcto desde todos los controller,
@@ -28,8 +27,6 @@ public class LoginController {
 
 	@PostConstruct
 	public void init() {
-		vacio = usuariosBD.save(vacio);
-		usuario = vacio;
 	}
 	
 	@GetMapping("/crear_usuario")
