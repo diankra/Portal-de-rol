@@ -3,12 +3,15 @@ package es.urjc.code;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -21,6 +24,9 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter implements WebMvcConfigurer{
+	
+	@Autowired
+	 public UserRepositoryAuthenticationProvider authenticationProvider;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -58,14 +64,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 
 	}
 
-	@Override
-	 protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-	 // User
-	 auth.inMemoryAuthentication().withUser("user").password("{noop}pass").roles("USER");
-	 auth.inMemoryAuthentication().withUser("admin").password("{noop}adminpass").roles("USER", "ADMIN");
-	 
-	 }
+//	@Override
+//	 protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//
+//	 // User
+//	 auth.inMemoryAuthentication().withUser("user").password("{noop}pass").roles("USER");
+//	 auth.inMemoryAuthentication().withUser("admin").password("{noop}adminpass").roles("USER", "ADMIN");
+//	 
+//	 }
 
 	
 	//Esto es para que se vea el CSS que si no se lo carga
@@ -75,6 +81,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 	    web.ignoring().antMatchers("/assets/**");
 	}
 
+	@Override
+	 protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	 // Database authentication provider
+	 auth.authenticationProvider(authenticationProvider);
+	 }
 
 }
 
