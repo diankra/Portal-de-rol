@@ -35,9 +35,8 @@ public class LoginController {
 		return "crear_usuario";
 	}
 
-	@PostMapping("/crear_usuario/aceptar")
-	public String aceptarUsuario(Model model, @RequestParam String user, @RequestParam String mail,
-			@RequestParam String password) {
+	@GetMapping("/crear_usuario/aceptar")
+	public String aceptarUsuario(Model model) {
 
 		String respuesta = "";
 //		Usuario uActualNombre = baseDatos.findUsuario(user);
@@ -48,7 +47,7 @@ public class LoginController {
 //			respuesta = "Usuario no válido. Correo electrónico repetido";
 //		} else {
 		respuesta = "Usuario aceptado";
-		usuario = usuariosBD.save(new Usuario(user, mail, password));
+		//usuario = usuariosBD.save(new Usuario(user, mail, password));
 		// }
 		model.addAttribute("cadena", respuesta);
 		return "aceptar_usuario";
@@ -60,6 +59,20 @@ public class LoginController {
 
 		return "inicia_sesion";
 	}
+	
+	@GetMapping("/cierra_sesion")
+	public String cierra_sesion(Model model) {
+		
+		return "cierra_sesion";
+	}
+	
+	@GetMapping("/cierra_sesion/aceptar")
+	public String cierra_sesion_aceptar(Model model) {
+		
+		return "cierra_sesion";
+	}
+	
+	
 
 	/*@PostMapping("/inicia_sesion/aceptar")
 	public String aceptarSesion(Model model, @RequestParam String user, @RequestParam String password) {

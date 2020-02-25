@@ -11,14 +11,9 @@
 <title>Portal de Rol</title>
 </head>
 <body>
-	<h2>Iniciar sesión</h2>
-	<form method="post" action="/inicia_sesion">
-		<p>Nombre de usuario:</p>
-		<input type='text' name="username" />
-		<p>Contraseña:</p>
-		<input type='password' name="password" /> <input type='submit'
-			value='Enviar'>
-		<input type='hidden' name="_csrf" value="{{token}}" />	
+	<h2>Te has desconectado</h2>
+	<form method="post" action="/cierra_sesion">
+
 </body>
 
 <a href="/">Volver</a>

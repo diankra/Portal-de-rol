@@ -1,5 +1,8 @@
 package es.urjc.code;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,10 +10,15 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 @Configuration
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter implements WebMvcConfigurer{
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -27,23 +35,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		
 		http.authorizeRequests().antMatchers("/crear_usuario").permitAll();
 		http.authorizeRequests().antMatchers("/inicia_sesion").permitAll();
+		http.authorizeRequests().antMatchers("/cierra_sesion/aceptar").permitAll();
 		
 		// Private pages (all other pages)
 		 http.authorizeRequests().anyRequest().authenticated();
+		 http.authorizeRequests().antMatchers("/foro/{hilo}/escribir_mensaje").hasAnyRole("USER");
+		 http.authorizeRequests().antMatchers("/foro/{hilo}/{mensaje}").hasAnyRole("ADMIN");
 		 
 		http.formLogin().loginPage("/inicia_sesion");
 		http.formLogin().usernameParameter("username");
 		http.formLogin().passwordParameter("password");
-		http.formLogin().defaultSuccessUrl("/");
+		http.formLogin().defaultSuccessUrl("/crear_usuario/aceptar");
 		//http.formLogin().failureUrl("/loginerror");
 		 
 		// Logout
-		http.logout().logoutUrl("/logout");
-		http.logout().logoutSuccessUrl("/");
-
-		 // Disable CSRF at the moment
-		http.csrf().disable();
+		http.logout().logoutUrl("/cierra_sesion");
+		http.logout().logoutSuccessUrl("/cierra_sesion/aceptar");
 	
+	}
+	
+	//CSRFHandler
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new CSRFHandlerInterceptor());
 	}
 	
 	@Override
@@ -51,6 +65,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 	 // User
 	 auth.inMemoryAuthentication().withUser("user").password("{noop}pass").roles("USER");
+	 auth.inMemoryAuthentication().withUser("admin").password("{noop}adminpass").roles("USER, ADMIN");
+	 
 	 }
 
 	
@@ -62,6 +78,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	}
 
 
+}
+
+class CSRFHandlerInterceptor extends HandlerInterceptorAdapter {
+	 @Override
+	 public void postHandle(final HttpServletRequest request,
+	 final HttpServletResponse response, final Object handler,
+	 
+	 final ModelAndView modelAndView) throws Exception {
+	 CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+	 modelAndView.addObject("token", token.getToken());
+	 }
 }
 
 

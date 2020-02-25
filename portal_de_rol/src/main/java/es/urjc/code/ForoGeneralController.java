@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -66,7 +67,7 @@ public class ForoGeneralController {
 	}
 
 	@GetMapping("foro/{hilo}")
-	public String hilo(Model model, @PathVariable long hilo) {
+	public String hilo(Model model, @PathVariable long hilo, HttpServletRequest request) {
 
 		// Espero que esto no haya que cambiarlo mucho con la database pero quien sabe
 
@@ -74,6 +75,7 @@ public class ForoGeneralController {
 
 		model.addAttribute("hilo", hiloActual);
 
+		model.addAttribute("admin", request.isUserInRole("ADMIN"));
 		model.addAttribute("mensajes", hiloActual.getMensajes());
 		return "hilo_foro";
 	}
