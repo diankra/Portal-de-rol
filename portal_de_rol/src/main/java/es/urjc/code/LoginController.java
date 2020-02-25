@@ -1,8 +1,10 @@
 package es.urjc.code;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,6 +56,22 @@ public class LoginController {
 
 	}
 
+	@GetMapping("/inicia_sesion/aceptar")
+	public String aceptarSesion(Model model) {
+
+		String respuesta = "Usuario aceptado";
+		model.addAttribute("cadena", respuesta);
+		return "aceptar_usuario";
+
+	}
+	@GetMapping("/fallo_inicia_sesion")
+	public String fallarSesion(Model model) {
+
+		String respuesta = "Credenciales erróneas";
+		model.addAttribute("cadena", respuesta);
+		return "aceptar_usuario";
+
+	}
 	@GetMapping("/inicia_sesion")
 	public String inicia_sesion(Model model) {
 
@@ -68,8 +86,9 @@ public class LoginController {
 	
 	@GetMapping("/cierra_sesion/aceptar")
 	public String cierra_sesion_aceptar(Model model) {
-		
-		return "cierra_sesion";
+		String respuesta = "Usuario desconectado";
+		model.addAttribute("cadena", respuesta);
+		return "aceptar_usuario";
 	}
 	
 	

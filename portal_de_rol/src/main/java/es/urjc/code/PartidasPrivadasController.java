@@ -2,6 +2,8 @@ package es.urjc.code;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,13 +34,14 @@ public class PartidasPrivadasController {
 	}
 
 	@GetMapping("partidas_privadas/{partidaPrivada}")
-	public String partidaPrivada(Model model, @PathVariable long partidaPrivada) {
+	public String partidaPrivada(Model model, @PathVariable long partidaPrivada,  HttpServletRequest request) {
 
 		Partida partidaActual = partidasBD.findPartidaById(partidaPrivada);
 
 		model.addAttribute("titulo", partidaActual.getTitulo());
 		model.addAttribute("partida", partidaPrivada);
 		model.addAttribute("mensajes", partidaActual.getMensajes());
+		model.addAttribute("admin", request.isUserInRole("ADMIN"));
 		return "partidaPrivada";
 	}
 

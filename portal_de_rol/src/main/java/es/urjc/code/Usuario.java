@@ -7,7 +7,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,8 +30,9 @@ public class Usuario {
 	private String correo;
 	@NotNull
 	private String password;
-	@NotNull
-	private boolean isAdmin;
+	@ElementCollection(fetch = FetchType.EAGER)
+	 private List<String> roles;
+
 	
 	@OneToMany(mappedBy="autor")
 	private List<Mensaje> mensajes = new ArrayList<Mensaje>();
@@ -100,12 +103,14 @@ public class Usuario {
 		this.partidasMaster = partidasMaster;
 	}
 
-	public boolean isAdmin() {
-		return isAdmin;
+
+
+	public List<String> getRoles() {
+		return roles;
 	}
 
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
 	}
 
 	public List<Mensaje> getMensajes() {

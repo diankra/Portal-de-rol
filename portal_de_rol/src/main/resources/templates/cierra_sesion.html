@@ -11,9 +11,11 @@
 <title>Portal de Rol</title>
 </head>
 <body>
-	<h2>Te has desconectado</h2>
+	<h2>¿Te quieres desconectar?</h2>
 	<form method="post" action="/cierra_sesion">
-
+	<input type='hidden' name="_csrf" value="{{token}}" />	
+	<input type='submit' value='Sí, desconéctame'>
+	</form>
 </body>
 
 <a href="/">Volver</a>

@@ -21,8 +21,11 @@
 			<div class="mensaje">
 				<p>{{texto}}</p>
 			</div>
-			{{/.}} <a href="/partidas_privadas/{{partida}}/{{-index}}">Eliminar
-				mensaje</a>
+			{{/.}} 
+			{{#admin}}
+			<a href="/partidas_privadas/{{partida}}/{{-index}}">Eliminar mensaje</a>
+			{{/admin}}
+				
 		</div>
 		<br></br> {{/mensajes}}
 
