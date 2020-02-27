@@ -21,12 +21,9 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Component
-@SessionScope
 
 public class Usuario {
 
-	
 	@Id
 	private String nombre;
 	@Column(unique = true)

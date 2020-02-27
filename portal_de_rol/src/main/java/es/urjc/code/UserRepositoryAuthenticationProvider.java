@@ -24,8 +24,12 @@ public class UserRepositoryAuthenticationProvider implements AuthenticationProvi
 	@Autowired
 	private UsuarioRepository userRepository;
 
+	@Autowired
+	private UserComponent userComponent;
+
 	@Override
-	public Authentication authenticate(Authentication auth){
+	public Authentication authenticate(Authentication auth) {
+		List<SimpleGrantedAuthority> roles = new ArrayList<>();
 		Usuario user = userRepository.findUsuarioByNombre(auth.getName());
 		if (user == null) {
 			throw new BadCredentialsException("User not found");
@@ -33,12 +37,12 @@ public class UserRepositoryAuthenticationProvider implements AuthenticationProvi
 		String password = (String) auth.getCredentials();
 		if (!new BCryptPasswordEncoder().matches(password, user.getPassword())) {
 			throw new BadCredentialsException("Wrong password");
-			
-		}
 
-		List<SimpleGrantedAuthority> roles = new ArrayList<>();
-		for (String role : user.getRoles()) {
-			roles.add(new SimpleGrantedAuthority(role));
+		} else {
+			for (String role : user.getRoles()) {
+				roles.add(new SimpleGrantedAuthority(role));
+			}
+			userComponent.setLoggedUser(user);
 		}
 		return new UsernamePasswordAuthenticationToken(user.getNombre(), password, roles);
 	}
@@ -46,9 +50,7 @@ public class UserRepositoryAuthenticationProvider implements AuthenticationProvi
 	@Override
 	public boolean supports(Class<?> authentication) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
-
-	
 
 }

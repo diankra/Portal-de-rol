@@ -17,6 +17,8 @@ public class PartidasPublicasController {
 	private PartidaRepository partidasBD;
 	@Autowired
 	private MensajeRepository mensajesBD;
+	@Autowired
+	private UserComponent userComponent;
 	
 	@GetMapping("/partidas_publicas")
 	public String partidas(Model model) {
@@ -51,7 +53,7 @@ public class PartidasPublicasController {
 		Partida partidaActual = partidasBD.findPartidaById(partida);
 		String respuesta = "";
 		respuesta = "Mensaje escrito para la partida " + partidaActual.getTitulo();
-		Mensaje m = new Mensaje(LoginController.getUsuario(), "Espectador: " + mensajeEscrito);
+		Mensaje m = new Mensaje(userComponent.getLoggedUser(), "Espectador: " + mensajeEscrito);
 		m.setHilo(partidaActual);
 
 		partidaActual.addMensaje(m);

@@ -16,17 +16,10 @@ public class LoginController {
 	
 	@Autowired
 	private UsuarioRepository usuariosBD;
-	@Autowired
-	static Usuario usuario;
-	//Para el usuario por defecto
-	
-	public static Usuario getUsuario() {
-		/*Chapucilla para acceder al usuario correcto desde todos los controller,
-		Invoca este metodo "LoginController.getUsuario()" para utilizar el user en otra clase
-		 */
-		return usuario;
-	}
 
+	@Autowired
+	private UserComponent userComponent;
+	
 	@PostConstruct
 	public void init() {
 	}
@@ -41,16 +34,7 @@ public class LoginController {
 	public String aceptarUsuario(Model model) {
 
 		String respuesta = "";
-//		Usuario uActualNombre = baseDatos.findUsuario(user);
-//		Usuario uActualMail = baseDatos.findUsuarioByCorreo(mail);
-//		if (uActualNombre != null) {
-//			respuesta = "Usuario no válido. Nombre repetido";
-//		} else if (uActualMail != null) {
-//			respuesta = "Usuario no válido. Correo electrónico repetido";
-//		} else {
-		respuesta = "Usuario aceptado";
-		//usuario = usuariosBD.save(new Usuario(user, mail, password));
-		// }
+		respuesta = "Usuario aceptado: "+ userComponent.getLoggedUser().getNombre();
 		model.addAttribute("cadena", respuesta);
 		return "aceptar_usuario";
 
@@ -58,8 +42,8 @@ public class LoginController {
 
 	@GetMapping("/inicia_sesion/aceptar")
 	public String aceptarSesion(Model model) {
-
-		String respuesta = "Usuario aceptado";
+		
+		String respuesta = "Usuario aceptado: "+ userComponent.getLoggedUser().getNombre();
 		model.addAttribute("cadena", respuesta);
 		return "aceptar_usuario";
 

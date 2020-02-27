@@ -25,6 +25,8 @@ public class ForoGeneralController {
 	private MensajeRepository mensajesBD;
 	@Autowired
 	private UsuarioRepository usuariosBD;
+	@Autowired
+	private UserComponent userComponent;
 
 	@GetMapping("/foro")
 	public String foro(Model model) {
@@ -56,9 +58,9 @@ public class ForoGeneralController {
 //		if (userActual == null) { // Ñapa incoming. Programming the Spanish way
 //			return "hilo_no_creado";
 //		} else {
-		m = new Mensaje(LoginController.getUsuario(), mensajeEscrito);
-		h = new Hilo(titulo, LoginController.getUsuario(), m);
-		m.setAutor(LoginController.getUsuario());
+		m = new Mensaje(userComponent.getLoggedUser(), mensajeEscrito);
+		h = new Hilo(titulo, userComponent.getLoggedUser(), m);
+		m.setAutor(userComponent.getLoggedUser());
 		m.setHilo(h);
 		hilosBD.save(h);
 		mensajesBD.save(m);
@@ -98,7 +100,7 @@ public class ForoGeneralController {
 //			return "mensaje_error";
 //
 //		} else {
-		Mensaje m = new Mensaje(LoginController.getUsuario(), mensajeEscrito);
+		Mensaje m = new Mensaje(userComponent.getLoggedUser(), mensajeEscrito);
 		m.setHilo(hiloActual);
 		hiloActual.addMensaje(m);
 

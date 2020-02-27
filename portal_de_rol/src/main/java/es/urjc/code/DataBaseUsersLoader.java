@@ -16,11 +16,11 @@ public class DataBaseUsersLoader {
 	@PostConstruct
 	private void initDatabase() {
 
-		userRepository.save(new Usuario("user", "pass", "...", "USER"));
+		userRepository.save(new Usuario("user","...", "pass", "USER"));
 
 		List<String> listaRoles = new ArrayList<String>();
 		listaRoles.add("USER");
 		listaRoles.add("ADMIN");
-		userRepository.save(new Usuario("admin", "adminpass", "...", listaRoles));
+		userRepository.save(new Usuario("admin", "....", "adminpass", listaRoles));
 	}
 }
