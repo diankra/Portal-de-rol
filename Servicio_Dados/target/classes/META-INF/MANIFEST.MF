@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: servicio_PDF
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: mrdar
+Implementation-Vendor-Id: Portal
+Build-Jdk: 1.8.0_231
+Implementation-URL: http://projects.spring.io/spring-boot/Servicio_PDF
+ /
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
