@@ -1,5 +1,7 @@
 package es.urjc.code;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,8 @@ public class PartidasPublicasController {
 	private PartidaRepository partidasBD;
 	@Autowired
 	private MensajeRepository mensajesBD;
+	@Autowired
+	private UserComponent userComponent;
 	
 	@GetMapping("/partidas_publicas")
 	public String partidas(Model model) {
@@ -25,13 +29,14 @@ public class PartidasPublicasController {
 	}
 
 	@GetMapping("partidas_publicas/{partida}")
-	public String partida(Model model, @PathVariable long partida) {
+	public String partida(Model model, @PathVariable long partida, HttpServletRequest request) {
 
 		Partida partidaActual = partidasBD.findPartidaById(partida);
 
 		model.addAttribute("titulo", partidaActual.getTitulo());
 		model.addAttribute("partida", partida);
 		model.addAttribute("mensajes", partidaActual.getMensajes());
+		model.addAttribute("admin", request.isUserInRole("ADMIN"));
 		return "partida";
 	}
 
@@ -48,7 +53,7 @@ public class PartidasPublicasController {
 		Partida partidaActual = partidasBD.findPartidaById(partida);
 		String respuesta = "";
 		respuesta = "Mensaje escrito para la partida " + partidaActual.getTitulo();
-		Mensaje m = new Mensaje(LoginController.getUsuario(), "Espectador: " + mensajeEscrito);
+		Mensaje m = new Mensaje(userComponent.getLoggedUser(), "Espectador: " + mensajeEscrito);
 		m.setHilo(partidaActual);
 
 		partidaActual.addMensaje(m);

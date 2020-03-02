@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,8 @@ public class ForoGeneralController {
 	private MensajeRepository mensajesBD;
 	@Autowired
 	private UsuarioRepository usuariosBD;
+	@Autowired
+	private UserComponent userComponent;
 
 	@GetMapping("/foro")
 	public String foro(Model model) {
@@ -55,9 +58,9 @@ public class ForoGeneralController {
 //		if (userActual == null) { // Ñapa incoming. Programming the Spanish way
 //			return "hilo_no_creado";
 //		} else {
-		m = new Mensaje(LoginController.getUsuario(), mensajeEscrito);
-		h = new Hilo(titulo, LoginController.getUsuario(), m);
-		m.setAutor(LoginController.getUsuario());
+		m = new Mensaje(userComponent.getLoggedUser(), mensajeEscrito);
+		h = new Hilo(titulo, userComponent.getLoggedUser(), m);
+		m.setAutor(userComponent.getLoggedUser());
 		m.setHilo(h);
 		hilosBD.save(h);
 		mensajesBD.save(m);
@@ -66,7 +69,7 @@ public class ForoGeneralController {
 	}
 
 	@GetMapping("foro/{hilo}")
-	public String hilo(Model model, @PathVariable long hilo) {
+	public String hilo(Model model, @PathVariable long hilo, HttpServletRequest request) {
 
 		// Espero que esto no haya que cambiarlo mucho con la database pero quien sabe
 
@@ -74,6 +77,7 @@ public class ForoGeneralController {
 
 		model.addAttribute("hilo", hiloActual);
 
+		model.addAttribute("admin", request.isUserInRole("ADMIN"));
 		model.addAttribute("mensajes", hiloActual.getMensajes());
 		return "hilo_foro";
 	}
@@ -96,7 +100,7 @@ public class ForoGeneralController {
 //			return "mensaje_error";
 //
 //		} else {
-		Mensaje m = new Mensaje(LoginController.getUsuario(), mensajeEscrito);
+		Mensaje m = new Mensaje(userComponent.getLoggedUser(), mensajeEscrito);
 		m.setHilo(hiloActual);
 		hiloActual.addMensaje(m);
 
