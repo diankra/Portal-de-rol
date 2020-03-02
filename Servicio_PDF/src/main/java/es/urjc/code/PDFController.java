@@ -12,8 +12,6 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.parser.Path;
-import com.itextpdf.text.pdf.parser.clipper.Paths;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

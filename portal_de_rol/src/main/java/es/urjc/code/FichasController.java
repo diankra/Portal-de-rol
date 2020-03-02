@@ -6,6 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.itextpdf.text.Document;
 
 @Controller
 public class FichasController {
@@ -82,6 +86,17 @@ public class FichasController {
 
 		return "aceptar_ficha";
 	}
+	
+	@PostMapping("/ficha_heroes/aceptar_ficha/convertir_PDF")
+	public String convertirFichaPDF(Model model) {
+		RestTemplate restTemplate = new RestTemplate();
+
+		String url="http://127.0.0.1:8080/";
+		Document fichaPDF =
+		restTemplate.getForObject(url, Document.class);
+		model.addAttribute("fichaPDF", fichaPDF);
+		return "convertir_PDF";
+	}
 
 	@PostMapping("/ficha_enemigos/aceptar_ficha_enemigo")
 	public String aceptarFichaEnemigo(Model model, @RequestParam String name, @RequestParam(required = false)  String Tipo,
@@ -130,5 +145,15 @@ public class FichasController {
 		model.addAttribute("ficha", f);
 		return "aceptar_ficha_objeto";
 	}
+	
+	/* TENGO QUE HACER EL HTML
+	@PostMapping("/ver_fichas")
+	public String verFichas(Model model) {
+		
+		model.addAttribute("fichasJugador", fichasJugadorBD.findAll());
+		model.addAttribute("fichasMundo", fichasMundoBD.findAll());
+		return "ver_fichas";
+	}
+	*/
 
 }
