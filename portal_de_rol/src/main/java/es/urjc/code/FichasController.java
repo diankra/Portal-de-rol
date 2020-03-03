@@ -83,17 +83,24 @@ public class FichasController {
 		if (usuariosBD.findUsuarioByNombre(LoginController.getUsuario().getNombre()) != null) {
 			LoginController.getUsuario().addFicha(f);
 		}
+		model.addAttribute("id", f.getId());
 
 		return "aceptar_ficha";
 	}
 	
 	@PostMapping("/ficha_heroes/aceptar_ficha/convertir_PDF")
-	public String convertirFichaPDF(Model model) {
+	public String convertirFichaPDF(Model model, @RequestParam long id) {
+		
+		FichaJugador f = fichasJugadorBD.findFichaById(id);
+		FichaPDF fp = new FichaPDF (f.getId(), f.getNombre(), f.getDescripcion());
 		RestTemplate restTemplate = new RestTemplate();
 
-		String url="http://127.0.0.1:8080/";
+		String url="http://127.0.0.1:8080/crear_pdf";
+		String url2="http://127.0.0.1:8080/pdf/" + fp.getId();
+		
+		restTemplate.postForObject(url, fp, Object.class);
 		Document fichaPDF =
-		restTemplate.getForObject(url, Document.class);
+		restTemplate.getForObject(url2, Document.class);
 		model.addAttribute("fichaPDF", fichaPDF);
 		return "convertir_PDF";
 	}
