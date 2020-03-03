@@ -16,6 +16,8 @@ public class CrearPartidaController {
 	private PartidaRepository partidasBD;
 	@Autowired
 	private MensajeRepository mensajesBD;
+	@Autowired
+	private UserComponent userComponent;
 	
 	@GetMapping("/crear_partida")
 	public String crear_partida(Model model) {
@@ -27,18 +29,18 @@ public class CrearPartidaController {
 	public String aceptarNuevaPartida(Model model, @RequestParam String nombre,
 			@RequestParam(required = false) String privada, @RequestParam String invitados,
 			@RequestParam String descripcion) {
-		Mensaje men = new Mensaje(LoginController.getUsuario(), descripcion);
+		Mensaje men = new Mensaje(userComponent.getLoggedUser(), descripcion);
 		Partida partida;
 		if (privada != null) {
 			model.addAttribute("tipo", "privada");
-			partida = new Partida(nombre, true, LoginController.getUsuario(), men);
+			partida = new Partida(nombre, true, userComponent.getLoggedUser(), men);
 		} else {
 			model.addAttribute("tipo", "publica");
-			partida = new Partida(nombre, false, LoginController.getUsuario(), men);
+			partida = new Partida(nombre, false, userComponent.getLoggedUser(), men);
 		}
 		men.setHilo(partida);
 
-		LoginController.getUsuario().addPartidaJugador(partida);
+		userComponent.getLoggedUser().addPartidaJugador(partida);
 		String usuariosInvitados[] = invitados.split(", ");
 		for (String name : usuariosInvitados) { // Se comprueba si los usuarios introducidos son validos y se añaden si
 												// es el caso

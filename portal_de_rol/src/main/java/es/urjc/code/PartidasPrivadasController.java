@@ -2,6 +2,8 @@ package es.urjc.code;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,8 @@ public class PartidasPrivadasController {
 	private FichaJugadorRepository fichasJugadorBD;
 	@Autowired
 	private FichaMundoRepository fichasMundoBD;
+	@Autowired
+	private UserComponent userComponent;
 	
 	@GetMapping("/partidas_privadas")
 	public String partidas_privadas(Model model) {
@@ -32,13 +36,14 @@ public class PartidasPrivadasController {
 	}
 
 	@GetMapping("partidas_privadas/{partidaPrivada}")
-	public String partidaPrivada(Model model, @PathVariable long partidaPrivada) {
+	public String partidaPrivada(Model model, @PathVariable long partidaPrivada,  HttpServletRequest request) {
 
 		Partida partidaActual = partidasBD.findPartidaById(partidaPrivada);
 
 		model.addAttribute("titulo", partidaActual.getTitulo());
 		model.addAttribute("partida", partidaPrivada);
 		model.addAttribute("mensajes", partidaActual.getMensajes());
+		model.addAttribute("admin", request.isUserInRole("ADMIN"));
 		return "partidaPrivada";
 	}
 
@@ -68,7 +73,7 @@ public class PartidasPrivadasController {
 //			respuesta = "No se ha escrito el mensaje. Usuario inválido";
 //		} else {
 		respuesta = "Mensaje escrito para la partida " + partidaActual.getTitulo();
-		Mensaje m = new Mensaje(LoginController.getUsuario(), inicio + mensajeEscrito);
+		Mensaje m = new Mensaje(userComponent.getLoggedUser(), inicio + mensajeEscrito);
 		partidaActual.addMensaje(m);
 		m.setHilo(partidaActual);
 

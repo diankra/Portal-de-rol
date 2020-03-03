@@ -20,6 +20,7 @@
 			type='checkbox' name='idFicha' value='{{id}}' /> {{nombre}}: {{tipo}}
 			<span class="checkmark"></span></label> <br></br> {{/.}} {{/fichas}} <input
 			type='submit' value='Enviar'>
+			<input type='hidden' name="_csrf" value="{{token}}" />
 	</form>
 
 

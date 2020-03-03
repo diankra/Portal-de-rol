@@ -20,7 +20,9 @@ public class FichasController {
 	private FichaJugadorRepository fichasJugadorBD;
 	@Autowired
 	private FichaMundoRepository fichasMundoBD;
-
+	@Autowired
+	private UserComponent userComponent;
+	
 	@GetMapping("/crear_ficha")
 	public String fichas(Model model) {
 
@@ -78,10 +80,10 @@ public class FichasController {
 			type = true;
 		}
 
-		FichaJugador f = new FichaJugador(LoginController.getUsuario(), name, type, Clase, Raza);
+		FichaJugador f = new FichaJugador(userComponent.getLoggedUser(), name, type, Clase, Raza);
 		f = fichasJugadorBD.save(f);
-		if (usuariosBD.findUsuarioByNombre(LoginController.getUsuario().getNombre()) != null) {
-			LoginController.getUsuario().addFicha(f);
+		if (usuariosBD.findUsuarioByNombre(userComponent.getLoggedUser().getNombre()) != null) {
+			userComponent.getLoggedUser().addFicha(f);
 		}
 		model.addAttribute("id", f.getId());
 
