@@ -12,11 +12,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-//import com.mysql.cj.conf.PropertySet;
-//import com.mysql.cj.exceptions.ExceptionInterceptor;
+import com.mysql.cj.conf.PropertySet;
+import com.mysql.cj.exceptions.ExceptionInterceptor;
 import org.springframework.security.authentication.AuthenticationProvider;
-//import com.mysql.cj.protocol.Protocol;
-//import com.mysql.cj.protocol.ServerSession;
+import com.mysql.cj.protocol.Protocol;
+import com.mysql.cj.protocol.ServerSession;
 import org.springframework.security.core.Authentication;
 
 @Component
