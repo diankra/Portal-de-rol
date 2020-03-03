@@ -35,6 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 		http.authorizeRequests().antMatchers("/partidas_publicas").permitAll();
 		http.authorizeRequests().antMatchers("/partidas_publicas/{partida}").permitAll();
 		http.authorizeRequests().antMatchers("/foro").permitAll();
+		http.authorizeRequests().antMatchers("/crear_usuario/aceptar").permitAll();
 		// Para que los no autorizados no puedan crear hilos
 		http.authorizeRequests().antMatchers("/foro/crear_hilo").authenticated();
 

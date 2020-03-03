@@ -30,7 +30,7 @@ public class PartidasPrivadasController {
 	@GetMapping("/partidas_privadas")
 	public String partidas_privadas(Model model) {
 
-		model.addAttribute("partidasPrivadas", partidasBD.findAll());
+		model.addAttribute("partidasPrivadas", userComponent.getLoggedUser().getPartidasJugador());
 
 		return "partidas_privadas";
 	}
@@ -43,7 +43,7 @@ public class PartidasPrivadasController {
 		model.addAttribute("titulo", partidaActual.getTitulo());
 		model.addAttribute("partida", partidaPrivada);
 		model.addAttribute("mensajes", partidaActual.getMensajes());
-		model.addAttribute("admin", request.isUserInRole("ADMIN"));
+		model.addAttribute("admin", request.isUserInRole("ADMIN") || partidaActual.getMaster().equals(userComponent.getLoggedUser()));
 		return "partidaPrivada";
 	}
 

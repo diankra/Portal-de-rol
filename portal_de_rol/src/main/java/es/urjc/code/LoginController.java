@@ -26,15 +26,31 @@ public class LoginController {
 	
 	@GetMapping("/crear_usuario")
 	public String crear_usuario(Model model) {
-
+		
 		return "crear_usuario";
 	}
 
-	@GetMapping("/crear_usuario/aceptar")
-	public String aceptarUsuario(Model model) {
+	@PostMapping("/crear_usuario/aceptar")
+	public String aceptarUsuario(Model model, @RequestParam String user, @RequestParam String mail, @RequestParam String password) {
 
 		String respuesta = "";
-		respuesta = "Usuario aceptado: "+ userComponent.getLoggedUser().getNombre();
+		
+		
+		Usuario usuario = new Usuario(user, mail, password, "USER");
+		
+		if(usuariosBD.findUsuarioByNombre(user)!= null) {
+			
+			respuesta = "Usuario repetido.";
+			
+		}else if(usuariosBD.findUsuarioByCorreo(mail)!= null) {
+			respuesta = "Correo repetido.";
+		}else if(password.equals("")) {
+			respuesta = "Contraseña vacia.";		
+		}else {
+			respuesta = "Usuario aceptado: ";//+ userComponent.getLoggedUser().getNombre();
+			usuariosBD.save(usuario);
+		}
+				
 		model.addAttribute("cadena", respuesta);
 		return "aceptar_usuario";
 
@@ -64,7 +80,7 @@ public class LoginController {
 	
 	@GetMapping("/cierra_sesion")
 	public String cierra_sesion(Model model) {
-		
+		usuariosBD.save(userComponent.getLoggedUser());
 		return "cierra_sesion";
 	}
 	
@@ -74,24 +90,6 @@ public class LoginController {
 		model.addAttribute("cadena", respuesta);
 		return "aceptar_usuario";
 	}
-	
-	
-
-	/*@PostMapping("/inicia_sesion/aceptar")
-	public String aceptarSesion(Model model, @RequestParam String user, @RequestParam String password) {
-//		Usuario uActual = baseDatos.findUsuario(user);
-//		String respuesta = "";
-//		if (uActual == null) {
-//			respuesta = "El nombre de usuario no existe";
-//		} else if (!password.equals(uActual.getPassword())) {
-//			respuesta = "Contraseña incorrecta";
-//		} else {
-//			respuesta = "Bienvenido, " + user;
-//			usuario = uActual;
-//		}
-		model.addAttribute("cadena", "Bienvenido");
-		return "aceptar_usuario";
-	}*/
 	
 	@GetMapping("/")
     public String index() {

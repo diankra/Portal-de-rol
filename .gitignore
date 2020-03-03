@@ -8,3 +8,6 @@ portal_de_rol/target/classes/application.properties
 *.properties
 *.properties
 portal_de_rol/target/classes/META-INF/MANIFEST.MF
+portal_de_rol/target/classes/META-INF/maven/com.example/portal_de_rol/pom.properties
+portal_de_rol/pom.xml
+portal_de_rol/target/classes/application.properties

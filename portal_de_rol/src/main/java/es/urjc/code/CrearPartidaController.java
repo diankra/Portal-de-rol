@@ -41,7 +41,10 @@ public class CrearPartidaController {
 		men.setHilo(partida);
 
 		userComponent.getLoggedUser().addPartidaJugador(partida);
-		String usuariosInvitados[] = invitados.split(", ");
+		
+		invitados = invitados.replace(" ", "");
+		
+		String usuariosInvitados[] = invitados.split(",");
 		for (String name : usuariosInvitados) { // Se comprueba si los usuarios introducidos son validos y se añaden si
 												// es el caso
 			Usuario u = usuariosBD.findUsuarioByNombre(name);
