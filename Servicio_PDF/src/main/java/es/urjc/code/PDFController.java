@@ -20,6 +20,7 @@ import java.io.FileOutputStream;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,29 +28,47 @@ import org.springframework.http.ResponseEntity;
 @RestController
 public class PDFController {
 
-	public ConcurrentMap<Long, Document> mapaPDF = new ConcurrentHashMap<Long, Document>();
-	
+	// public ConcurrentMap<Long, Document> mapaPDF = new ConcurrentHashMap<Long,
+	// Document>();
+	public ConcurrentMap<Long, FichaPDF> mapaPDF = new ConcurrentHashMap<Long, FichaPDF>();
+	private AtomicLong lastId = new AtomicLong();
+
 	@PostMapping(value = "/crear_pdf")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Document nuevoPDF(@RequestBody FichaPDF fp) throws FileNotFoundException, DocumentException {
-		Document pdf = new Document();
-		PdfWriter.getInstance(pdf, new FileOutputStream("Ficha_" + fp.getId() + ".pdf"));		 
-		pdf.open();
-		Font titleFont = FontFactory.getFont(FontFactory.COURIER, 20, BaseColor.RED);
-		Font textFont = FontFactory.getFont(FontFactory.COURIER, 14, BaseColor.BLACK);
-		Chunk nombre = new Chunk(fp.getNombre(), titleFont);		
-		pdf.add(nombre);
-		Chunk descripcion = new Chunk(fp.getDescripcion(), textFont);
-		pdf.add(descripcion);
-		pdf.close();
-		mapaPDF.put(fp.getId(), pdf);
-		return pdf;
+	public FichaPDF crearPDF(@RequestBody FichaPDF fp) {
+		/*
+		 * Document pdf = new Document(); PdfWriter.getInstance(pdf, new
+		 * FileOutputStream("Ficha_" + fp.getId() + ".pdf")); pdf.open(); Font titleFont
+		 * = FontFactory.getFont(FontFactory.COURIER, 20, BaseColor.RED); Font textFont
+		 * = FontFactory.getFont(FontFactory.COURIER, 14, BaseColor.BLACK); Chunk nombre
+		 * = new Chunk(fp.getNombre(), titleFont); pdf.add(nombre); Chunk descripcion =
+		 * new Chunk(fp.getDescripcion(), textFont); pdf.add(descripcion); pdf.close();
+		 */
+		// mapaPDF.put(fp.getId(), pdf);
+		//fp.setId(lastId.incrementAndGet());
+		mapaPDF.put(fp.getId(), fp);
+		return fp;
 	}
-	
-	@GetMapping("/pdf/{id}")
-	public ResponseEntity<Document> getPdf(@PathVariable long id){
-		Document pdf = mapaPDF.get(id);
-		return new ResponseEntity<Document>(pdf, HttpStatus.OK);
+
+	@GetMapping("/crear_pdf/{id}")
+	public ResponseEntity<Document> getPdf(@PathVariable(required = false) long id)
+			throws FileNotFoundException, DocumentException {
+		if (mapaPDF.containsKey(id)) {
+			FichaPDF fp = mapaPDF.get(id);
+			Document pdf = new Document();
+			PdfWriter.getInstance(pdf, new FileOutputStream("Ficha_" + fp.getId() + ".pdf"));
+			pdf.open();
+			Font titleFont = FontFactory.getFont(FontFactory.COURIER, 20, BaseColor.RED);
+			Font textFont = FontFactory.getFont(FontFactory.COURIER, 14, BaseColor.BLACK);
+			Chunk nombre = new Chunk(fp.getNombre(), titleFont);
+			pdf.add(nombre);
+			Chunk descripcion = new Chunk(fp.getDescripcion(), textFont);
+			pdf.add(descripcion);
+			pdf.close();
+			// Document pdf = mapaPDF.get(id);
+			return new ResponseEntity<>(pdf, HttpStatus.OK);
+		}
+		else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 }

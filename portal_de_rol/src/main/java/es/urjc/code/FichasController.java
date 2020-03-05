@@ -98,9 +98,9 @@ public class FichasController {
 		RestTemplate restTemplate = new RestTemplate();
 
 		String url="http://127.0.0.1:8080/crear_pdf";
-		String url2="http://127.0.0.1:8080/pdf/" + fp.getId();
+		String url2="http://127.0.0.1:8080/crear_pdf/" + fp.getId();
 		
-		restTemplate.postForObject(url, fp, Object.class);
+		fp = restTemplate.postForObject(url, fp, FichaPDF.class);
 		Document fichaPDF =
 		restTemplate.getForObject(url2, Document.class);
 		model.addAttribute("fichaPDF", fichaPDF);

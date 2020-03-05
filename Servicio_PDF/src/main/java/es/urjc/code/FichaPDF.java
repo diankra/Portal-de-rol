@@ -6,6 +6,10 @@ public class FichaPDF {
 	public String nombre;
 	public String descripcion;
 	
+	public FichaPDF() {
+		
+	}
+	
 	public FichaPDF(long id, String nombre, String descripcion) {
 		this.id = id;
 		this.nombre = nombre;
