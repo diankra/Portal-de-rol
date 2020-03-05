@@ -1,5 +1,8 @@
 package es.urjc.code;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,6 +22,12 @@ public class LoginController {
 
 	@Autowired
 	private UserComponent userComponent;
+	
+	@Autowired
+	private PartidaRepository PartidaRepository;
+	
+	@Autowired
+	private MensajeRepository MensajeRepository;
 	
 	@PostConstruct
 	public void init() {
@@ -95,5 +104,38 @@ public class LoginController {
     public String index() {
         return "index";
     }
+	
+	
+	//Ver perfil
+	
+	@GetMapping("/verperfil")
+	public String verperfil(Model model) {
+		
+		Usuario user = userComponent.getLoggedUser();
+		model.addAttribute("nombre", user.getNombre());
+		model.addAttribute("correo", user.getCorreo());
+		
+		List<Partida> partidas = PartidaRepository.findPartidasByMaster(user);
+		List<String> nombrePartidas = new ArrayList<>();
+		for(Partida p: partidas) {
+			nombrePartidas.add(p.getTitulo());			
+		}
+		model.addAttribute("partidas", nombrePartidas);
+		
+		List<Mensaje> mensajes = MensajeRepository.findMensajesByAutor(user);
+		List<String> mensajesUser = new ArrayList<>();
+		for(Mensaje m: mensajes) {
+			mensajesUser.add(m.getTexto());			
+		}
+		model.addAttribute("mensajes", mensajesUser);
+		
+		
+		return "verperfil";
+	}
+	
+	
+	
+	
+	
 
 }

@@ -8,4 +8,5 @@ public interface PartidaRepository extends JpaRepository<Partida, Long>{
 
 	List<Partida> findPartidasByPrivada(boolean privada);
 	Partida findPartidaById(long id);
+	List<Partida> findPartidasByMaster(Usuario user);
 }
