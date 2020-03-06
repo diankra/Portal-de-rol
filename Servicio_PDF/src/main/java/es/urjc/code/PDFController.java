@@ -17,6 +17,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -51,8 +54,8 @@ public class PDFController {
 	}
 
 	@GetMapping("/crear_pdf/{id}")
-	public ResponseEntity<Document> getPdf(@PathVariable(required = false) long id)
-			throws FileNotFoundException, DocumentException {
+	public ResponseEntity<byte[]> getPdf(@PathVariable(required = false) long id)
+			throws DocumentException, IOException {
 		if (mapaPDF.containsKey(id)) {
 			FichaPDF fp = mapaPDF.get(id);
 			Document pdf = new Document();
@@ -65,8 +68,9 @@ public class PDFController {
 			Chunk descripcion = new Chunk(fp.getDescripcion(), textFont);
 			pdf.add(descripcion);
 			pdf.close();
+			byte[] arrayPDF = Files.readAllBytes(Paths.get("Ficha_" + fp.getId() + ".pdf"));
 			// Document pdf = mapaPDF.get(id);
-			return new ResponseEntity<>(pdf, HttpStatus.OK);
+			return new ResponseEntity<>(arrayPDF, HttpStatus.OK);
 		}
 		else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
