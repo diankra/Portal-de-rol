@@ -23,6 +23,9 @@
 			<div class="mensaje">
 				<p>{{texto}}</p>
 			</div>
+			{{#tieneImagen}}
+			<img src={{rutaImagen}} alt="Imagen del mensaje">
+			{{/tieneImagen}}
 			{{#admin}}
 			<a href="/foro/{{hilo.id}}/{{-index}}">Eliminar mensaje</a>
 			{{/admin}}
