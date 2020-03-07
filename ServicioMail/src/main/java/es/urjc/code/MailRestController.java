@@ -3,6 +3,7 @@ package es.urjc.code;
 import java.util.Date;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
 import javax.annotation.PostConstruct;
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -50,7 +51,7 @@ public class MailRestController {
 			msg.setFrom(new InternetAddress(c.getFrom()));
 			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(c.getTo(), false));
 			msg.setSubject(c.getSubject());
-			msg.setText(c.getBody());
+			msg.setDataHandler(new DataHandler(new HTMLDataSource(c.getBody())));
 			msg.setSentDate(new Date());
 
 			SMTPTransport smtp = (SMTPTransport) session.getTransport("smtp");

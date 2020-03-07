@@ -9,17 +9,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
 @Controller
 public class PartidasPublicasController {
 
-	@Autowired 
+	// Para el envio de correos
+	final String username = "portalderol.dad@gmail.com";
+	final String password = "DaD1234DaD";
+
+	@Autowired
 	private PartidaRepository partidasBD;
 	@Autowired
 	private MensajeRepository mensajesBD;
 	@Autowired
 	private UserComponent userComponent;
-	
+
 	@GetMapping("/partidas_publicas")
 	public String partidas(Model model) {
 
@@ -58,6 +63,29 @@ public class PartidasPublicasController {
 
 		partidaActual.addMensaje(m);
 		mensajesBD.save(m);
+
+		// Envio de correo con actualizaciones
+		String subject = "Actualizacion en la partida " + partidaActual.getTitulo() + " de PortalDeRol";
+		String body = "<h2>El usuario " + userComponent.getLoggedUser().getNombre() + " ha publicado "
+				+ "un mensaje en una partida en la que participas o estás suscrito. Para verlo "
+				+ "pulsa en el siguiente enlace:\n </h2> "
+				+ "<a href= \"https://127.0.0.1:8443/partidas_publicas/" + partidaActual.getId()
+				+ "\">Acceder a la partida</a>";
+		String to;
+		if (!partidaActual.getMaster().equals(userComponent.getLoggedUser()))
+				to = partidaActual.getMaster().getCorreo() + ", ";
+		else to = "";
+		for (Usuario u : partidaActual.getJugadores()) {
+			if (!u.equals(userComponent.getLoggedUser()))
+				to += u.getCorreo() + ", ";
+		}
+
+		if (!to.equals("")) {
+			Correo correo = new Correo(username, to, subject, body, username, password);
+			RestTemplate restTemplate = new RestTemplate();
+			String url = "http://127.0.0.1:8080/enviar_correo";
+			restTemplate.postForObject(url, correo, Correo.class);
+		}
 
 		model.addAttribute("cadena", respuesta);
 		model.addAttribute("titulo", partida);
