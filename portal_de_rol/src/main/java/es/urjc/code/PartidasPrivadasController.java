@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
 @Controller
 public class PartidasPrivadasController {
@@ -110,6 +111,26 @@ public class PartidasPrivadasController {
 		return "aceptar_add_ficha";
 	}
 
+	@RequestMapping("partidas_privadas/{id}/tirar_dado")
+	public String tirarDado(Model model, @PathVariable long id) {
+		Partida actual = partidasBD.findPartidaById(id);
+		RestTemplate restTemplate = new RestTemplate();
+		String url = "http://127.0.0.1:8080/tirada/"+actual.getId()+"/";
+		Integer res = restTemplate.postForObject(url, userComponent.getLoggedUser().getNombre(), Integer.class);
+		model.addAttribute("id", id);
+		model.addAttribute("tirada", res.intValue());
+		return "tira_dado";
+	}
+	
+	@RequestMapping("partidas_privadas/{id}/ver_tiradas")
+	public String verTiradas(Model model, @PathVariable long id) {
+		String url = "http://127.0.0.1:8080/getTiradas/"+id+"/";
+		RestTemplate restTemplate = new RestTemplate();
+		List<Tirada> listaTiradas = restTemplate.getForObject(url, List.class);
+		model.addAttribute("id", id);
+		model.addAttribute("tiradas", listaTiradas);
+		return "ver_tiradas";
+	}
 	@RequestMapping("partidas_privadas/{id}/consultar_fichas")
 	public String consultarFichas(Model model, @PathVariable long id) {
 		Partida partidaActual = partidasBD.findPartidaById(id);

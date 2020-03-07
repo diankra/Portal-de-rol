@@ -33,7 +33,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Controller
-@JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
 public class ForoGeneralController {
 
 	@Autowired 
