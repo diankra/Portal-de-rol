@@ -2,24 +2,38 @@ package es.urjc.code;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Controller
+@JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
 public class ForoGeneralController {
 
 	@Autowired 
@@ -109,11 +123,8 @@ public class ForoGeneralController {
 		String url="http://127.0.0.1:8080/"+m.getId()+"/imagen";
 
 		if(imagenFile != null) {
-			//m.setTieneImagen(true);
-			//m.setImagen(imgService.saveImage("mensajes", m.getId(), imagenFile));
-			restTemplate.postForObject(url, imagenFile, ResponseEntity.class);
-			//File img = restTemplate.getForObject(url,File.class);
-			//m.setImagen(imgService.saveImage("mensajes", m.getId(), img));
+			m.setTieneImagen(true);
+			m.setImagen(imgService.saveImage("mensajes", m.getId(), imagenFile));    
 		}
 		mensajesBD.save(m);
 

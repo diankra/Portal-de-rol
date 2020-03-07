@@ -2,6 +2,8 @@ package es.urjc.code;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -48,6 +50,23 @@ public class imageService implements WebMvcConfigurer {
 		}
 		Path newFile = createFilePath(id, folder);
 		File imagen = new File(newFile.toString());
+		FileInputStream fis = new FileInputStream(imagen);
+		FileOutputStream fos = new FileOutputStream(image);
+		
+		byte[] buffer = new byte[1024];
+		 
+	    int length;
+	    /*copying the contents from input stream to
+	     * output stream using read and write methods
+	     */
+	    while ((length = fis.read(buffer)) > 0){
+	    	fos.write(buffer, 0, length);
+	    }
+
+	    //Closing the input/output file streams
+	    fis.close();
+	    fos.close();
+		
 		
 		return "/images/"+folderName+"/image-"+id+".jpg";
 	}

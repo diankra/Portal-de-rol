@@ -1,15 +1,23 @@
 package es.urjc.code;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.UrlResource;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -49,18 +57,42 @@ public class ImageService implements WebMvcConfigurer {
 		image.transferTo(newFile);
 	}
 
-	public ResponseEntity<Object> createResponseFromImage(String folderName, long id) throws IOException {
+	public ResponseEntity<Object> createResponseFromImage(String folderName, long id) throws MalformedURLException {
+
 		Path folder = FILES_FOLDER.resolve(folderName);
-		Path checkFile = createFilePath(id, folder);
-		if(Files.exists(checkFile)) {
- 
-			return new ResponseEntity<>(new File(checkFile.toString()), HttpStatus.OK);
-		}else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		
+		//Resource file = (Resource) new UrlResource(createFilePath(id, folder).toUri());
+
+		//return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").body(file);
+		return null;
 	}
 
-	
+	public File saveImage(String folderName, long id, File image) throws IOException {
+		Path folder = FILES_FOLDER.resolve(folderName);
+		if (!Files.exists(folder)) {
+			Files.createDirectories(folder);
+		}
+		Path newFile = createFilePath(id, folder);
+		File imagen = new File(newFile.toString());
+		try {
+			FileReader fr = new FileReader(image);
+			BufferedReader br = new BufferedReader(fr);
+			FileWriter fw = new FileWriter(imagen, true);
+			String s;
+ 
+			while ((s = br.readLine()) != null) { // read a line
+				fw.write(s); // write to output file
+				fw.flush();
+			}
+			br.close();
+			fw.close();
+                        System.out.println("file copied");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return imagen;
+	}
 
 }

@@ -1,11 +1,15 @@
 package es.urjc.code;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 @Controller
 public class CrearPartidaController {
@@ -55,4 +59,7 @@ public class CrearPartidaController {
 		mensajesBD.save(men);
 		return "aceptar_nueva_partida";
 	}
+
 }
+
+
