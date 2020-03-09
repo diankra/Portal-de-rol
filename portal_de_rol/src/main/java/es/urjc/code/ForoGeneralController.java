@@ -122,9 +122,9 @@ public class ForoGeneralController {
 		String url="http://127.0.0.1:8080/"+m.getId()+"/imagen";
 
 		if(imagenFile != null) {
-			m.setTieneImagen(true);
-			m.setImagen(imgService.saveImage("mensajes", m.getId(), imagenFile));
-			//restTemplate.postForObject(url, imagenFile, ResponseEntity.class);
+			//m.setTieneImagen(true);
+			//m.setImagen(imgService.saveImage("mensajes", m.getId(), imagenFile));
+			restTemplate.postForObject(url,  imagenFile, ResponseEntity.class);
 			//Resource img = restTemplate.getForObject(url,Resource.class);
 			//m.setImagen(imgService.saveImage("mensajes", m.getId(), img));
 			
