@@ -39,7 +39,7 @@ public class ImagenesController {
     private FileStorageService fileStorageService;
     
 	@PostMapping("/{id}/imagen")
-	public UploadFileResponse uploadFile(@RequestParam MultipartFile file, @PathVariable long partida) {
+	public UploadFileResponse uploadFile(@RequestParam("user-file") MultipartFile file, @PathVariable long partida) {
         String fileName = fileStorageService.storeFile(file);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()

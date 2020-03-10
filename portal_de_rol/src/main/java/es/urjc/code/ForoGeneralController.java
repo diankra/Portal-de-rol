@@ -124,27 +124,22 @@ public class ForoGeneralController {
 		if(imagenFile != null) {
 			//m.setTieneImagen(true);
 			//m.setImagen(imgService.saveImage("mensajes", m.getId(), imagenFile));
-			restTemplate.postForObject(url,  imagenFile, ResponseEntity.class);
+			//restTemplate.postForObject(url,  imagenFile, ResponseEntity.class);
 			//Resource img = restTemplate.getForObject(url,Resource.class);
 			//m.setImagen(imgService.saveImage("mensajes", m.getId(), img));
-			
-//			Path tempFile = Files.createTempFile(null, null);
-//
-//			Files.write(tempFile, imagenFile.getBytes());
-//			File fileToSend = tempFile.toFile();
-//			
-//			 MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<>();
-//		        bodyMap.add("user-file", fileToSend);
-//		        HttpHeaders headers = new HttpHeaders();
-//		        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-//		        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(bodyMap, headers);
-//
-//		        
-//		        File response = restTemplate.postForObject(url, requestEntity, File.class);
-//		        //imgService.saveImage("mensajes", m.getId(), response);
-//		        
-//		        System.out.println(response.getPath());
-//		        
+
+			 MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<>();
+		        bodyMap.add("user-file", imagenFile);
+		        HttpHeaders headers = new HttpHeaders();
+		        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+		        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(bodyMap, headers);
+
+		        
+		        File response = restTemplate.postForObject(url, requestEntity, File.class);
+		        //imgService.saveImage("mensajes", m.getId(), response);
+		        
+		        System.out.println(response.getPath());
+		        
 		}
 		mensajesBD.save(m);
 

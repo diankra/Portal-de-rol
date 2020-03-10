@@ -115,7 +115,7 @@ public class PartidasPrivadasController {
 	public String tirarDado(Model model, @PathVariable long id) {
 		Partida actual = partidasBD.findPartidaById(id);
 		RestTemplate restTemplate = new RestTemplate();
-		String url = "http://127.0.0.1:8080/tirada/"+actual.getId()+"/";
+		String url = "http://127.0.0.1:8082/tirada/"+actual.getId()+"/";
 		Integer res = restTemplate.postForObject(url, userComponent.getLoggedUser().getNombre(), Integer.class);
 		model.addAttribute("id", id);
 		model.addAttribute("tirada", res.intValue());
@@ -124,7 +124,7 @@ public class PartidasPrivadasController {
 	
 	@RequestMapping("partidas_privadas/{id}/ver_tiradas")
 	public String verTiradas(Model model, @PathVariable long id) {
-		String url = "http://127.0.0.1:8080/getTiradas/"+id+"/";
+		String url = "http://127.0.0.1:8082/getTiradas/"+id+"/";
 		RestTemplate restTemplate = new RestTemplate();
 		List<Tirada> listaTiradas = restTemplate.getForObject(url, List.class);
 		model.addAttribute("id", id);
