@@ -22,6 +22,8 @@ public class Mensaje {
 	@ManyToOne
 	private Hilo hilo;
 	
+	private boolean tieneImagen = false;
+	private String rutaImagen = "";
 	protected Mensaje() {
 		
 	}
@@ -64,5 +66,19 @@ public class Mensaje {
 		this.texto = texto;
 	}
 	
+	public void setImagen(String rutaImagen) {
+		this.rutaImagen = rutaImagen;
+	}
 	
+	public String getImage() {
+		return rutaImagen;
+	}
+
+	public boolean tieneImagen() {
+		return tieneImagen;
+	}
+
+	public void setTieneImagen(boolean tieneImagen) {
+		this.tieneImagen = tieneImagen;
+	}
 }

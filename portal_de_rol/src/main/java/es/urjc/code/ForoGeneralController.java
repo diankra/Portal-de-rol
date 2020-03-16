@@ -1,18 +1,36 @@
 package es.urjc.code;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Controller
 public class ForoGeneralController {
@@ -28,6 +46,9 @@ public class ForoGeneralController {
 	@Autowired
 	private UserComponent userComponent;
 
+	@Autowired
+	private imageService imgService;
+	
 	@GetMapping("/foro")
 	public String foro(Model model) {
 
@@ -91,24 +112,39 @@ public class ForoGeneralController {
 	}
 
 	@PostMapping("foro/{hilo}/escribir_mensaje/aceptar")
-	public String aceptarMensaje(Model model, @PathVariable long hilo, @RequestParam String mensajeEscrito) {
+	public String aceptarMensaje(Model model, @PathVariable long hilo, @RequestParam String mensajeEscrito, @RequestParam(required = false) MultipartFile imagenFile) throws IOException {
 
 		Hilo hiloActual = hilosBD.findHiloById(hilo);
-//		Usuario userActual = baseDatos.findUsuario(usuario.getNombre());
-//		if (userActual == null) { // Si el usuario actual no está en la BD es que no está registrado
-//			model.addAttribute("hilo", hiloActual);
-//			return "mensaje_error";
-//
-//		} else {
 		Mensaje m = new Mensaje(userComponent.getLoggedUser(), mensajeEscrito);
 		m.setHilo(hiloActual);
 		hiloActual.addMensaje(m);
+		RestTemplate restTemplate = new RestTemplate();
+		String url="http://127.0.0.1:8080/"+m.getId()+"/imagen";
 
+		if(imagenFile != null) {
+			//m.setTieneImagen(true);
+			//m.setImagen(imgService.saveImage("mensajes", m.getId(), imagenFile));
+			//restTemplate.postForObject(url,  imagenFile, ResponseEntity.class);
+			//Resource img = restTemplate.getForObject(url,Resource.class);
+			//m.setImagen(imgService.saveImage("mensajes", m.getId(), img));
+
+			 MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<>();
+		        bodyMap.add("user-file", imagenFile);
+		        HttpHeaders headers = new HttpHeaders();
+		        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+		        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(bodyMap, headers);
+
+		        
+		        File response = restTemplate.postForObject(url, requestEntity, File.class);
+		        //imgService.saveImage("mensajes", m.getId(), response);
+		        
+		        System.out.println(response.getPath());
+		        
+		}
 		mensajesBD.save(m);
 
 		model.addAttribute("hilo", hiloActual);
 		return "mensaje_escrito";
-		// }
 	}
 
 	@GetMapping("foro/{hilo}/{index}")
