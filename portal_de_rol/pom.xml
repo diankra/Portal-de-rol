@@ -84,6 +84,18 @@
 
 	<build>
         <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.1.2</version>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <mainClass>es.urjc.code.PortalDeRolApplication</mainClass>
+                    </manifest>
+                </archive>
+            </configuration>
+        </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -101,6 +113,11 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+   			 <plugin>
+      			<groupId>org.springframework.boot</groupId>
+      			<artifactId>spring-boot-maven-plugin</artifactId>
+    		</plugin>
+
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
