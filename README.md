@@ -188,8 +188,10 @@ Lo primero es tener instalado tanto VirtualBox como vagrant, no entraremos en es
 
 Pasos para crear la Maquina virtual:
 Crear la carpeta donde se guarde todo lo relacionado con la virtual machine.
+
 Crear el vagrantfile con:
 - vagrant init ubuntu/trusty32
+
 Añadir la box y el ubuntu/trusty32 con:
 - vagrant box add ubuntu/trusty32
 
