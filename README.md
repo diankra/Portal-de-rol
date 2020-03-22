@@ -197,31 +197,41 @@ Añadir la box y el ubuntu/trusty32 con:
 
 La maquina virtual está creada, este proceso solo se debe realizar una vez si no se destruye la maquina.
 
-- Vagrant up para levantar la maquina virtual.
+Para levantar la maquina virtual:
+
+- Vagrant up
 
 Para acceder a la maquina:
+
 - Vagrant ssh
+
 Hemos accedido a la maquina, ahora hay que instalar Java y SQL antes de lanzar el portal.
 
 Instalación Java
+
 - sudo add-apt-repository ppa:openjdk-r/ppa
 - sudo apt-get update
 - sudo apt-get install openjdk-8-jre
 - sudo update-alternatives --config java //Esta linea solo aplica en el caso de que caso de que hayas instalado otra versión de java.
 
 Instalación SQL:
+
 - sudo apt-get install mysql-server
+
 Lanzar SQL:
+
 - mysql -u root -p
 
 La contraseña en este caso de prueba es 1234.
 
 - Crear base de datos: CREATE DATABASE portalderol;
+
 Con esto la base de datos estaría creada.
 
 - Salir de SQL con exit.
 
-Portal de rol
+Portal de rol:
+
 - Lanzar todo el servicio interno en distintas cmds.
 - Lanzar el portal de rol.
 
