@@ -173,7 +173,7 @@ Tablero de Trello: https://trello.com/b/gaM8JvpQ/portal-de-rol-dad
     
 ![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Capturas_pantallas/Foro/26%20-%20Ficha%20localizacion%20creada.jpg)
 
-#Fase 3
+# Fase 3
 
 
 
