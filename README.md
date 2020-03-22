@@ -173,6 +173,61 @@ Tablero de Trello: https://trello.com/b/gaM8JvpQ/portal-de-rol-dad
     
 ![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Capturas_pantallas/Foro/26%20-%20Ficha%20localizacion%20creada.jpg)
 
+#Fase 3
+
+
+
+## Instrucciones de compilación en Spring:
+Ejecutar el proyecto como "Maven build..."
+
+En el apartado "Goals" escribir: clean package y marcar la casilla "Skip test"
+Nos generará un .jar que será nuestra aplicación, posteriormente la trasladaremos a la carpeta de la maquina virtual.
+
+## Instrucciones de virtualización con Vagrant y VirtualBox:
+Lo primero es tener instalado tanto VirtualBox como vagrant, no entraremos en eso aquí.
+
+Pasos para crear la Maquina virtual:
+Crear la carpeta donde se guarde todo lo relacionado con la virtual machine.
+Crear el vagrantfile con:
+- vagrant init ubuntu/trusty32
+Añadir la box y el ubuntu/trusty32 con:
+- vagrant box add ubuntu/trusty32
+
+La maquina virtual está creada, este proceso solo se debe realizar una vez si no se destruye la maquina.
+
+- Vagrant up para levantar la maquina virtual.
+
+Para acceder a la maquina:
+- Vagrant ssh
+Hemos accedido a la maquina, ahora hay que instalar Java y SQL antes de lanzar el portal.
+
+Instalación Java
+- sudo add-apt-repository ppa:openjdk-r/ppa
+- sudo apt-get update
+- sudo apt-get install openjdk-8-jre
+- sudo update-alternatives --config java //Esta linea solo aplica en el caso de que caso de que hayas instalado otra versión de java.
+
+Instalación SQL:
+- sudo apt-get install mysql-server
+Lanzar SQL:
+- mysql -u root -p
+
+La contraseña en este caso de prueba es 1234.
+
+- Crear base de datos: CREATE DATABASE portalderol;
+Con esto la base de datos estaría creada.
+
+- Salir de SQL con exit.
+
+Portal de rol
+- Lanzar todo el servicio interno en distintas cmds.
+- Lanzar el portal de rol.
+
+Acceder mediante navegador con la direccion IP:
+
+https//192.168.33.10:8443
+
+
 ## Integrantes
   - Marta Sebastián Valverde
       - Correo: m.sebastianv.2016@alumnos.urjc.es
