@@ -122,24 +122,8 @@ public class ForoGeneralController {
 		String url="http://127.0.0.1:8080/"+m.getId()+"/imagen";
 
 		if(imagenFile != null) {
-			//m.setTieneImagen(true);
-			//m.setImagen(imgService.saveImage("mensajes", m.getId(), imagenFile));
-			//restTemplate.postForObject(url,  imagenFile, ResponseEntity.class);
-			//Resource img = restTemplate.getForObject(url,Resource.class);
-			//m.setImagen(imgService.saveImage("mensajes", m.getId(), img));
-
-			 MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<>();
-		        bodyMap.add("user-file", imagenFile);
-		        HttpHeaders headers = new HttpHeaders();
-		        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-		        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(bodyMap, headers);
-
-		        
-		        File response = restTemplate.postForObject(url, requestEntity, File.class);
-		        //imgService.saveImage("mensajes", m.getId(), response);
-		        
-		        System.out.println(response.getPath());
-		        
+			m.setTieneImagen(true);
+			m.setImagen(imgService.saveImage("mensajes", m.getId(), imagenFile)); 		        
 		}
 		mensajesBD.save(m);
 
