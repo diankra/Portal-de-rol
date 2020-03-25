@@ -32,6 +32,7 @@ public class Mensaje {
 		super();
 		this.autor = autor;
 		this.texto = texto;
+		tieneImagen = false;
 	}
 
 	public long getId() {
