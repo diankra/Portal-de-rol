@@ -1,0 +1,12 @@
+LEYENDA:
+
+Azul: ENTITY
+Morado: MAPPED SUPERCLASS
+Marrón: COMPONENT
+Amarillo: SERVICE
+Verde: CLASS (Sin anotaciones)
+Rojo: REPOSITORY (Interface)
+Blanco: CONFIGURATION
+Naranja: CONTROLLER
+Gris: REST CONTROLLER
+Celeste: TEMPLATES
