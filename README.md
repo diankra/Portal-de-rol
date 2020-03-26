@@ -239,6 +239,38 @@ Acceder mediante navegador con la direccion IP:
 
 https//192.168.33.10:8443
 
+##Diagrama de clases
+
+Se ha dividido el diagrama en cuatro partes para mejorar su inteligibilidad. Además, se ha utilizado el siguiente código de colores:
+- Azul: ENTITY
+- Morado: MAPPED SUPERCLASS
+- Marrón: COMPONENT
+- Amarillo: SERVICE
+- Verde: CLASS (Sin anotaciones)
+- Rojo: REPOSITORY (Interface)
+- Blanco: CONFIGURATION
+- Naranja: CONTROLLER
+- Gris: REST CONTROLLER
+- Celeste: TEMPLATES
+
+1. Relaciones entre clases: Aquí se detallan las clases principales (Las entidades de JPA) y algunas clases adicionales relacionadas. Se detallan sus atributos y métodos notables, _omitiendo los constructores, getters y setters_, por simplicidad.
+
+![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Diagramas%20de%20clases/DaD%20clases%201.png)
+
+2. Repositorios y clases de seguridad: Aquí se muestran los repositorios (interfaces) conectados a la entidad que contienen. También se muestran ciertas clases relacionadas con la seguridad, la autenticación de usuarios y CSRF. _Las clases que ya aparecían en el diagrama 1 se muestran aquí sin detalles, solo en nombre_.
+
+![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Diagramas%20de%20clases/DaD%20clases%202.png)
+
+3. Controladores y plantillas: Aquí aparecen detallados los controllers, sus atributos, métodos y los repositorios y clases que utiliza. Además, se relaciona cada Controller con la lista de plantillas html que maneja. Se ha dividido el diagrama en dos imágenes debido a su gran tamaño.
+
+![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Diagramas%20de%20clases/DaD%20clases%203_1.png)
+
+![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Diagramas%20de%20clases/DaD%20clases%203_2.png)
+
+4. Servicios REST y relación con la aplicación principal: Se muestran los RestController y clases adicionales de cada apiREST y se relacionan con el Controller del Portal de Rol que utiliza el servicio.
+
+![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Diagramas%20de%20clases/DaD%20clases%20REST.png)
+
 
 ## Integrantes
   - Marta Sebastián Valverde
