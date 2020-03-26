@@ -118,12 +118,10 @@ public class ForoGeneralController {
 		Mensaje m = new Mensaje(userComponent.getLoggedUser(), mensajeEscrito);
 		m.setHilo(hiloActual);
 		hiloActual.addMensaje(m);
-		RestTemplate restTemplate = new RestTemplate();
-		String url="http://127.0.0.1:8080/"+m.getId()+"/imagen";
 
-		if(imagenFile != null) {
+		if(!imagenFile.isEmpty()) {
 			m.setTieneImagen(true);
-			m.setImagen(imgService.saveImage("mensajes", m.getId(), imagenFile)); 		        
+			m.setImagen(imgService.saveImage("mensajes", m.getId(), imagenFile));
 		}
 		mensajesBD.save(m);
 
