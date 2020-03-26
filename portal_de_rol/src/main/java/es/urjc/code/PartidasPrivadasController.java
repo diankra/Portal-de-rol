@@ -1,5 +1,6 @@
 package es.urjc.code;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class PartidasPrivadasController {
@@ -31,6 +33,9 @@ public class PartidasPrivadasController {
 	private FichaMundoRepository fichasMundoBD;
 	@Autowired
 	private UserComponent userComponent;
+	
+	@Autowired
+	private imageService imgService;
 	
 	@GetMapping("/partidas_privadas")
 	public String partidas_privadas(Model model) {
@@ -62,7 +67,7 @@ public class PartidasPrivadasController {
 
 	@PostMapping("partidas_privadas/{titulo}/escribir_mensaje_partida_privada/aceptar")
 	public String aceptarMensajePartidaPrivada(Model model, @PathVariable long titulo,
-			@RequestParam String mensajeEscrito, @RequestParam(required = false) String idFicha) {
+			@RequestParam String mensajeEscrito, @RequestParam(required = false) String idFicha, @RequestParam(required = false) MultipartFile imagenFile) throws IOException {
 
 		Ficha fichaActual = null;
 
@@ -81,8 +86,16 @@ public class PartidasPrivadasController {
 		Mensaje m = new Mensaje(userComponent.getLoggedUser(), inicio + mensajeEscrito);
 		partidaActual.addMensaje(m);
 		m.setHilo(partidaActual);
-
+		
 		mensajesBD.save(m);
+		
+		if(!imagenFile.isEmpty()) {
+			m.setTieneImagen(true);
+			m.setImagen(imgService.saveImage("mensajes", m.getId(), imagenFile));
+		}
+		
+		mensajesBD.save(m);
+		
 		// }
 		
 		// Envio de correo con actualizaciones

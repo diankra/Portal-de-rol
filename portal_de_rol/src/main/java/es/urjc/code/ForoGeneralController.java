@@ -118,7 +118,9 @@ public class ForoGeneralController {
 		Mensaje m = new Mensaje(userComponent.getLoggedUser(), mensajeEscrito);
 		m.setHilo(hiloActual);
 		hiloActual.addMensaje(m);
-
+		
+		mensajesBD.save(m);
+		
 		if(!imagenFile.isEmpty()) {
 			m.setTieneImagen(true);
 			m.setImagen(imgService.saveImage("mensajes", m.getId(), imagenFile));

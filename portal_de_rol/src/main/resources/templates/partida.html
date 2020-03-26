@@ -21,6 +21,9 @@
 			<div class="mensaje">
 				<p>{{texto}}</p>
 			</div>
+			{{#tieneImagen}}
+			<img src={{rutaImagen}} alt="Imagen del mensaje">
+			{{/tieneImagen}}
 			{{/.}} 
 			{{#admin}}
 			<a href="/partidas_publicas/{{partida}}/{{-index}}">Eliminar
