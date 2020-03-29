@@ -197,6 +197,13 @@ Añadir la box y el ubuntu/trusty32 con:
 
 La maquina virtual está creada, este proceso solo se debe realizar una vez si no se destruye la maquina.
 
+Dentro del vagrantfile hay que descomentar las siguientes lineas:
+
+- Linea 26
+- Linea 31
+- Linea 35
+- Linea 40
+
 Para levantar la maquina virtual:
 
 - Vagrant up
