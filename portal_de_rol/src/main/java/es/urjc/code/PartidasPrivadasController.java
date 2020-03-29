@@ -115,7 +115,7 @@ public class PartidasPrivadasController {
 		}
 
 		if (!to.equals("")) {
-			System.out.println("Correo preparado para: " + to);
+			//System.out.println("Correo preparado para: " + to);
 			Correo correo = new Correo(username, to, subject, body, username, password);
 			RestTemplate restTemplate = new RestTemplate();
 			String url = "http://127.0.0.1:8080/enviar_correo";

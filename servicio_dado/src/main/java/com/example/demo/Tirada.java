@@ -12,7 +12,7 @@ public class Tirada {
 		this.id = id;
 		this.usuario = usuario;
 		this.partida = partida;
-		this.resultado = (int) ((Math.random()*100) % 20);
+		this.resultado = (int) (((Math.random()*100) % 20)+1);
 	}
 
 	public long getId() {
