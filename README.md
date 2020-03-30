@@ -64,7 +64,7 @@ Tablero de Trello: https://trello.com/b/gaM8JvpQ/portal-de-rol-dad
   ## Diagrama de navegación
   
   
-  ![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Diagrama%20de%20navegaci%C3%B3n.jpg)
+  ![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Diagrama%20de%20navegaci%C3%B3n%2030-03.jpg)
   
 
 
@@ -172,6 +172,23 @@ Tablero de Trello: https://trello.com/b/gaM8JvpQ/portal-de-rol-dad
         En esta página podremos observar las características especificadas en la página anterior durante la creación de la localización.
     
 ![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Capturas_pantallas/Foro/26%20-%20Ficha%20localizacion%20creada.jpg)
+
+- Visualizar tirada de dado:
+        En esta página podremos observar el resultado de la tirada de dado:
+    
+![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Capturas_pantallas/TiradaDado.png)
+
+- Visualizar tiradas de dados:
+        En esta página podremos observar el resultado de las tiradas de dados realizadas anteriormente:
+    
+![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Capturas_pantallas/TiradasDado.png)
+
+- Visualizar perfil de usuario:
+        En esta página podremos observar el perfil del usuario activo:
+    
+![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Capturas_pantallas/PerfilUsuario.png)
+
+
 
 # Fase 3
 
