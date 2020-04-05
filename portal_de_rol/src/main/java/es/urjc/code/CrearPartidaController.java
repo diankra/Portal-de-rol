@@ -45,7 +45,7 @@ public class CrearPartidaController {
 		men.setHilo(partida);
 
 		userComponent.getLoggedUser().addPartidaJugador(partida);
-		
+		partida.addJugador(userComponent.getLoggedUser());
 		invitados = invitados.replace(" ", "");
 		
 		String usuariosInvitados[] = invitados.split(",");
