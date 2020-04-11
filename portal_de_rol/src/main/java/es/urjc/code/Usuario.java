@@ -1,5 +1,6 @@
 package es.urjc.code;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 
-public class Usuario {
+public class Usuario implements Serializable{
 
 	@Id
 	private String nombre;
