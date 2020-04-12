@@ -83,7 +83,7 @@ public class PartidasPublicasController {
 		String body = "<h2>El usuario " + userComponent.getLoggedUser().getNombre() + " ha publicado "
 				+ "un mensaje en una partida en la que participas o estás suscrito. Para verlo "
 				+ "pulsa en el siguiente enlace:\n </h2> "
-				+ "<a href= \"https://192.168.99.100:5000/partidas_publicas/" + partidaActual.getId()
+				+ "<a href= \"https://192.168.33.10:443/partidas_publicas/" + partidaActual.getId()
 				+ "\">Acceder a la partida</a>";
 		String to;
 		if (!partidaActual.getMaster().equals(userComponent.getLoggedUser()))
