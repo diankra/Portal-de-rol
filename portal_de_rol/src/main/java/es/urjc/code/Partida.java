@@ -1,5 +1,6 @@
 package es.urjc.code;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 	@Entity
-public class Partida extends Hilo{
+public class Partida extends Hilo implements Serializable{
 
 	@ManyToOne
 	private Usuario master;
