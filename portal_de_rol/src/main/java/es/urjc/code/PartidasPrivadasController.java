@@ -103,7 +103,7 @@ public class PartidasPrivadasController {
 		String body = "<h2>El usuario " + userComponent.getLoggedUser().getNombre() + " ha publicado "
 				+ "un mensaje en una partida en la que participas o estás suscrito. Para verlo "
 				+ "pulsa en el siguiente enlace:\n </h2> "
-				+ "<a href= \"https://192.168.33.10:8443/partidas_publicas/" + partidaActual.getId()
+				+ "<a href= \"https://192.168.99.100:443/partidas_publicas/" + partidaActual.getId()
 				+ "\">Acceder a la partida</a>";
 		String to;
 		if (!partidaActual.getMaster().equals(userComponent.getLoggedUser()))
@@ -115,10 +115,10 @@ public class PartidasPrivadasController {
 		}
 
 		if (!to.equals("")) {
-			//System.out.println("Correo preparado para: " + to);
+			System.out.println("Correo preparado para: " + to);
 			Correo correo = new Correo(username, to, subject, body, username, password);
 			RestTemplate restTemplate = new RestTemplate();
-			String url = "http://127.0.0.1:8080/enviar_correo";
+			String url = "http://192.168.0.23:8080/enviar_correo";
 			restTemplate.postForObject(url, correo, Correo.class);
 		}
 		
@@ -157,7 +157,7 @@ public class PartidasPrivadasController {
 	public String tirarDado(Model model, @PathVariable long id) {
 		Partida actual = partidasBD.findPartidaById(id);
 		RestTemplate restTemplate = new RestTemplate();
-		String url = "http://127.0.0.1:8082/tirada/"+actual.getId()+"/";
+		String url = "http://192.168.0.24:8082/tirada/"+actual.getId()+"/";
 		Integer res = restTemplate.postForObject(url, userComponent.getLoggedUser().getNombre(), Integer.class);
 		model.addAttribute("id", id);
 		model.addAttribute("tirada", res.intValue());
@@ -166,7 +166,7 @@ public class PartidasPrivadasController {
 	
 	@RequestMapping("partidas_privadas/{id}/ver_tiradas")
 	public String verTiradas(Model model, @PathVariable long id) {
-		String url = "http://127.0.0.1:8082/getTiradas/"+id+"/";
+		String url = "http://servicio-dado:8082/getTiradas/"+id+"/";
 		RestTemplate restTemplate = new RestTemplate();
 		List<Tirada> listaTiradas = restTemplate.getForObject(url, List.class);
 		model.addAttribute("id", id);

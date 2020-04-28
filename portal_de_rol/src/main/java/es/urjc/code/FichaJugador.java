@@ -1,12 +1,14 @@
 package es.urjc.code;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 	@Entity
 
-public class FichaJugador extends Ficha {
+public class FichaJugador extends Ficha implements Serializable{
 
 //	La ficha jugador tiene el nombre, si es NPC o no definido con tipo, su clase y su raza.
 //	Por lo que necesitamos los parametros nombre, tipo, clase y raza definidos en ficha_heroes

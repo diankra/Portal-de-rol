@@ -1,11 +1,13 @@
 package es.urjc.code;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 	@Entity
 
-public class FichaMundo extends Ficha{
+public class FichaMundo extends Ficha implements Serializable{
 	
 	@ManyToOne
 	private Partida partida;
