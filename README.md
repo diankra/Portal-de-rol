@@ -1,6 +1,9 @@
 # Portal-de-rol
 Práctica para Desarrollo de Aplicaciones Distribuidas que consiste en la implementación de una página web que actúe como portal para que gente situada en distintos lugares pueda jugar partidas de rol.
 
+## Vídeo del funcionamiento
+https://youtu.be/rlnIfoM9AXQ
+
 ## Descripción
 La práctica estará enfocada a jugar partidas de rol mediante foro. Estas partidas podrán clasificarse como públicas, es decir, las puede ver todo el mundo que acceda a la página, tenga usuario o no; o privadas, de modo que solo las puedan ver las personas que estén participando en estas. 
 
