@@ -299,6 +299,19 @@ Se ha dividido el diagrama en cuatro partes para mejorar su inteligibilidad. Ade
 ![alt text](https://raw.githubusercontent.com/diankra/Portal-de-rol/master/Diagramas%20de%20clases/DaD%20clases%20REST.png)
 
 
+
+# Fase 4
+
+
+
+## Documentación de los servicios internos
+La aplicación dispone de dos funcionalidades de servicio interno implementados mediante el uso de API Rest:
+
+  - Servicio de dado: Permite hacer tiradas de dados en una partida y acceder a la lista de tiradas realizadas en una partida.
+                      Se comunica con el PartidasPrivadasController y dispone de un método POST y un método GET.
+  
+  - Servicio de correo: Sirve para, cuando un usuario escribe un mensaje en una partida, mandar automáticamente un correo a los                                 otros participantes informando de ello, adjuntando un enlace a dicha partida. A esta API se la invoca                                   automáticamente desde PartidasPublicasController y PartidasPrivadasController y dispone sólo de un método                               POST. El servicio hace uso de JavaMail y permite el envío de correos en html a través de Gmail SMTP. 
+
 ## Integrantes
   - Marta Sebastián Valverde
       - Correo: m.sebastianv.2016@alumnos.urjc.es
