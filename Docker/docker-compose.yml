@@ -1,0 +1,80 @@
+version: '3'
+services:
+    mysql-docker-container:
+        image: mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=1234
+            - MYSQL_DATABASE=portalderol
+        expose:
+            - 3306
+        networks:
+            public_net:
+                ipv4_address: ${APACHE_3_IP}
+    service-mail:
+        build: correo/
+        ports: 
+            - "8080:8080"
+        dns:
+            - 8.8.8.8
+        expose:
+            - 8080
+        networks:
+            public_net:
+                ipv4_address: ${APACHE_4_IP}
+    servicio-dado:
+        build: dado/
+        ports:
+            - "8082:8082"
+        expose:
+            - 8082
+        networks:
+            public_net:
+                ipv4_address: ${APACHE_5_IP}
+    web:
+        build: .
+        expose:
+            - ${APACHE_EXPOSED_PORT}
+        networks:
+            public_net:
+                ipv4_address: ${APACHE_1_IP}
+        links:
+        - mysql-docker-container
+        - service-mail
+        - servicio-dado
+    web2:
+        build: .
+        ports: 
+            - "5000:8443"
+        expose:
+            - ${APACHE_EXPOSED_PORT}
+        networks:
+            public_net:
+                ipv4_address: ${APACHE_2_IP}
+        links:
+        - mysql-docker-container
+        - service-mail
+        - servicio-dado
+    
+    haproxy_img:
+        build: ./haproxy
+        ports:
+            - 443:443
+            - 9000:9000
+        expose:
+            - 443
+            - 9000
+        networks:
+            public_net:
+                ipv4_address: ${HA_PROXY_IP}
+        environment:
+                - APACHE_1_IP=${APACHE_1_IP}
+                - APACHE_2_IP=${APACHE_2_IP}
+                - APACHE_EXPOSED_PORT=${APACHE_EXPOSED_PORT}
+networks:
+    public_net:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: ${NETWORK_SUBNET}
+
