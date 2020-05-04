@@ -312,6 +312,11 @@ La aplicación dispone de dos funcionalidades de servicio interno implementados 
   
   - Servicio de correo: Sirve para, cuando un usuario escribe un mensaje en una partida, mandar automáticamente un correo a los                                 otros participantes informando de ello, adjuntando un enlace a dicha partida. A esta API se la invoca                                   automáticamente desde PartidasPublicasController y PartidasPrivadasController y dispone sólo de un método                               POST. El servicio hace uso de JavaMail y permite el envío de correos en html a través de Gmail SMTP. 
 
+## Diagrama de la infraestructura
+![alt text](https://github.com/diankra/Portal-de-rol/blob/master/Diagrama_infraestructura.png?raw=true)
+
+Todas las conexiones se producen a través de docker compose
+
 ## Integrantes
   - Marta Sebastián Valverde
       - Correo: m.sebastianv.2016@alumnos.urjc.es
